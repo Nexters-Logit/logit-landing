@@ -5,6 +5,7 @@ import HeroV4 from "@/components/sections/hero-variants/HeroV4";
 import HeroV5 from "@/components/sections/hero-variants/HeroV5";
 import HeroV6 from "@/components/sections/hero-variants/HeroV6";
 import HeroV7 from "@/components/sections/hero-variants/HeroV7";
+import PainPointV1 from "@/components/sections/hero-variants/PainPointV1";
 
 function Divider({ label }: { label: string }) {
   return (
@@ -31,6 +32,8 @@ export default function TestPage() {
       <HeroV6 />
       <Divider label="V7 — 로짓 중심 플로팅 카드 + 연결선" />
       <HeroV7 />
+      <Divider label="PainPoint V1 — 타이핑 애니메이션" />
+      <PainPointV1 />
     </main>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useScrollReveal } from "@/lib/hooks";
 
 const QUOTE = "자소서 문항: 본인의 가장 도전적인 경험을 기술하시오";
@@ -51,12 +51,11 @@ function TypewriterQuote({ onDone }: { onDone: () => void }) {
   );
 }
 
-export default function PainPoint() {
+export default function PainPointV1() {
   const section = useScrollReveal(0.1);
   const [quoteDone, setQuoteDone] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
   const cards = useScrollReveal(0.1);
-  const handleQuoteDone = useCallback(() => setQuoteDone(true), []);
 
   useEffect(() => {
     if (section.visible && !hasStarted) {
@@ -85,7 +84,7 @@ export default function PainPoint() {
           {/* 타이핑 Quote */}
           <div className="min-h-[160px] max-md:min-h-[100px] flex items-center justify-center">
             {hasStarted && (
-              <TypewriterQuote onDone={handleQuoteDone} />
+              <TypewriterQuote onDone={() => setQuoteDone(true)} />
             )}
           </div>
 
