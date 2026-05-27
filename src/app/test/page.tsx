@@ -4,6 +4,7 @@ import HeroV3 from "@/components/sections/hero-variants/HeroV3";
 import HeroV4 from "@/components/sections/hero-variants/HeroV4";
 import HeroV5 from "@/components/sections/hero-variants/HeroV5";
 import HeroV6 from "@/components/sections/hero-variants/HeroV6";
+import HeroV7 from "@/components/sections/hero-variants/HeroV7";
 
 function Divider({ label }: { label: string }) {
   return (
@@ -28,6 +29,8 @@ export default function TestPage() {
       <HeroV5 />
       <Divider label="V6 — 목업 오른쪽 배치 + 블러 페이드" />
       <HeroV6 />
+      <Divider label="V7 — 로짓 중심 플로팅 카드 + 연결선" />
+      <HeroV7 />
     </main>
   );
 }
