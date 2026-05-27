@@ -1,18 +1,51 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --gradient-empty-100: linear-gradient(225deg, #DEE4FF -3.87%, #DCF5F4 75.23%);
+  --gradient-empty-200: linear-gradient(225deg, #D4DEFE -3.87%, #D8F1F7 75.23%);
+  --gradient-logo: linear-gradient(360deg, #58AEF4 0%, #65C1ED 100%);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  /* Primary */
+  --color-primary-20: #F5FAFF;
+  --color-primary-50: #E5F0FF;
+  --color-primary-60: #C3DCFF;
+  --color-primary-70: #8DC9FF;
+  --color-primary-100: #40A5FF;
+  --color-primary-200: #2571EB;
+  --color-primary-300: #240991;
+  --color-primary-400: #6B7684;
+  --color-primary-500: #374151;
+  --color-primary-600: #333D4B;
+
+  /* Secondary */
+  --color-secondary-100: #4BC0FA;
+
+  /* Grey */
+  --color-grey-20: #F5F7FA;
+  --color-grey-50: #F2F3F7;
+  --color-grey-70: #E1E4ED;
+  --color-grey-100: #BEC2D1;
+  --color-grey-200: #989CB2;
+  --color-grey-300: #6B6F84;
+  --color-grey-400: #262626;
+
+  /* Icon */
+  --color-icon-1: #63DBD5;
+  --color-icon-2: #71D1F0;
+  --color-icon-3: #32B1FF;
+  --color-icon-4: #8B9AFF;
+  --color-icon-5: #8B83E6;
+  --color-icon-6: #A283E6;
+  --color-icon-7: #CF83E6;
+  --color-icon-8: #E683BE;
+
+  /* Font */
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, sans-serif;
+  font-family: var(--font-sans);
 }
