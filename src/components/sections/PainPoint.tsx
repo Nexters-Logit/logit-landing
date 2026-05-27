@@ -52,15 +52,19 @@ function TypewriterQuote({ onDone }: { onDone: () => void }) {
 }
 
 export default function PainPoint() {
-  const section = useScrollReveal(0.1);
+  const section = useScrollReveal(0.1, false);
   const [quoteDone, setQuoteDone] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
-  const cards = useScrollReveal(0.1);
+  const cards = useScrollReveal(0.1, false);
   const handleQuoteDone = useCallback(() => setQuoteDone(true), []);
 
   useEffect(() => {
     if (section.visible && !hasStarted) {
       setHasStarted(true);
+    }
+    if (!section.visible && hasStarted) {
+      setHasStarted(false);
+      setQuoteDone(false);
     }
   }, [section.visible, hasStarted]);
 
