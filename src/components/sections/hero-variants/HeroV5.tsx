@@ -12,7 +12,7 @@ const EXPERIENCES = [
   "여행",
 ];
 
-export default function Hero() {
+export default function HeroV5() {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(true);
 
