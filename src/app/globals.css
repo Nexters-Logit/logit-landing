@@ -49,3 +49,9 @@
 body {
   font-family: var(--font-sans);
 }
+
+@layer utilities {
+  .container-base {
+    @apply max-w-[1200px] mx-auto px-6 md:px-10 lg:px-16;
+  }
+}
