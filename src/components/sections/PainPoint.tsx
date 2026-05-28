@@ -134,7 +134,8 @@ export default function PainPoint() {
           {PAIN_POINTS.map((point, i) => (
             <div
               key={i}
-              className="bg-white rounded-3xl px-8 py-10 max-md:px-6 max-md:py-7 flex flex-col gap-5 border border-grey-70"
+              className="bg-white rounded-3xl px-8 py-10 max-md:px-6 max-md:py-7 flex flex-col gap-5 border border-grey-70 cursor-pointer select-none transition-transform duration-150 ease-out hover:-translate-y-1 active:scale-[0.97] active:shadow-none"
+              style={{ boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}
             >
               <span className="text-primary-100 text-4xl max-md:text-2xl font-bold">0{i + 1}</span>
               <p className="text-grey-400 text-2xl max-lg:text-xl max-md:text-lg font-bold leading-snug [word-break:keep-all]">
