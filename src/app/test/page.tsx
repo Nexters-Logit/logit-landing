@@ -1,11 +1,14 @@
-import HeroV1 from "@/components/sections/hero-variants/HeroV1";
-import HeroV2 from "@/components/sections/hero-variants/HeroV2";
-import HeroV3 from "@/components/sections/hero-variants/HeroV3";
-import HeroV4 from "@/components/sections/hero-variants/HeroV4";
-import HeroV5 from "@/components/sections/hero-variants/HeroV5";
+import Feature1 from "@/components/sections/features/Feature1";
+import Feature2 from "@/components/sections/features/Feature2";
+import Feature3 from "@/components/sections/features/Feature3";
+import PainPoint from "@/components/sections/PainPoint";
+import PainPointExpand from "@/components/sections/PainPointExpand";
+import PainPointExpandV2 from "@/components/sections/PainPointExpandV2";
+import HowItWorksV4 from "@/components/sections/how-it-works-variants/HowItWorksV4";
+import HowItWorksV5 from "@/components/sections/how-it-works-variants/HowItWorksV5";
+import HowItWorksV6 from "@/components/sections/how-it-works-variants/HowItWorksV6";
 import HeroV6 from "@/components/sections/hero-variants/HeroV6";
 import HeroV7 from "@/components/sections/hero-variants/HeroV7";
-import PainPointV1 from "@/components/sections/hero-variants/PainPointV1";
 
 function Divider({ label }: { label: string }) {
   return (
@@ -18,22 +21,27 @@ function Divider({ label }: { label: string }) {
 export default function TestPage() {
   return (
     <main>
-      <Divider label="V1 — 타이핑 애니메이션" />
-      <HeroV1 />
-      <Divider label="V2 — Before / After 카드 Flip" />
-      <HeroV2 />
-      <Divider label="V3 — 스크롤 스토리텔링" />
-      <HeroV3 />
-      <Divider label="V4 — 플로팅 경험 카드" />
-      <HeroV4 />
-      <Divider label="V5 — 목업 배경 + 그라디언트 오버레이" />
-      <HeroV5 />
-      <Divider label="V6 — 목업 오른쪽 배치 + 블러 페이드" />
+<Divider label="V6 — 목업 오른쪽 배치 + 블러 페이드" />
       <HeroV6 />
       <Divider label="V7 — 로짓 중심 플로팅 카드 + 연결선" />
       <HeroV7 />
-      <Divider label="PainPoint V1 — 타이핑 애니메이션" />
-      <PainPointV1 />
+      <Divider label="PainPointExpand V1 — 카드에서 수렴 → 로고 → 풀스크린" />
+      <PainPoint />
+      <Divider label="PainPointExpand V2 — 로고에서 풀스크린" />
+      <PainPoint />
+      <PainPointExpandV2 />
+      <Divider label="Feature 1 — 편안한 경험 등록 (카드 덱)" />
+      <Feature1 />
+      <Divider label="Feature 2 — 스토리 확장 (일상 → 역량 변환)" />
+      <Feature2 />
+      <Divider label="Feature 3 — 초안 고속 생성 (다크)" />
+      <Feature3 />
+      <Divider label="HowItWorks V4 — 스텝별 세로 스크롤 + 경험 카드 순환" />
+      <HowItWorksV4 />
+      <Divider label="HowItWorks V5 — 풀스크린 타이포그래피 중심" />
+      <HowItWorksV5 />
+      <Divider label="HowItWorks V6 — Sticky 스크롤 + 앱 목업 시연" />
+      <HowItWorksV6 />
     </main>
   );
 }
