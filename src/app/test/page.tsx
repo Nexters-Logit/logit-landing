@@ -3,7 +3,6 @@ import Feature2 from "@/components/sections/features/Feature2";
 import Feature3 from "@/components/sections/features/Feature3";
 import PainPoint from "@/components/sections/PainPoint";
 import PainPointExpand from "@/components/sections/PainPointExpand";
-import PainPointExpandV2 from "@/components/sections/PainPointExpandV2";
 import HowItWorksV4 from "@/components/sections/how-it-works-variants/HowItWorksV4";
 import HowItWorksV5 from "@/components/sections/how-it-works-variants/HowItWorksV5";
 import HowItWorksV6 from "@/components/sections/how-it-works-variants/HowItWorksV6";
@@ -27,9 +26,6 @@ export default function TestPage() {
       <HeroV7 />
       <Divider label="PainPointExpand V1 — 카드에서 수렴 → 로고 → 풀스크린" />
       <PainPoint />
-      <Divider label="PainPointExpand V2 — 로고에서 풀스크린" />
-      <PainPoint />
-      <PainPointExpandV2 />
       <Divider label="Feature 1 — 편안한 경험 등록 (카드 덱)" />
       <Feature1 />
       <Divider label="Feature 2 — 스토리 확장 (일상 → 역량 변환)" />
