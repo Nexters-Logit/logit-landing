@@ -82,13 +82,22 @@ export default function HeroV7() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center bg-white overflow-hidden">
+    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden bg-white">
       <style>{`
         @keyframes floatCard {
           0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
           50%       { transform: translate(-50%, -50%) translateY(-10px); }
         }
       `}</style>
+
+      {/* V6 방식 — 오른쪽 절반 primary-50, 왼쪽으로 블러 페이드 */}
+      <div
+        className="absolute right-0 top-0 w-1/2 h-full bg-primary-50"
+        style={{
+          maskImage: "linear-gradient(to right, transparent 0%, black 40%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent 0%, black 40%)",
+        }}
+      />
 
       <div className="w-full px-8 md:px-16 lg:px-24 xl:px-36 py-20 lg:py-32 flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
 
