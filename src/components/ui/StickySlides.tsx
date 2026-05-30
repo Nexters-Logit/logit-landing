@@ -10,7 +10,7 @@ function norm(p: number, s: number, e: number) {
 }
 
 // 슬라이드당 머무는 스크롤 구간 (vh)
-const DWELL = 150;
+const DWELL = 180;
 // 슬라이드 간 크로스페이드 구간 (vh)
 const FADE  = 80;
 

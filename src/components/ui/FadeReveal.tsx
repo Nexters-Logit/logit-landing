@@ -37,8 +37,8 @@ export default function FadeReveal({
         // (PainPoint sticky 퇴장 전에 이미 오버레이가 충분히 채워지도록)
         next = ease(Math.min(1, (2 * vh - rect.top) / (1.25 * vh)));
       } else {
-        // 뷰포트 상단을 지나가는 중 — 매우 천천히 fade-out (2vh 에 걸쳐)
-        next = 1 - ease(Math.min(1, -rect.top / (vh * 2)));
+        // 뷰포트 상단을 지나가는 중 — 빠르게 fade-out (0.75vh 에 걸쳐)
+        next = 1 - ease(Math.min(1, -rect.top / (vh * 0.75)));
       }
       setOp(next);
     };

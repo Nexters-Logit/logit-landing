@@ -121,6 +121,8 @@ export default function PainPoint() {
   const labelT   = ease(norm(p, 0.58, 0.68));
   const headingT = ease(norm(p, 0.61, 0.71));
   const subT     = ease(norm(p, 0.64, 0.76));
+  // 텍스트 퇴장 — 수렴 공간 끝에 딱 맞춰 위로 슬라이드 fade-out
+  const textExitT = ease(norm(p, 0.88, 1.0));
 
   const isMobile = vw < 768;
   const padding  = vw >= 1024 ? 80 : 48;
@@ -236,7 +238,14 @@ export default function PainPoint() {
         </div>
 
         {/* 수렴 오버레이 공간 */}
-        <div ref={convergeSpaceRef} style={{ height: "400vh" }} className="relative">
+        <div
+          ref={convergeSpaceRef}
+          style={{
+            height: "400vh",
+            background: expandT > 0 ? "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)" : undefined,
+          }}
+          className="relative"
+        >
           <div className="sticky top-0 h-screen overflow-hidden pointer-events-none">
 
             {/* 중심 glow — 카드 수렴 시 빛이 모임 */}
@@ -293,10 +302,11 @@ export default function PainPoint() {
               <Image src="/logo_symbol_2d.svg" alt="로짓" width={52} height={52} />
             </div>
 
-            {/* 솔루션 텍스트 — 요소별 순차 등장 */}
+            {/* 솔루션 텍스트 — 등장 후 위로 slide-up fade-out */}
             <div style={{
               position: "absolute", left: 0, right: 0, top: "50%",
-              transform: "translateY(-50%)",
+              transform: `translateY(calc(-50% + ${textExitT * -80}px))`,
+              opacity: 1 - textExitT,
               zIndex: 5,
               textAlign: "center", padding: "0 3rem",
               pointerEvents: "none",
