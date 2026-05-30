@@ -3,9 +3,6 @@ import Feature2 from "@/components/sections/features/Feature2";
 import Feature3 from "@/components/sections/features/Feature3";
 import PainPoint from "@/components/sections/PainPoint";
 import PainPointExpand from "@/components/sections/PainPointExpand";
-import HowItWorksV4 from "@/components/sections/how-it-works-variants/HowItWorksV4";
-import HowItWorksV5 from "@/components/sections/how-it-works-variants/HowItWorksV5";
-import HowItWorksV6 from "@/components/sections/how-it-works-variants/HowItWorksV6";
 import HeroV6 from "@/components/sections/hero-variants/HeroV6";
 import HeroV7 from "@/components/sections/hero-variants/HeroV7";
 
@@ -32,12 +29,6 @@ export default function TestPage() {
       <Feature2 />
       <Divider label="Feature 3 — 초안 고속 생성 (다크)" />
       <Feature3 />
-      <Divider label="HowItWorks V4 — 스텝별 세로 스크롤 + 경험 카드 순환" />
-      <HowItWorksV4 />
-      <Divider label="HowItWorks V5 — 풀스크린 타이포그래피 중심" />
-      <HowItWorksV5 />
-      <Divider label="HowItWorks V6 — Sticky 스크롤 + 앱 목업 시연" />
-      <HowItWorksV6 />
     </main>
   );
 }
