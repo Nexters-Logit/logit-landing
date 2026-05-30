@@ -102,7 +102,10 @@ export default function Feature3() {
   const visual = useScrollReveal(0.2, false);
 
   return (
-    <section className="w-full min-h-screen flex items-center bg-primary-50 py-32 max-lg:py-24 max-md:py-16">
+    <section
+      className="w-full min-h-screen flex items-center py-32 max-lg:py-24 max-md:py-16"
+      style={{ background: "radial-gradient(ellipse at 28% 72%, #C8E6FF 0%, #DAEEFF 30%, #EAF4FF 62%, #F5FAFF 100%)" }}
+    >
       <div className="w-full px-20 max-lg:px-12 max-md:px-6 flex items-center gap-20 max-lg:gap-12 max-md:flex-col max-md:gap-12">
 
         {/* 텍스트 */}

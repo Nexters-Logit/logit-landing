@@ -242,7 +242,7 @@ export default function PainPoint() {
           ref={convergeSpaceRef}
           style={{
             height: "400vh",
-            background: expandT > 0 ? "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)" : undefined,
+            background: expandT > 0 ? "#E5F0FF" : undefined,
           }}
           className="relative"
         >
