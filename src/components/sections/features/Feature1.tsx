@@ -83,7 +83,7 @@ export default function Feature1() {
   const visual = useScrollReveal(0.15, false);
 
   return (
-    <section className="w-full min-h-screen flex items-center bg-white py-32 max-lg:py-24 max-md:py-16">
+    <section className="w-full min-h-screen flex items-center bg-primary-50 py-32 max-lg:py-24 max-md:py-16">
       <div className="w-full px-20 max-lg:px-12 max-md:px-6 flex items-center gap-20 max-lg:gap-12 max-md:flex-col max-md:gap-12">
 
         {/* 텍스트 */}

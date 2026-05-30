@@ -3,6 +3,8 @@ import Feature2 from "@/components/sections/features/Feature2";
 import Feature3 from "@/components/sections/features/Feature3";
 import PainPoint from "@/components/sections/PainPoint";
 import PainPointExpand from "@/components/sections/PainPointExpand";
+import FadeReveal from "@/components/ui/FadeReveal";
+import StickySlides from "@/components/ui/StickySlides";
 import HeroV6 from "@/components/sections/hero-variants/HeroV6";
 import HeroV7 from "@/components/sections/hero-variants/HeroV7";
 
@@ -23,12 +25,13 @@ export default function TestPage() {
       <HeroV7 />
       <Divider label="PainPointExpand V1 — 카드에서 수렴 → 로고 → 풀스크린" />
       <PainPoint />
-      <Divider label="Feature 1 — 편안한 경험 등록 (카드 덱)" />
-      <Feature1 />
-      <Divider label="Feature 2 — 스토리 확장 (일상 → 역량 변환)" />
-      <Feature2 />
-      <Divider label="Feature 3 — 초안 고속 생성 (다크)" />
-      <Feature3 />
+      <FadeReveal>
+        <StickySlides>
+          <Feature1 />
+          <Feature2 />
+          <Feature3 />
+        </StickySlides>
+      </FadeReveal>
     </main>
   );
 }

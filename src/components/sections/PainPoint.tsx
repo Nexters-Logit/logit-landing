@@ -117,10 +117,10 @@ export default function PainPoint() {
   const expandT    = ease(norm(p, 0.50, 0.82));
   const circleSize = 80 * (1 + expandT * 42);
 
-  // 솔루션 텍스트 — 요소별 순차 등장
-  const labelT   = ease(norm(p, 0.68, 0.78));
-  const headingT = ease(norm(p, 0.72, 0.84));
-  const subT     = ease(norm(p, 0.76, 0.92));
+  // 솔루션 텍스트 — 요소별 순차 등장 (더 일찍 + 스태거 축소 → 한번에 보이는 느낌)
+  const labelT   = ease(norm(p, 0.58, 0.68));
+  const headingT = ease(norm(p, 0.61, 0.71));
+  const subT     = ease(norm(p, 0.64, 0.76));
 
   const isMobile = vw < 768;
   const padding  = vw >= 1024 ? 80 : 48;
@@ -236,7 +236,7 @@ export default function PainPoint() {
         </div>
 
         {/* 수렴 오버레이 공간 */}
-        <div ref={convergeSpaceRef} style={{ height: "350vh" }} className="relative">
+        <div ref={convergeSpaceRef} style={{ height: "400vh" }} className="relative">
           <div className="sticky top-0 h-screen overflow-hidden pointer-events-none">
 
             {/* 중심 glow — 카드 수렴 시 빛이 모임 */}
@@ -299,31 +299,23 @@ export default function PainPoint() {
               transform: "translateY(-50%)",
               zIndex: 5,
               textAlign: "center", padding: "0 3rem",
+              pointerEvents: "none",
             }}>
               <p
                 className="text-white/60 text-sm font-semibold mb-5 tracking-[0.15em] uppercase"
-                style={{
-                  opacity: labelT,
-                  transform: `translateY(${(1 - labelT) * 14}px)`,
-                }}
+                style={{ opacity: labelT, transform: `translateY(${(1 - labelT) * 14}px)` }}
               >
                 그래서 로짓이 나왔어요
               </p>
               <h2
                 className="text-5xl max-lg:text-4xl max-md:text-3xl font-bold text-white leading-[1.2] [word-break:keep-all] mb-6"
-                style={{
-                  opacity: headingT,
-                  transform: `translateY(${(1 - headingT) * 20}px)`,
-                }}
+                style={{ opacity: headingT, transform: `translateY(${(1 - headingT) * 20}px)` }}
               >
                 당신의 평범한 일상이<br />합격의 재료가 됩니다
               </h2>
               <p
                 className="text-white/75 text-xl max-md:text-base max-w-xl mx-auto leading-relaxed [word-break:keep-all]"
-                style={{
-                  opacity: subT,
-                  transform: `translateY(${(1 - subT) * 14}px)`,
-                }}
+                style={{ opacity: subT, transform: `translateY(${(1 - subT) * 14}px)` }}
               >
                 어떤 경험이든, 어떤 일상이든 괜찮아요.{" "}
                 로짓이 당신만의 합격 스토리를 찾아드릴게요.

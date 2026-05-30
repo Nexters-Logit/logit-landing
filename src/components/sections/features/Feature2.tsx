@@ -53,7 +53,7 @@ function TransformVisual({ active }: { active: boolean }) {
       </div>
 
       {/* 역량 언어 */}
-      <div className="flex-1 bg-primary-20 rounded-2xl p-6 max-md:p-4 border border-primary-100 shadow-sm" style={fadeStyle}>
+      <div className="flex-1 bg-white rounded-2xl p-6 max-md:p-4 border border-primary-100 shadow-sm" style={fadeStyle}>
         <p className="text-primary-200 text-xs font-semibold mb-3 tracking-wide uppercase">직무 역량</p>
         <div className="flex flex-col gap-2">
           {item.to.map((t) => (
@@ -72,7 +72,7 @@ export default function Feature2() {
   const visual = useScrollReveal(0.2, false);
 
   return (
-    <section className="w-full min-h-screen flex items-center bg-grey-20 py-32 max-lg:py-24 max-md:py-16">
+    <section className="w-full min-h-screen flex items-center bg-primary-50 py-32 max-lg:py-24 max-md:py-16">
       <div className="w-full px-20 max-lg:px-12 max-md:px-6 flex flex-col items-center gap-20 max-lg:gap-14 max-md:gap-12">
 
         {/* 텍스트 */}

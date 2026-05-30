@@ -36,7 +36,7 @@ function DraftVisual({ active }: { active: boolean }) {
         {SELECTED_CARDS.map((card, i) => (
           <div
             key={i}
-            className="flex-1 bg-white/10 border border-white/20 rounded-xl p-4 flex flex-col gap-2 transition-all duration-500"
+            className="flex-1 bg-white border border-grey-70 rounded-xl p-4 flex flex-col gap-2 transition-all duration-500 shadow-sm"
             style={{
               opacity: active ? 1 : 0,
               transform: active ? "translateY(0)" : "translateY(16px)",
@@ -49,11 +49,11 @@ function DraftVisual({ active }: { active: boolean }) {
                   <path d="M1.5 4L3 5.5L6.5 2" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </span>
-              <span className="text-white/80 text-xs font-semibold">{card.label}</span>
+              <span className="text-grey-400 text-xs font-semibold">{card.label}</span>
             </div>
             <div className="flex gap-1.5 flex-wrap">
               {card.tags.map((tag) => (
-                <span key={tag} className="bg-white/10 text-white/70 text-xs px-2 py-0.5 rounded-full">{tag}</span>
+                <span key={tag} className="bg-grey-50 text-grey-300 text-xs px-2 py-0.5 rounded-full">{tag}</span>
               ))}
             </div>
           </div>
@@ -65,20 +65,20 @@ function DraftVisual({ active }: { active: boolean }) {
         className="flex items-center gap-3 transition-all duration-500"
         style={{ opacity: drafted ? 1 : 0, transitionDelay: "0ms" }}
       >
-        <div className="flex-1 h-px bg-white/20" />
-        <span className="text-white/60 text-xs font-semibold tracking-wide">AI 초안 생성 중</span>
-        <div className="flex-1 h-px bg-white/20" />
+        <div className="flex-1 h-px bg-grey-100" />
+        <span className="text-grey-300 text-xs font-semibold tracking-wide">AI 초안 생성 중</span>
+        <div className="flex-1 h-px bg-grey-100" />
       </div>
 
       {/* 초안 출력 */}
       <div
-        className="bg-white/10 border border-white/20 rounded-xl p-5 min-h-[120px] transition-all duration-500"
+        className="bg-white border border-grey-70 rounded-xl p-5 min-h-[120px] transition-all duration-500 shadow-sm"
         style={{ opacity: drafted ? 1 : 0 }}
       >
-        <p className="text-white text-sm leading-relaxed [word-break:keep-all]">
+        <p className="text-grey-400 text-sm leading-relaxed [word-break:keep-all]">
           {displayed}
           {displayed.length > 0 && displayed.length < DRAFT.length && (
-            <span className="inline-block w-0.5 h-3.5 bg-white ml-0.5 align-middle animate-pulse" />
+            <span className="inline-block w-0.5 h-3.5 bg-grey-400 ml-0.5 align-middle animate-pulse" />
           )}
         </p>
       </div>
@@ -91,7 +91,7 @@ function DraftVisual({ active }: { active: boolean }) {
         <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
           <path d="M2 6L5 9L10 3" stroke="#34C759" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-        <span className="text-white/70 text-xs font-semibold">초안 완성</span>
+        <span className="text-grey-300 text-xs font-semibold">초안 완성</span>
       </div>
     </div>
   );
@@ -102,7 +102,7 @@ export default function Feature3() {
   const visual = useScrollReveal(0.2, false);
 
   return (
-    <section className="w-full min-h-screen flex items-center bg-grey-400 py-32 max-lg:py-24 max-md:py-16">
+    <section className="w-full min-h-screen flex items-center bg-primary-50 py-32 max-lg:py-24 max-md:py-16">
       <div className="w-full px-20 max-lg:px-12 max-md:px-6 flex items-center gap-20 max-lg:gap-12 max-md:flex-col max-md:gap-12">
 
         {/* 텍스트 */}
@@ -114,11 +114,11 @@ export default function Feature3() {
             transform: section.visible ? "translateX(0)" : "translateX(-32px)",
           }}
         >
-          <span className="text-primary-100 text-sm font-semibold tracking-[0.2em] uppercase">초안 고속 생성</span>
-          <h2 className="text-5xl max-lg:text-4xl max-md:text-3xl font-bold text-white leading-[1.2] [word-break:keep-all]">
+          <span className="text-primary-200 text-sm font-semibold tracking-[0.2em] uppercase">초안 고속 생성</span>
+          <h2 className="text-5xl max-lg:text-4xl max-md:text-3xl font-bold text-grey-400 leading-[1.2] [word-break:keep-all]">
             경험 카드 조합하면,<br />자소서 초안 3초 컷
           </h2>
-          <p className="text-xl max-md:text-base text-white/60 leading-relaxed max-w-md [word-break:keep-all]">
+          <p className="text-xl max-md:text-base text-grey-200 leading-relaxed max-w-md [word-break:keep-all]">
             원하는 문항을 고르고 매칭할 경험 카드를 선택하면 끝. 맞춤법부터 자연스러운 문맥 흐름까지 완벽한 초안을 눈앞에 대령합니다.
           </p>
         </div>
