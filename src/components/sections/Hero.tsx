@@ -52,10 +52,10 @@ export default function Hero() {
   return (
     <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-primary-50" />
-      <div className="absolute inset-0 bg-gradient-to-r from-white via-white/90 to-white/10" />
+      <div className="absolute inset-0 bg-white/40" />
 
-      <div className="relative z-10 w-full px-20 max-lg:px-12 max-md:px-6 py-32 max-lg:py-24 max-md:py-16">
-        <div className="max-w-3xl flex flex-col gap-10 max-md:gap-7">
+      <div className="relative z-10 w-full px-20 max-lg:px-12 max-md:px-6 py-32 max-lg:py-24 max-md:py-16 flex justify-center">
+        <div className="max-w-3xl w-full flex flex-col gap-10 max-md:gap-7 items-center text-center">
 
           {/* 배지 */}
           <span
