@@ -85,7 +85,9 @@ export default function Header() {
 
           {/* CTA */}
           <a
-            href="#"
+            href="https://logit.ai.kr"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-primary-200 hover:bg-primary-300 text-white font-semibold px-5 py-2.5 lg:px-7 lg:py-3.5 text-sm lg:text-base rounded-full transition-colors duration-200 whitespace-nowrap"
           >
             <span className="hidden sm:inline">지금 무료로 시작하기</span>

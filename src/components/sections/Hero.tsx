@@ -92,7 +92,9 @@ export default function Hero() {
 
           {/* CTA */}
           <a
-            href="#"
+            href="https://logit.ai.kr"
+            target="_blank"
+            rel="noopener noreferrer"
             className="bg-primary-200 hover:bg-primary-300 text-white font-semibold text-xl max-md:text-base px-12 py-5 max-md:px-8 max-md:py-4 rounded-full transition-colors duration-200 whitespace-nowrap w-fit"
             style={revealStyle(mounted, STAGGER_ITEMS[3].delay)}
           >
