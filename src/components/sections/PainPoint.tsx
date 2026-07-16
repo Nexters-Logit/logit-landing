@@ -8,16 +8,16 @@ const QUOTE = "자소서가 어려운 이유, 글솜씨 때문만이 아닙니�
 
 const PAIN_POINTS = [
   {
-    question: "어떤 경험을 써야 하지?",
-    description: "매번 자소서를 열어도 경험란 앞에서 멈추게 돼요.",
+    question: "경험은 있는데 어디에 써야 할지 모르겠어요",
+    description: "프로젝트, 인턴, 대외활동은 했는데 어떤 문항에\n어떤 경험을 넣어야 할지 막막합니다.",
   },
   {
-    question: "내 경험이 너무 평범한 것 같아",
-    description: "공모전도, 인턴십도 없는 평범한 일상이 자소서 소재가 될 수 있을까요?",
+    question: "AI가 써준 글이 내 이야기 같지 않아요",
+    description: "문장은 그럴듯하지만, 면접에서 설명하기 어려운\n답변이 만들어집니다.",
   },
   {
-    question: "매번 처음부터 다시 쓰는 자소서",
-    description: "회사마다 비슷한 질문인데, 왜 항상 백지에서 시작해야 할까요?",
+    question: "공고마다 자소서를 다시 쓰는 게 힘들어요",
+    description: "비슷한 경험을 매번 새로 정리하고, 문항에 맞게\n다시 고쳐야 합니다.",
   },
 ];
 
@@ -174,7 +174,7 @@ export default function PainPoint() {
         {/* 카드 그리드 — sticky */}
         <div
           ref={cards.ref}
-          className="w-full grid grid-cols-3 max-md:grid-cols-1 gap-6 max-md:gap-4 px-20 max-lg:px-12 max-md:px-6"
+          className="w-full grid grid-cols-3 max-md:grid-cols-1 gap-6 max-md:gap-4 px-[181px] max-lg:px-[100px] max-md:px-6 items-start"
           style={{
             position: "sticky",
             top: "calc(50vh - 155px)",
@@ -190,9 +190,17 @@ export default function PainPoint() {
             return (
               <div
                 key={i}
-                className="bg-white rounded-3xl px-8 py-10 max-md:px-6 max-md:py-7 flex flex-col gap-5 border border-grey-70 select-none"
+                className="select-none"
                 style={{
-                  boxShadow: "0 2px 24px rgba(59,111,232,0.07), 0 1px 6px rgba(0,0,0,0.04)",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  alignSelf: "start",
+                  padding: "24px",
+                  gap: "29px",
+                  borderRadius: "20px",
+                  background: "#FFF",
+                  boxShadow: "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
                   transform: cardTransforms[i],
                   opacity: cT > 0 ? Math.pow(1 - cT, 0.7) : undefined,
                   filter: blurPx > 0.5 ? `blur(${blurPx}px)` : undefined,
@@ -201,12 +209,14 @@ export default function PainPoint() {
                   willChange: "transform, opacity, filter",
                 }}
               >
-                <span className="text-primary-100 text-4xl max-md:text-2xl font-bold">0{i + 1}</span>
-                <p className="text-grey-400 text-2xl max-lg:text-xl max-md:text-lg font-bold leading-snug [word-break:keep-all]">
+                <span className="text-primary-100 text-[20px] font-bold">0{i + 1}</span>
+                <p className="text-black text-[16px] font-bold leading-[120%] w-full [word-break:keep-all]">
                   {point.question}
                 </p>
-                <p className="text-grey-200 text-lg max-md:text-sm leading-relaxed [word-break:keep-all]">
-                  {point.description}
+                <p className="text-grey-300 text-[15px] font-medium leading-[120%] w-full">
+                  {point.description.split('\n').map((line, i, arr) => (
+                    <span key={i}>{line}{i < arr.length - 1 && <br />}</span>
+                  ))}
                 </p>
               </div>
             );
