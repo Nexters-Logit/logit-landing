@@ -50,14 +50,14 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-[90vh] flex items-start overflow-hidden">
 
-      <div className="relative z-10 w-full px-20 max-lg:px-12 max-md:px-6 py-32 max-lg:py-24 max-md:py-16 flex justify-center">
+      <div className="relative z-10 w-full px-20 max-lg:px-12 max-md:px-6 pt-[180px] pb-32 max-lg:pt-24 max-lg:pb-24 max-md:pt-16 max-md:pb-16 flex justify-center">
         <div className="max-w-3xl w-full flex flex-col gap-10 max-md:gap-7 items-center text-center">
 
           {/* 배지 */}
           <span
-            className="bg-primary-50 text-primary-200 text-lg max-md:text-sm font-semibold px-5 py-2 rounded-full w-fit"
+            className="flex justify-center items-center gap-[10px] bg-primary-50 text-primary-200 text-[24px] max-lg:text-xl max-md:text-sm font-semibold px-6 py-[10px] rounded-[50px] w-fit"
             style={revealStyle(mounted, STAGGER_ITEMS[0].delay)}
           >
             AI 자소서 초안 서비스
