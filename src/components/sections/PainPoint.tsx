@@ -197,7 +197,6 @@ export default function PainPoint() {
                   alignItems: "flex-start",
                   alignSelf: "start",
                   padding: "24px",
-                  gap: "29px",
                   borderRadius: "20px",
                   background: "#FFF",
                   boxShadow: "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
@@ -209,8 +208,8 @@ export default function PainPoint() {
                   willChange: "transform, opacity, filter",
                 }}
               >
-                <span className="text-primary-100 text-[20px] font-bold">0{i + 1}</span>
-                <p className="text-black text-[16px] font-bold leading-[120%] w-full [word-break:keep-all]">
+                <span className="text-primary-100 text-[20px] font-bold" style={{ marginBottom: "29px" }}>0{i + 1}</span>
+                <p className="text-black text-[16px] font-bold leading-[120%] w-full [word-break:keep-all]" style={{ marginBottom: "20px" }}>
                   {point.question}
                 </p>
                 <p className="text-grey-300 text-[15px] font-medium leading-[120%] w-full">
