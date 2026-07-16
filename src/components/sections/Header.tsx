@@ -52,7 +52,7 @@ export default function Header() {
                 <a
                   key={link.href}
                   href={link.href}
-                  className="text-grey-300 hover:text-grey-400 text-base lg:text-lg font-medium transition-colors duration-200"
+                  className="text-primary-400 hover:text-primary-500 text-[18px] font-medium leading-[120%] transition-colors duration-200"
                 >
                   {link.label}
                 </a>
@@ -61,24 +61,9 @@ export default function Header() {
                 href="https://www.instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-grey-300 hover:text-grey-400 transition-colors duration-200"
-                aria-label="Instagram"
+                className="text-primary-400 hover:text-primary-500 text-[18px] font-medium leading-[120%] transition-colors duration-200"
               >
-                <svg
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="w-5 h-5 lg:w-6 lg:h-6"
-                >
-                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                  <circle cx="12" cy="12" r="4" />
-                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-                </svg>
+                SNS
               </a>
             </nav>
           </div>
@@ -88,7 +73,7 @@ export default function Header() {
             href="https://logit.ai.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-200 hover:bg-primary-300 text-white font-semibold px-5 py-2.5 lg:px-7 lg:py-3.5 text-sm lg:text-base rounded-full transition-colors duration-200 whitespace-nowrap"
+            className="flex h-[44px] px-6 py-[14px] justify-center items-center gap-[14px] rounded-[14px] bg-primary-200 hover:bg-primary-300 text-white font-semibold text-sm lg:text-base transition-colors duration-200 whitespace-nowrap"
           >
             <span className="hidden sm:inline">지금 무료로 시작하기</span>
             <span className="sm:hidden">무료 시작</span>
@@ -101,7 +86,7 @@ export default function Header() {
             <a
               key={link.href}
               href={link.href}
-              className="text-grey-300 hover:text-grey-400 text-sm font-medium transition-colors duration-200"
+              className="text-primary-400 hover:text-primary-500 text-[18px] font-medium leading-[120%] transition-colors duration-200"
             >
               {link.label}
             </a>
@@ -110,23 +95,9 @@ export default function Header() {
             href="https://www.instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-grey-300 hover:text-grey-400 transition-colors duration-200"
-            aria-label="Instagram"
+            className="text-primary-400 hover:text-primary-500 text-[18px] font-medium leading-[120%] transition-colors duration-200"
           >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-              <circle cx="12" cy="12" r="4" />
-              <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-            </svg>
+            SNS
           </a>
         </nav>
 
