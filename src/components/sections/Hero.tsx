@@ -95,10 +95,10 @@ export default function Hero() {
             href="https://logit.ai.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-200 hover:bg-primary-300 text-white font-semibold text-xl max-md:text-base px-12 py-5 max-md:px-8 max-md:py-4 rounded-full transition-colors duration-200 whitespace-nowrap w-fit"
+            className="bg-primary-200 hover:bg-primary-300 text-white font-semibold text-[18px] leading-[140%] px-8 py-5 md:px-[120px] lg:px-[201px] max-md:py-4 rounded-full transition-colors duration-200 whitespace-nowrap w-fit"
             style={revealStyle(mounted, STAGGER_ITEMS[3].delay)}
           >
-            지금 무료로 첫 경험 카드 만들기
+            지금 바로 무료로 시작하기
           </a>
 
           {/* 앱 다운로드 */}
