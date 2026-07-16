@@ -17,27 +17,29 @@ export default function Header() {
       <div className="w-full px-4 md:px-6 lg:px-[30px]">
 
         {/* 1줄: 로고 + (데스크탑 nav) + CTA */}
-        <div className="flex items-center justify-between h-20 lg:h-28">
-          <div className="flex items-center gap-8 lg:gap-12">
+        <div className="flex items-start justify-between h-20 lg:h-28 lg:pt-[15px]">
+          <div className="flex items-center gap-8 lg:gap-10 lg:mt-[8px]">
             <div className="flex items-center gap-3">
               <Image
                 src="/logo_symbol_2d.svg"
                 alt="Logit 심볼"
                 width={40}
                 height={40}
-                className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10"
+                className="w-6 h-6 md:w-8 md:h-8 lg:w-6 lg:h-6"
+                style={{ transform: "translateY(-4px)" }}
               />
               <Image
                 src="/logo_wordmark.svg"
                 alt="Logit"
                 width={104}
                 height={52}
-                className="w-12 md:w-16 lg:w-20"
+                className="w-12 md:w-16"
+                style={{ width: "51.412px", height: "25.63px" }}
               />
             </div>
 
             {/* 데스크탑에서만 보이는 nav */}
-            <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+            <nav className="hidden md:flex items-center gap-5">
               {NAV_LINKS.map((link) => (
                 <a
                   key={link.href}
