@@ -19,8 +19,8 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 bg-white transition-shadow duration-200 ${
-        scrolled ? "shadow-sm" : ""
+      className={`sticky top-0 z-50 transition-all duration-200 ${
+        scrolled ? "bg-primary-50/80 backdrop-blur-sm shadow-sm" : "bg-transparent"
       }`}
     >
       {/* 모바일: 2줄 / 데스크탑: 1줄 */}
