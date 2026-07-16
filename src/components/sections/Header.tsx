@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
 
 const NAV_LINKS = [
   { label: "About Us", href: "#about" },
@@ -9,19 +8,10 @@ const NAV_LINKS = [
 ];
 
 export default function Header() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 10);
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-200 ${
-        scrolled ? "bg-primary-50/80 backdrop-blur-sm shadow-sm" : "bg-transparent"
-      }`}
+      className="sticky top-0 z-50 bg-transparent"
     >
       {/* 모바일: 2줄 / 데스크탑: 1줄 */}
       <div className="w-full px-4 md:px-6 lg:px-[30px]">
