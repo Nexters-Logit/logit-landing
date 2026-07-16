@@ -65,27 +65,29 @@ export default function Hero() {
 
           {/* 헤드카피 */}
           <h1
-            className="text-7xl max-lg:text-6xl max-md:text-4xl font-bold text-grey-400 leading-[1.2] [word-break:keep-all]"
+            className="flex flex-col items-center gap-6 text-[64px] max-lg:text-[52px] max-md:text-4xl font-bold text-grey-400 text-center [word-break:keep-all]"
             style={revealStyle(mounted, STAGGER_ITEMS[1].delay)}
           >
-            <span
-              className="inline text-primary-200"
-              style={{ opacity: wordVisible ? 1 : 0, transition: "opacity 0.3s ease" }}
-            >
-              {EXPERIENCES[index]}
+            <span className="leading-[72%]">
+              <span
+                className="text-primary-200"
+                style={{ opacity: wordVisible ? 1 : 0, transition: "opacity 0.3s ease" }}
+              >
+                {EXPERIENCES[index]}
+              </span>
+              {" "}기록만 하세요.
             </span>
-            {" "}기록만 하세요.<br />
-            자소서 초안은 AI가<br />
-            10초 만에 끝냅니다.
+            <span className="leading-[72%] whitespace-nowrap max-md:whitespace-normal">
+              자소서 초안은 AI가 10초 만에 끝냅니다.
+            </span>
           </h1>
 
           {/* 서브카피 */}
           <p
-            className="text-2xl max-lg:text-xl max-md:text-base text-grey-200 leading-relaxed [word-break:keep-all]"
+            className="text-[24px] max-lg:text-xl max-md:text-base font-normal text-grey-300 leading-[120%] text-center whitespace-nowrap max-md:whitespace-normal"
             style={revealStyle(mounted, STAGGER_ITEMS[2].delay)}
           >
-            당신의 사소한 일상 속 숨겨진 합격 DNA를<br className="max-md:hidden" />
-            {" "}AI가 찾아드릴게요.
+            경험을 등록해두고, 자소서를 한 번에 생성해보세요. 당신의 숨겨진 합격 DNA, AI가 찾아드릴게요.
           </p>
 
           {/* CTA */}
