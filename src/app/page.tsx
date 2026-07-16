@@ -6,8 +6,17 @@ import Features from "@/components/sections/Features";
 export default function Home() {
   return (
     <main>
-      <div className="relative overflow-hidden bg-primary-50">
-        <div className="absolute inset-0 bg-white/40" />
+      <div className="relative overflow-hidden bg-white">
+        <div
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{
+            width: "170vw",
+            height: "170vw",
+            borderRadius: "50%",
+            background: "radial-gradient(50% 50% at 50% 50%, #2571EB 0%, rgba(216, 231, 255, 0.00) 100%)",
+            top: "39.7vh",
+          }}
+        />
         <img
           src="/logit-bg.svg"
           alt=""
