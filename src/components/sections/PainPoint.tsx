@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useScrollReveal } from "@/lib/hooks";
 import Image from "next/image";
 
-const QUOTE = "자소서 문항: 본인의 가장 도전적인 경험을 기술하시오";
+const QUOTE = "자소서가 어려운 이유, 글솜씨 때문만이 아닙니다";
 
 const PAIN_POINTS = [
   {
@@ -49,7 +49,7 @@ function TypewriterQuote({ onDone }: { onDone: () => void }) {
   }, [onDone]);
 
   return (
-    <h2 className="text-5xl max-lg:text-4xl max-md:text-2xl font-bold text-grey-400 leading-[1.3] [word-break:keep-all]">
+    <h2 className="text-[40px] max-md:text-2xl font-bold text-grey-400 leading-[120%] text-center w-full [word-break:keep-all]">
       &ldquo;{displayed}
       {cursor && <span className="inline-block w-[3px] h-[1em] bg-grey-400 ml-1 align-middle animate-pulse" />}
       {!cursor && <>&rdquo;</>}
@@ -152,43 +152,19 @@ export default function PainPoint() {
           className="flex flex-col items-center text-center gap-8 max-md:gap-5 w-full max-w-4xl"
         >
           <p
-            className="text-grey-200 text-xl max-md:text-base font-medium transition-all duration-700"
+            className="text-grey-300 text-[24px] font-normal leading-[120%] text-center w-full transition-all duration-700"
             style={{
               opacity: section.visible ? 1 : 0,
               transform: section.visible ? "translateY(0)" : "translateY(20px)",
             }}
           >
-            많은 취준생들이 이런 생각을 해요
+            자소서 작성, 왜 매번 이렇게 어려울까요?
           </p>
 
           <div className="min-h-[160px] max-md:min-h-[100px] flex items-center justify-center">
             {hasStarted && <TypewriterQuote onDone={handleQuoteDone} />}
           </div>
 
-          <div
-            className="transition-all duration-600"
-            style={{
-              opacity: quoteDone ? 1 : 0,
-              transform: quoteDone ? "translateY(0) scale(1)" : "translateY(20px) scale(0.95)",
-            }}
-          >
-            <p className="text-4xl max-lg:text-3xl max-md:text-xl font-bold text-primary-200 [word-break:keep-all]">
-              잠시만요, 제 인생에<br className="max-md:hidden" />
-              {" "}그렇게 거창한 도전은 없었는데요?
-            </p>
-          </div>
-
-          <p
-            className="text-xl max-md:text-base text-grey-200 leading-relaxed max-w-2xl [word-break:keep-all] transition-all duration-700"
-            style={{
-              opacity: quoteDone ? 1 : 0,
-              transform: quoteDone ? "translateY(0)" : "translateY(12px)",
-              transitionDelay: "200ms",
-            }}
-          >
-            대단한 공모전 수상, 거창한 인턴십만 스펙이 아닙니다.<br className="max-md:hidden" />
-            {" "}당신의 사소한 일상 속 숨겨진 합격 DNA를 AI가 찾아드릴게요.
-          </p>
         </div>
       </div>
 
