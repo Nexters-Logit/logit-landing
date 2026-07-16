@@ -24,7 +24,7 @@ export default function Header() {
       }`}
     >
       {/* 모바일: 2줄 / 데스크탑: 1줄 */}
-      <div className="w-full px-6 md:px-12 lg:px-20">
+      <div className="w-full px-4 md:px-6 lg:px-[30px]">
 
         {/* 1줄: 로고 + (데스크탑 nav) + CTA */}
         <div className="flex items-center justify-between h-20 lg:h-28">
@@ -35,14 +35,14 @@ export default function Header() {
                 alt="Logit 심볼"
                 width={40}
                 height={40}
-                className="w-8 h-8 md:w-10 md:h-10 lg:w-14 lg:h-14"
+                className="w-6 h-6 md:w-8 md:h-8 lg:w-10 lg:h-10"
               />
               <Image
                 src="/logo_wordmark.svg"
                 alt="Logit"
                 width={104}
                 height={52}
-                className="w-16 md:w-20 lg:w-28"
+                className="w-12 md:w-16 lg:w-20"
               />
             </div>
 
