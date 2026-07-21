@@ -1,6 +1,14 @@
-import React from "react";
+"use client";
+import React, { useRef, useEffect } from "react";
 
 interface GradientConfig {
+  style: React.CSSProperties;
+}
+
+interface ExtraImage {
+  src: string;
+  width: number;
+  height: number;
   style: React.CSSProperties;
 }
 
@@ -14,6 +22,8 @@ interface FeatureStepProps {
   imageHeight: number;
   background: string;
   gradients?: GradientConfig[];
+  extraImages?: ExtraImage[];
+  sectionRef?: React.RefObject<HTMLElement | null>;
 }
 
 function FeatureStep({
@@ -26,9 +36,11 @@ function FeatureStep({
   imageHeight,
   background,
   gradients = [],
+  extraImages = [],
+  sectionRef,
 }: FeatureStepProps) {
   return (
-    <section className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background }}>
+    <section ref={sectionRef} className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background }}>
       {gradients.map((g, i) => (
         <div key={i} className="pointer-events-none" style={{ position: "absolute", zIndex: 0, ...g.style }} />
       ))}
@@ -74,11 +86,99 @@ function FeatureStep({
           zIndex: 1,
         }}
       />
+
+      {extraImages.map((img, i) => (
+        <img
+          key={i}
+          src={img.src}
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            width: `${img.width}px`,
+            height: `${img.height}px`,
+            zIndex: 2,
+            ...img.style,
+          }}
+        />
+      ))}
     </section>
   );
 }
 
 export default function Features() {
+  const step1Ref = useRef<HTMLElement>(null);
+  const step2Ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    let isSnapping = false;
+
+    const snapTo = (y: number) => {
+      if (isSnapping) return;
+      isSnapping = true;
+      window.scrollTo({ top: y, behavior: "smooth" });
+      setTimeout(() => { isSnapping = false; }, 900);
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (isSnapping) return;
+      const step1 = step1Ref.current;
+      const step2 = step2Ref.current;
+      if (!step1 || !step2) return;
+
+      const step1Rect = step1.getBoundingClientRect();
+      const step2Rect = step2.getBoundingClientRect();
+
+      // Step 1에서 아래로 스크롤 → Step 2로 스냅
+      // Step 1의 bottom = Step 2의 top (Step 1이 정확히 100vh이므로)
+      if (e.deltaY > 0 && step1Rect.top < -30 && step1Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(window.scrollY + step1Rect.bottom);
+        return;
+      }
+
+      // Step 2에서 위로 스크롤 → Step 1로 스냅
+      // Step 2의 절대 위치에서 100vh를 빼면 Step 1의 절대 위치
+      if (e.deltaY < 0 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
+        e.preventDefault();
+        const step2AbsTop = step2Rect.top + window.scrollY;
+        snapTo(step2AbsTop - window.innerHeight);
+        return;
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (isSnapping) return;
+      const step1 = step1Ref.current;
+      const step2 = step2Ref.current;
+      if (!step1 || !step2) return;
+
+      const step1Rect = step1.getBoundingClientRect();
+      const step2Rect = step2.getBoundingClientRect();
+      const delta = touchStartY - e.touches[0].clientY;
+
+      if (delta > 20 && step1Rect.top < -30 && step1Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(window.scrollY + step1Rect.bottom);
+      } else if (delta < -20 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
+        e.preventDefault();
+        const step2AbsTop = step2Rect.top + window.scrollY;
+        snapTo(step2AbsTop - window.innerHeight);
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
+
   return (
     <>
       <FeatureStep
@@ -90,6 +190,7 @@ export default function Features() {
         imageWidth={570}
         imageHeight={647}
         background="#E4EEFD"
+        sectionRef={step1Ref}
         gradients={[
           {
             style: {
@@ -112,6 +213,15 @@ export default function Features() {
         imageWidth={493}
         imageHeight={637}
         background="#ABC9F8"
+        sectionRef={step2Ref}
+        extraImages={[
+          {
+            src: "/feature-step2-card.svg",
+            width: 404,
+            height: 183,
+            style: { left: "calc(50% + 50px)", top: "586.873px" },
+          },
+        ]}
         gradients={[
           {
             style: {
