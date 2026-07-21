@@ -195,19 +195,22 @@ export default function PainPoint() {
                   transition: cT > 0
                     ? "none"
                     : `opacity 0.7s ease-out ${cardDelay}ms, transform 0.7s ease-out ${cardDelay}ms`,
+                  gap: "29px",
                   transformOrigin: "center center",
                   willChange: "transform, opacity, filter",
                 }}
               >
-                <span className="text-primary-100 text-[20px] font-bold" style={{ marginBottom: "29px" }}>0{i + 1}</span>
-                <p className="text-black text-[16px] font-bold leading-[120%] w-full [word-break:keep-all]" style={{ marginBottom: "20px" }}>
-                  {point.question}
-                </p>
-                <p className="text-grey-300 text-[15px] font-medium leading-[120%] w-full">
-                  {point.description.split('\n').map((line, j, arr) => (
-                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                  ))}
-                </p>
+                <span className="text-primary-100 text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "9px", alignSelf: "stretch" }}>
+                  <p className="text-black text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
+                    {point.question}
+                  </p>
+                  <p className="text-grey-300 text-[24px] font-medium leading-[120%] self-stretch">
+                    {point.description.split('\n').map((line, j, arr) => (
+                      <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                    ))}
+                  </p>
+                </div>
               </div>
             );
           })}
