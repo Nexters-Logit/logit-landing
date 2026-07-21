@@ -1,4 +1,22 @@
-export default function Features() {
+interface FeatureStepProps {
+  emoji: string;
+  emojiColor: string;
+  stepLabel: string;
+  heading: string;
+  imageSrc: string;
+  imageWidth: number;
+  imageHeight: number;
+}
+
+function FeatureStep({
+  emoji,
+  emojiColor,
+  stepLabel,
+  heading,
+  imageSrc,
+  imageWidth,
+  imageHeight,
+}: FeatureStepProps) {
   return (
     <section className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background: "#E4EEFD" }}>
       {/* 배경 radial gradient — 대형 */}
@@ -31,6 +49,7 @@ export default function Features() {
         }}
       />
 
+      {/* 텍스트 */}
       <div
         style={{
           position: "absolute",
@@ -48,26 +67,26 @@ export default function Features() {
         <p
           style={{
             alignSelf: "stretch",
-            color: "#E1E4ED",
+            color: emojiColor,
             textAlign: "center",
             fontSize: "64px",
             fontWeight: 400,
             lineHeight: "120%",
           }}
         >
-          ✏️
+          {emoji}
         </p>
         <p
           style={{
             alignSelf: "stretch",
-            color: "#E1E4ED",
+            color: emojiColor,
             textAlign: "center",
             fontSize: "24px",
             fontWeight: 400,
             lineHeight: "120%",
           }}
         >
-          Step 1. 경험 등록
+          {stepLabel}
         </p>
         <p
           style={{
@@ -78,13 +97,13 @@ export default function Features() {
             lineHeight: "120%",
           }}
         >
-          STAR 기법으로 경험을 등록해두세요
+          {heading}
         </p>
-
       </div>
 
+      {/* 목업 이미지 */}
       <img
-        src="/feature-step1.svg"
+        src={imageSrc}
         alt=""
         aria-hidden="true"
         style={{
@@ -92,11 +111,36 @@ export default function Features() {
           top: "433.873px",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "570px",
-          height: "647px",
+          width: `${imageWidth}px`,
+          height: `${imageHeight}px`,
           zIndex: 1,
         }}
       />
     </section>
+  );
+}
+
+export default function Features() {
+  return (
+    <>
+      <FeatureStep
+        emoji="✏️"
+        emojiColor="#E1E4ED"
+        stepLabel="Step 1. 경험 등록"
+        heading="STAR 기법으로 경험을 등록해두세요"
+        imageSrc="/feature-step1.svg"
+        imageWidth={570}
+        imageHeight={647}
+      />
+      <FeatureStep
+        emoji="⌨️"
+        emojiColor="#EBECF0"
+        stepLabel="Step 2. 채용 공고 입력"
+        heading="채용공고가 올라오면, 공고를 복사해 입력해주세요"
+        imageSrc="/feature-step2.svg"
+        imageWidth={493}
+        imageHeight={637}
+      />
+    </>
   );
 }

@@ -75,7 +75,9 @@ export default function PainPoint() {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (pRef.current > 0.85 && e.deltaY > 0 && !isSnapping) {
+      const el = convergeSpaceRef.current;
+      if (!el) return;
+      if (pRef.current > 0.85 && e.deltaY > 0 && !isSnapping && el.getBoundingClientRect().bottom > 0) {
         e.preventDefault();
         snapToFeatures();
       }
@@ -84,7 +86,9 @@ export default function PainPoint() {
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-      if (pRef.current > 0.85 && !isSnapping) {
+      const el = convergeSpaceRef.current;
+      if (!el) return;
+      if (pRef.current > 0.85 && !isSnapping && el.getBoundingClientRect().bottom > 0) {
         const delta = touchStartY - e.touches[0].clientY;
         if (delta > 20) { e.preventDefault(); snapToFeatures(); }
       }
