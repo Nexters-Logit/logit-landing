@@ -281,24 +281,17 @@ export default function PainPoint() {
               pointerEvents: "none",
             }}>
               <p
-                className="text-white/60 text-sm font-semibold mb-5 tracking-[0.15em] uppercase"
+                className="text-grey-70 text-[24px] font-normal leading-[120%] text-center self-stretch mb-5"
                 style={{ opacity: labelT, transform: `translateY(${(1 - labelT) * 14}px)` }}
               >
-                그래서 로짓이 나왔어요
+                그래서 로짓은, 자소서를 바로 쓰지 않습니다.
               </p>
               <h2
-                className="text-5xl max-lg:text-4xl max-md:text-3xl font-bold text-white leading-[1.2] [word-break:keep-all] mb-6"
+                className="text-[40px] font-bold text-white leading-[120%] text-center whitespace-nowrap mb-6"
                 style={{ opacity: headingT, transform: `translateY(${(1 - headingT) * 20}px)` }}
               >
-                당신의 평범한 일상이<br />합격의 재료가 됩니다
+                자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
               </h2>
-              <p
-                className="text-white/75 text-xl max-md:text-base max-w-xl mx-auto leading-relaxed [word-break:keep-all]"
-                style={{ opacity: subT, transform: `translateY(${(1 - subT) * 14}px)` }}
-              >
-                어떤 경험이든, 어떤 일상이든 괜찮아요.{" "}
-                로짓이 당신만의 합격 스토리를 찾아드릴게요.
-              </p>
             </div>
 
           </div>
