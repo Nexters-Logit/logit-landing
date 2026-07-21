@@ -69,7 +69,7 @@ export default function PainPoint() {
       const el = convergeSpaceRef.current;
       if (!el) return;
       isSnapping = true;
-      const target = window.scrollY + el.getBoundingClientRect().bottom;
+      const target = window.scrollY + el.getBoundingClientRect().bottom - window.innerHeight * 0.1;
       window.scrollTo({ top: target, behavior: "smooth" });
       setTimeout(() => { isSnapping = false; }, 1000);
     };
@@ -171,7 +171,7 @@ export default function PainPoint() {
             className="sticky top-0 h-screen overflow-hidden"
             style={{
               background: expandT > 0
-                ? `rgb(${Math.round(229 + (255 - 229) * textExitT)}, ${Math.round(240 + (255 - 240) * textExitT)}, 255)`
+                ? `rgb(${Math.round(229 + (228 - 229) * textExitT)}, ${Math.round(240 + (238 - 240) * textExitT)}, ${Math.round(255 + (253 - 255) * textExitT)})`
                 : "#E4EEFD"
             }}
           >
