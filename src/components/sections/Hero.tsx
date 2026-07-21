@@ -129,7 +129,7 @@ export default function Hero() {
 
       {/* 앱 다운로드 - 우측 하단 고정 */}
       <div
-        className="absolute bottom-8 right-[30px] z-10 flex items-center gap-4 max-md:hidden"
+        className="absolute bottom-12 right-[30px] z-10 flex items-center gap-4 max-md:hidden"
         style={revealStyle(mounted, STAGGER_ITEMS[4].delay)}
       >
         <a href="https://apps.apple.com/kr/app/logit/id6759486113" target="_blank" rel="noopener noreferrer">
