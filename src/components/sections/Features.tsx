@@ -291,6 +291,18 @@ export default function Features() {
             height: 183,
             style: { left: "calc(50% - 383px)", top: "790px" },
           },
+          {
+            src: "/feature-step3-deco.svg",
+            width: 458,
+            height: 458,
+            style: { left: "1109px", top: "331px", zIndex: 4 },
+          },
+          {
+            src: "/feature-step3-deco2.svg",
+            width: 511,
+            height: 501,
+            style: { left: "1200px", top: "459px" },
+          },
         ]}
         gradients={[
           {
