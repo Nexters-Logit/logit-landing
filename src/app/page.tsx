@@ -5,7 +5,7 @@ import Features from "@/components/sections/Features";
 
 export default function Home() {
   return (
-    <main className="relative bg-white overflow-x-hidden">
+    <main className="relative bg-white">
       <div className="relative overflow-hidden bg-transparent min-h-screen" style={{ zIndex: 1 }}>
         {/* 라디얼 그라디언트 — 첫 화면에만 보임 (overflow-hidden으로 클립) */}
         <div
