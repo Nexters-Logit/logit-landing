@@ -7,6 +7,21 @@ export default function Home() {
   return (
     <main>
       <div className="relative overflow-hidden bg-white">
+        <img
+          src="/logit-bg.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            left: "-50px",
+            top: "-222px",
+            width: "1970px",
+            height: "943px",
+            maxWidth: "none",
+            pointerEvents: "none",
+            zIndex: 0,
+          }}
+        />
         <div
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
           style={{
@@ -16,12 +31,6 @@ export default function Home() {
             background: "radial-gradient(50% 50% at 50% 50%, #2571EB 0%, rgba(216, 231, 255, 0.00) 100%)",
             top: "39.7vh",
           }}
-        />
-        <img
-          src="/logit-bg.svg"
-          alt=""
-          aria-hidden="true"
-          className="absolute top-0 left-0 w-full pointer-events-none select-none"
         />
         <Header />
         <Hero />
