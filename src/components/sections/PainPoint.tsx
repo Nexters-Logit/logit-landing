@@ -165,7 +165,11 @@ export default function PainPoint() {
         >
           <div
             className="sticky top-0 h-screen overflow-hidden"
-            style={{ background: expandT > 0 ? "#E5F0FF" : "#E4EEFD" }}
+            style={{
+              background: expandT > 0
+                ? `rgb(${Math.round(229 + (255 - 229) * textExitT)}, ${Math.round(240 + (255 - 240) * textExitT)}, 255)`
+                : "#E4EEFD"
+            }}
           >
 
             {/* 텍스트 인트로 */}
@@ -281,7 +285,7 @@ export default function PainPoint() {
               left: "50%", top: "50%",
               transform: "translate(-50%, -50%)",
               zIndex: 2,
-              opacity: expandT > 0 ? 1 : 0,
+              opacity: expandT > 0 ? (1 - textExitT) : 0,
             }} />
 
             {/* 로고 링 */}
