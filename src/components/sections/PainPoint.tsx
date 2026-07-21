@@ -35,6 +35,7 @@ export default function PainPoint() {
 
   const convergeSpaceRef = useRef<HTMLDivElement>(null);
   const [p, setP] = useState(0);
+  const pRef = useRef(0);
   const [vw, setVw] = useState(1200);
 
   useEffect(() => {
@@ -50,11 +51,53 @@ export default function PainPoint() {
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const total = el.offsetHeight - window.innerHeight;
-      setP(Math.max(0, Math.min(1, -rect.top / total)));
+      const next = Math.max(0, Math.min(1, -rect.top / total));
+      setP(next);
+      pRef.current = next;
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // 솔루션 텍스트 → Features 스크롤 스냅
+  useEffect(() => {
+    let isSnapping = false;
+
+    const snapToFeatures = () => {
+      if (isSnapping) return;
+      const el = convergeSpaceRef.current;
+      if (!el) return;
+      isSnapping = true;
+      const target = window.scrollY + el.getBoundingClientRect().bottom;
+      window.scrollTo({ top: target, behavior: "smooth" });
+      setTimeout(() => { isSnapping = false; }, 1000);
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (pRef.current > 0.85 && e.deltaY > 0 && !isSnapping) {
+        e.preventDefault();
+        snapToFeatures();
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (pRef.current > 0.85 && !isSnapping) {
+        const delta = touchStartY - e.touches[0].clientY;
+        if (delta > 20) { e.preventDefault(); snapToFeatures(); }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
   }, []);
 
   // 텍스트 인트로 — 스크롤 시작하면 바로 fade-out
