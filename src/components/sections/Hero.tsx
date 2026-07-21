@@ -38,6 +38,49 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, []);
 
+  // Hero → PainPoint 스크롤 스냅
+  useEffect(() => {
+    let isSnapping = false;
+
+    const snapToPainPoint = () => {
+      if (isSnapping) return;
+      isSnapping = true;
+      window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+      setTimeout(() => { isSnapping = false; }, 1000);
+    };
+
+    const handleWheel = (e: WheelEvent) => {
+      if (window.scrollY < 50 && e.deltaY > 0 && !isSnapping) {
+        e.preventDefault();
+        snapToPainPoint();
+      }
+    };
+
+    let touchStartY = 0;
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    const handleTouchMove = (e: TouchEvent) => {
+      if (window.scrollY < 50 && !isSnapping) {
+        const delta = touchStartY - e.touches[0].clientY;
+        if (delta > 20) {
+          e.preventDefault();
+          snapToPainPoint();
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchmove", handleTouchMove);
+    };
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setWordVisible(false);
