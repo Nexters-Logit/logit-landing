@@ -50,9 +50,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
+    <section className="relative w-full min-h-[90vh] flex items-start overflow-hidden">
 
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 xl:py-32 flex justify-center">
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 xl:pt-[294px] xl:pb-32 flex justify-center">
         <div
           className="max-w-2xl md:max-w-3xl xl:max-w-4xl w-full flex flex-col items-center text-center"
           style={{ gap: "clamp(20px, 2.08vw, 40px)" }}
@@ -60,7 +60,7 @@ export default function Hero() {
 
           {/* 배지 */}
           <span
-            className="flex justify-center items-center gap-[10px] bg-primary-50 text-primary-200 font-semibold rounded-[50px] w-fit"
+            className="flex justify-center items-center gap-[10px] bg-primary-50 text-primary-200 font-bold leading-[120%] rounded-[50px] w-fit"
             style={{
               ...revealStyle(mounted, STAGGER_ITEMS[0].delay),
               fontSize: "clamp(13px, 1.25vw, 24px)",
@@ -76,10 +76,11 @@ export default function Hero() {
             style={{
               ...revealStyle(mounted, STAGGER_ITEMS[1].delay),
               fontSize: "clamp(28px, 3.33vw, 64px)",
-              gap: "clamp(12px, 1.25vw, 24px)",
+              gap: "14.56px",
+              marginTop: "calc(22px - clamp(20px, 2.08vw, 40px))",
             }}
           >
-            <span className="leading-[72%]">
+            <span className="leading-[120%]">
               <span
                 className="text-primary-200"
                 style={{ opacity: wordVisible ? 1 : 0, transition: "opacity 0.3s ease" }}
@@ -110,11 +111,14 @@ export default function Hero() {
             href="https://logit.ai.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-100 hover:bg-primary-200 text-white font-semibold leading-[140%] rounded-[14px] transition-colors duration-200 whitespace-nowrap w-fit"
+            className="flex items-center justify-center bg-primary-100 hover:bg-primary-200 text-white font-semibold leading-[140%] rounded-[14px] transition-colors duration-200 whitespace-nowrap"
             style={{
               ...revealStyle(mounted, STAGGER_ITEMS[3].delay),
               fontSize: "clamp(14px, 0.94vw, 18px)",
-              padding: "clamp(12px, 1.04vw, 20px) clamp(32px, 10.47vw, 201px)",
+              width: "586px",
+              height: "66px",
+              padding: "14px 24px",
+              marginTop: "calc(52px - clamp(20px, 2.08vw, 40px))",
             }}
           >
             지금 바로 무료로 시작하기
