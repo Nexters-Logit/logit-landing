@@ -271,6 +271,37 @@ export default function PainPoint() {
               <Image src="/logo_symbol_2d.svg" alt="로짓" width={52} height={52} />
             </div>
 
+            {/* 솔루션 배경 gradient */}
+            <div style={{
+              position: "absolute",
+              left: "-695px",
+              top: "-864px",
+              width: "2801px",
+              height: "2801px",
+              borderRadius: "2801px",
+              background: "radial-gradient(55.95% 55.95% at 41.75% 40.6%, #40A5FF 0%, #2571EB 100%)",
+              opacity: (1 - textExitT) * labelT,
+              zIndex: 4,
+              pointerEvents: "none",
+            }} />
+
+            {/* 솔루션 배경 SVG */}
+            <img
+              src="/solution-bg.svg"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                opacity: (1 - textExitT) * labelT,
+                zIndex: 4,
+                pointerEvents: "none",
+              }}
+            />
+
             {/* 솔루션 텍스트 */}
             <div style={{
               position: "absolute", left: 0, right: 0, top: "50%",
