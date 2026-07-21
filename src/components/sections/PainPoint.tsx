@@ -112,7 +112,7 @@ export default function PainPoint() {
     <section className="w-full bg-[#E4EEFD]">
 
       {/* ── 텍스트 인트로 ── */}
-      <div className="pt-[207px] pb-20 max-lg:pt-24 max-lg:pb-14 max-md:pt-16 max-md:pb-10 w-full px-20 max-lg:px-12 max-md:px-6 flex flex-col items-center gap-20 max-lg:gap-14 max-md:gap-10">
+      <div className="pt-[207px] pb-[95px] max-lg:pt-24 max-lg:pb-14 max-md:pt-16 max-md:pb-10 w-full px-20 max-lg:px-12 max-md:px-6 flex flex-col items-center gap-20 max-lg:gap-14 max-md:gap-10">
         <div
           ref={section.ref}
           className="flex flex-col items-center text-center gap-8 max-md:gap-5 w-full max-w-4xl"
@@ -161,7 +161,7 @@ export default function PainPoint() {
         {/* 카드 그리드 — sticky */}
         <div
           ref={cards.ref}
-          className="w-full grid grid-cols-3 max-md:grid-cols-1 gap-6 max-md:gap-4 px-[181px] max-lg:px-[100px] max-md:px-6 items-start"
+          className="w-full grid grid-cols-3 max-md:grid-cols-1 gap-[28px] max-md:gap-4 px-[181px] max-lg:px-[100px] max-md:px-6 items-start"
           style={{
             position: "sticky",
             top: "calc(50vh - 155px)",
