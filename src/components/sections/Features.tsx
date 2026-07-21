@@ -17,6 +17,7 @@ interface FeatureStepProps {
   emojiColor: string;
   stepLabel: string;
   heading: string;
+  textWidth?: string;
   imageSrc?: string;
   imageWidth?: number;
   imageHeight?: number;
@@ -31,6 +32,7 @@ function FeatureStep({
   emojiColor,
   stepLabel,
   heading,
+  textWidth = "866px",
   imageSrc,
   imageWidth = 0,
   imageHeight = 0,
@@ -52,7 +54,7 @@ function FeatureStep({
           top: "217px",
           left: "50%",
           transform: "translateX(-50%)",
-          width: "866px",
+          width: textWidth,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -66,7 +68,7 @@ function FeatureStep({
         <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "24px", fontWeight: 400, lineHeight: "120%" }}>
           {stepLabel}
         </p>
-        <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "40px", fontWeight: 700, lineHeight: "120%" }}>
+        <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "40px", fontWeight: 700, lineHeight: "120%", whiteSpace: "nowrap" }}>
           {heading}
         </p>
       </div>
@@ -276,8 +278,20 @@ export default function Features() {
         emojiColor="#E1E4ED"
         stepLabel="Step 3. 자소서 초안 완성!"
         heading="AI가 매칭해주는 점수로 빠르게 경험을 매칭하고 자소서를 완성해보세요"
+        textWidth="1100px"
+        imageSrc="/feature-step3.svg"
+        imageWidth={570}
+        imageHeight={647}
         background="rgba(171, 201, 248, 1)"
         sectionRef={step3Ref}
+        extraImages={[
+          {
+            src: "/feature-step3-card.svg",
+            width: 447,
+            height: 183,
+            style: { left: "calc(50% - 383px)", top: "790px" },
+          },
+        ]}
         gradients={[
           {
             style: {
