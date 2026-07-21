@@ -50,23 +50,34 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-start overflow-hidden">
+    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
 
-      <div className="relative z-10 w-full px-20 max-lg:px-12 max-md:px-6 pt-[180px] pb-32 max-lg:pt-24 max-lg:pb-24 max-md:pt-16 max-md:pb-16 flex justify-center">
-        <div className="max-w-3xl w-full flex flex-col gap-10 max-md:gap-7 items-center text-center">
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 xl:py-32 flex justify-center">
+        <div
+          className="max-w-2xl md:max-w-3xl xl:max-w-4xl w-full flex flex-col items-center text-center"
+          style={{ gap: "clamp(20px, 2.08vw, 40px)" }}
+        >
 
           {/* 배지 */}
           <span
-            className="flex justify-center items-center gap-[10px] bg-primary-50 text-primary-200 text-[24px] max-lg:text-xl max-md:text-sm font-semibold px-6 py-[10px] rounded-[50px] w-fit"
-            style={revealStyle(mounted, STAGGER_ITEMS[0].delay)}
+            className="flex justify-center items-center gap-[10px] bg-primary-50 text-primary-200 font-semibold rounded-[50px] w-fit"
+            style={{
+              ...revealStyle(mounted, STAGGER_ITEMS[0].delay),
+              fontSize: "clamp(13px, 1.25vw, 24px)",
+              padding: "clamp(6px, 0.52vw, 10px) clamp(16px, 1.25vw, 24px)",
+            }}
           >
             AI 자소서 초안 서비스
           </span>
 
           {/* 헤드카피 */}
           <h1
-            className="flex flex-col items-center gap-6 text-[64px] max-lg:text-[52px] max-md:text-4xl font-bold text-grey-400 text-center [word-break:keep-all]"
-            style={revealStyle(mounted, STAGGER_ITEMS[1].delay)}
+            className="flex flex-col items-center font-bold text-grey-400 text-center [word-break:keep-all]"
+            style={{
+              ...revealStyle(mounted, STAGGER_ITEMS[1].delay),
+              fontSize: "clamp(28px, 3.33vw, 64px)",
+              gap: "clamp(12px, 1.25vw, 24px)",
+            }}
           >
             <span className="leading-[72%]">
               <span
@@ -75,17 +86,21 @@ export default function Hero() {
               >
                 {EXPERIENCES[index]}
               </span>
-              {" "}기록만 하세요.
+              만 하세요.
             </span>
-            <span className="leading-[72%] whitespace-nowrap max-md:whitespace-normal">
+            <span className="leading-[72%] whitespace-nowrap">
               자소서 초안은 AI가 10초 만에 끝냅니다.
             </span>
           </h1>
 
           {/* 서브카피 */}
           <p
-            className="text-[24px] max-lg:text-xl max-md:text-base font-normal text-grey-300 leading-[120%] text-center whitespace-nowrap max-md:whitespace-normal"
-            style={revealStyle(mounted, STAGGER_ITEMS[2].delay)}
+            className="font-normal text-grey-300 leading-[120%] text-center whitespace-nowrap"
+            style={{
+              ...revealStyle(mounted, STAGGER_ITEMS[2].delay),
+              fontSize: "clamp(15px, 1.25vw, 24px)",
+              marginTop: "calc(20px - clamp(20px, 2.08vw, 40px))",
+            }}
           >
             경험을 등록해두고, 자소서를 한 번에 생성해보세요. 당신의 숨겨진 합격 DNA, AI가 찾아드릴게요.
           </p>
@@ -95,12 +110,15 @@ export default function Hero() {
             href="https://logit.ai.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary-200 hover:bg-primary-300 text-white font-semibold text-[18px] leading-[140%] px-8 py-5 md:px-[120px] lg:px-[201px] max-md:py-4 rounded-full transition-colors duration-200 whitespace-nowrap w-fit"
-            style={revealStyle(mounted, STAGGER_ITEMS[3].delay)}
+            className="bg-primary-100 hover:bg-primary-200 text-white font-semibold leading-[140%] rounded-[14px] transition-colors duration-200 whitespace-nowrap w-fit"
+            style={{
+              ...revealStyle(mounted, STAGGER_ITEMS[3].delay),
+              fontSize: "clamp(14px, 0.94vw, 18px)",
+              padding: "clamp(12px, 1.04vw, 20px) clamp(32px, 10.47vw, 201px)",
+            }}
           >
             지금 바로 무료로 시작하기
           </a>
-
 
         </div>
       </div>
