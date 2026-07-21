@@ -17,9 +17,9 @@ interface FeatureStepProps {
   emojiColor: string;
   stepLabel: string;
   heading: string;
-  imageSrc: string;
-  imageWidth: number;
-  imageHeight: number;
+  imageSrc?: string;
+  imageWidth?: number;
+  imageHeight?: number;
   background: string;
   gradients?: GradientConfig[];
   extraImages?: ExtraImage[];
@@ -32,8 +32,8 @@ function FeatureStep({
   stepLabel,
   heading,
   imageSrc,
-  imageWidth,
-  imageHeight,
+  imageWidth = 0,
+  imageHeight = 0,
   background,
   gradients = [],
   extraImages = [],
@@ -72,20 +72,22 @@ function FeatureStep({
       </div>
 
       {/* 목업 이미지 */}
-      <img
-        src={imageSrc}
-        alt=""
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          top: "433.873px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: `${imageWidth}px`,
-          height: `${imageHeight}px`,
-          zIndex: 1,
-        }}
-      />
+      {imageSrc && (
+        <img
+          src={imageSrc}
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "433.873px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            width: `${imageWidth}px`,
+            height: `${imageHeight}px`,
+            zIndex: 1,
+          }}
+        />
+      )}
 
       {extraImages.map((img, i) => (
         <img
@@ -109,6 +111,7 @@ function FeatureStep({
 export default function Features() {
   const step1Ref = useRef<HTMLElement>(null);
   const step2Ref = useRef<HTMLElement>(null);
+  const step3Ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
     let isSnapping = false;
@@ -124,25 +127,31 @@ export default function Features() {
       if (isSnapping) return;
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
-      if (!step1 || !step2) return;
+      const step3 = step3Ref.current;
+      if (!step1 || !step2 || !step3) return;
 
       const step1Rect = step1.getBoundingClientRect();
       const step2Rect = step2.getBoundingClientRect();
+      const step3Rect = step3.getBoundingClientRect();
 
-      // Step 1에서 아래로 스크롤 → Step 2로 스냅
-      // Step 1의 bottom = Step 2의 top (Step 1이 정확히 100vh이므로)
       if (e.deltaY > 0 && step1Rect.top < -30 && step1Rect.bottom > 0) {
         e.preventDefault();
         snapTo(window.scrollY + step1Rect.bottom);
         return;
       }
-
-      // Step 2에서 위로 스크롤 → Step 1로 스냅
-      // Step 2의 절대 위치에서 100vh를 빼면 Step 1의 절대 위치
+      if (e.deltaY > 0 && step2Rect.top < -30 && step2Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(window.scrollY + step2Rect.bottom);
+        return;
+      }
       if (e.deltaY < 0 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
         e.preventDefault();
-        const step2AbsTop = step2Rect.top + window.scrollY;
-        snapTo(step2AbsTop - window.innerHeight);
+        snapTo(step2Rect.top + window.scrollY - window.innerHeight);
+        return;
+      }
+      if (e.deltaY < 0 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(step3Rect.top + window.scrollY - window.innerHeight);
         return;
       }
     };
@@ -153,19 +162,26 @@ export default function Features() {
       if (isSnapping) return;
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
-      if (!step1 || !step2) return;
+      const step3 = step3Ref.current;
+      if (!step1 || !step2 || !step3) return;
 
       const step1Rect = step1.getBoundingClientRect();
       const step2Rect = step2.getBoundingClientRect();
+      const step3Rect = step3.getBoundingClientRect();
       const delta = touchStartY - e.touches[0].clientY;
 
       if (delta > 20 && step1Rect.top < -30 && step1Rect.bottom > 0) {
         e.preventDefault();
         snapTo(window.scrollY + step1Rect.bottom);
+      } else if (delta > 20 && step2Rect.top < -30 && step2Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(window.scrollY + step2Rect.bottom);
       } else if (delta < -20 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
         e.preventDefault();
-        const step2AbsTop = step2Rect.top + window.scrollY;
-        snapTo(step2AbsTop - window.innerHeight);
+        snapTo(step2Rect.top + window.scrollY - window.innerHeight);
+      } else if (delta < -20 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
+        e.preventDefault();
+        snapTo(step3Rect.top + window.scrollY - window.innerHeight);
       }
     };
 
@@ -251,6 +267,26 @@ export default function Features() {
               height: "1287px",
               borderRadius: "1287px",
               background: "radial-gradient(50% 50% at 50% 50%, rgba(37, 113, 235, 0.24) 0%, rgba(216, 231, 255, 0.00) 100%)",
+            },
+          },
+        ]}
+      />
+      <FeatureStep
+        emoji="🎉"
+        emojiColor="#E1E4ED"
+        stepLabel="Step 3. 자소서 초안 완성!"
+        heading="AI가 매칭해주는 점수로 빠르게 경험을 매칭하고 자소서를 완성해보세요"
+        background="rgba(171, 201, 248, 1)"
+        sectionRef={step3Ref}
+        gradients={[
+          {
+            style: {
+              top: "154px",
+              left: "278px",
+              width: "1365px",
+              height: "569px",
+              borderRadius: "1365px",
+              background: "radial-gradient(50% 50% at 50% 50%, rgba(37, 113, 235, 0.40) 0%, rgba(216, 231, 255, 0.00) 100%)",
             },
           },
         ]}
