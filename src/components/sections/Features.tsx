@@ -315,6 +315,17 @@ export default function Features() {
               background: "radial-gradient(50% 50% at 50% 50%, rgba(37, 113, 235, 0.40) 0%, rgba(216, 231, 255, 0.00) 100%)",
             },
           },
+          {
+            style: {
+              bottom: "0",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: "1920px",
+              height: "387px",
+              borderRadius: "320px 320px 0 0",
+              background: "#181B24",
+            },
+          },
         ]}
       />
     </>
