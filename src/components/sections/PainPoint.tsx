@@ -112,13 +112,26 @@ export default function PainPoint() {
     <section className="w-full bg-[#E4EEFD]">
 
       {/* ── 텍스트 인트로 ── */}
-      <div className="pt-36 pb-20 max-lg:pt-24 max-lg:pb-14 max-md:pt-16 max-md:pb-10 w-full px-20 max-lg:px-12 max-md:px-6 flex flex-col items-center gap-20 max-lg:gap-14 max-md:gap-10">
+      <div className="pt-[207px] pb-20 max-lg:pt-24 max-lg:pb-14 max-md:pt-16 max-md:pb-10 w-full px-20 max-lg:px-12 max-md:px-6 flex flex-col items-center gap-20 max-lg:gap-14 max-md:gap-10">
         <div
           ref={section.ref}
           className="flex flex-col items-center text-center gap-8 max-md:gap-5 w-full max-w-4xl"
         >
+          <img
+            src="/object.svg"
+            alt=""
+            aria-hidden="true"
+            style={{
+              width: "208px",
+              height: "180px",
+              opacity: section.visible ? 1 : 0,
+              transform: section.visible ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.7s ease 0ms, transform 0.7s ease 0ms",
+            }}
+          />
+
           <p
-            className="text-grey-300 text-[24px] font-normal leading-[120%] text-center w-full"
+            className="text-grey-300 text-[24px] font-normal leading-[120%] text-center w-full self-stretch"
             style={{
               opacity: section.visible ? 1 : 0,
               transform: section.visible ? "translateY(0)" : "translateY(20px)",
@@ -129,14 +142,15 @@ export default function PainPoint() {
           </p>
 
           <h2
-            className="text-[40px] max-md:text-2xl font-bold text-grey-400 leading-[120%] text-center w-full [word-break:keep-all]"
+            className="text-[40px] max-md:text-2xl font-bold text-grey-400 leading-[120%] text-center w-full self-stretch [word-break:keep-all]"
             style={{
+              marginTop: "-24px",
               opacity: section.visible ? 1 : 0,
               transform: section.visible ? "translateY(0)" : "translateY(20px)",
               transition: "opacity 0.7s ease 150ms, transform 0.7s ease 150ms",
             }}
           >
-            &ldquo;{QUOTE}&rdquo;
+            {QUOTE}
           </h2>
         </div>
       </div>
