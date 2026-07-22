@@ -39,6 +39,20 @@ export default function Home() {
       </div>
       <PainPoint />
       <Features />
+      <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#181B24", overflow: "visible", zIndex: 1 }}>
+        <img
+          src="/next-section-mockup.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "-125px",
+            left: "231px",
+            width: "467px",
+            height: "451px",
+          }}
+        />
+      </div>
     </main>
   );
 }

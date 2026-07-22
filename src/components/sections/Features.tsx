@@ -25,6 +25,7 @@ interface FeatureStepProps {
   gradients?: GradientConfig[];
   extraImages?: ExtraImage[];
   sectionRef?: React.RefObject<HTMLElement | null>;
+  innerContentRef?: React.RefObject<HTMLDivElement | null>;
 }
 
 function FeatureStep({
@@ -40,6 +41,7 @@ function FeatureStep({
   gradients = [],
   extraImages = [],
   sectionRef,
+  innerContentRef,
 }: FeatureStepProps) {
   return (
     <section ref={sectionRef} className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background }}>
@@ -47,65 +49,68 @@ function FeatureStep({
         <div key={i} className="pointer-events-none" style={{ position: "absolute", zIndex: 0, ...g.style }} />
       ))}
 
-      {/* 텍스트 */}
-      <div
-        style={{
-          position: "absolute",
-          top: "217px",
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: textWidth,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "8px",
-          zIndex: 1,
-        }}
-      >
-        <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "64px", fontWeight: 400, lineHeight: "120%" }}>
-          {emoji}
-        </p>
-        <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "24px", fontWeight: 400, lineHeight: "120%" }}>
-          {stepLabel}
-        </p>
-        <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "40px", fontWeight: 700, lineHeight: "120%", whiteSpace: "nowrap" }}>
-          {heading}
-        </p>
-      </div>
-
-      {/* 목업 이미지 */}
-      {imageSrc && (
-        <img
-          src={imageSrc}
-          alt=""
-          aria-hidden="true"
+      {/* 애니메이션 대상 콘텐츠 래퍼 */}
+      <div ref={innerContentRef} style={{ position: "absolute", inset: 0, willChange: "transform, opacity" }}>
+        {/* 텍스트 */}
+        <div
           style={{
             position: "absolute",
-            top: "433.873px",
+            top: "217px",
             left: "50%",
             transform: "translateX(-50%)",
-            width: `${imageWidth}px`,
-            height: `${imageHeight}px`,
+            width: textWidth,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "8px",
             zIndex: 1,
           }}
-        />
-      )}
+        >
+          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "64px", fontWeight: 400, lineHeight: "120%" }}>
+            {emoji}
+          </p>
+          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "24px", fontWeight: 400, lineHeight: "120%" }}>
+            {stepLabel}
+          </p>
+          <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "40px", fontWeight: 700, lineHeight: "120%", whiteSpace: "nowrap" }}>
+            {heading}
+          </p>
+        </div>
 
-      {extraImages.map((img, i) => (
-        <img
-          key={i}
-          src={img.src}
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            width: `${img.width}px`,
-            height: `${img.height}px`,
-            zIndex: 2,
-            ...img.style,
-          }}
-        />
-      ))}
+        {/* 목업 이미지 */}
+        {imageSrc && (
+          <img
+            src={imageSrc}
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              top: "433.873px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: `${imageWidth}px`,
+              height: `${imageHeight}px`,
+              zIndex: 1,
+            }}
+          />
+        )}
+
+        {extraImages.map((img, i) => (
+          <img
+            key={i}
+            src={img.src}
+            alt=""
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              width: `${img.width}px`,
+              height: `${img.height}px`,
+              zIndex: 2,
+              ...img.style,
+            }}
+          />
+        ))}
+      </div>
     </section>
   );
 }
@@ -114,19 +119,25 @@ export default function Features() {
   const step1Ref = useRef<HTMLElement>(null);
   const step2Ref = useRef<HTMLElement>(null);
   const step3Ref = useRef<HTMLElement>(null);
+  const step3ContentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let isSnapping = false;
+    let curtainUpActive = false;
 
-    const snapTo = (y: number) => {
+    const snapTo = (y: number, blockScroll = false) => {
       if (isSnapping) return;
       isSnapping = true;
+      curtainUpActive = blockScroll;
       window.scrollTo({ top: y, behavior: "smooth" });
-      setTimeout(() => { isSnapping = false; }, 900);
+      setTimeout(() => { isSnapping = false; curtainUpActive = false; }, 900);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (isSnapping) return;
+      if (isSnapping) {
+        if (curtainUpActive) e.preventDefault();
+        return;
+      }
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
       const step3 = step3Ref.current;
@@ -151,6 +162,14 @@ export default function Features() {
         snapTo(step2Rect.top + window.scrollY - window.innerHeight);
         return;
       }
+      // 커튼 존 or 다크 섹션 top → step3 top으로 복귀 (스크롤 차단)
+      if (e.deltaY < 0 && step3Rect.top < -30 && step3Rect.bottom >= 0) {
+        hasCurtainSnapped = false;
+        e.preventDefault();
+        snapTo(step3Rect.top + window.scrollY, true);
+        return;
+      }
+      // step3 top에 있을 때 → step2로 복귀
       if (e.deltaY < 0 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
         e.preventDefault();
         snapTo(step3Rect.top + window.scrollY - window.innerHeight);
@@ -161,7 +180,10 @@ export default function Features() {
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-      if (isSnapping) return;
+      if (isSnapping) {
+        if (curtainUpActive) e.preventDefault();
+        return;
+      }
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
       const step3 = step3Ref.current;
@@ -181,19 +203,57 @@ export default function Features() {
       } else if (delta < -20 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
         e.preventDefault();
         snapTo(step2Rect.top + window.scrollY - window.innerHeight);
+      } else if (delta < -20 && step3Rect.top < -30 && step3Rect.bottom >= 0) {
+        hasCurtainSnapped = false;
+        e.preventDefault();
+        snapTo(step3Rect.top + window.scrollY, true);
       } else if (delta < -20 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
         e.preventDefault();
         snapTo(step3Rect.top + window.scrollY - window.innerHeight);
       }
     };
 
+    // Step 3 커튼 애니메이션: 콘텐츠가 위로 올라가며 사라지고 다크 섹션으로 스냅
+    let hasCurtainSnapped = false;
+
+    const handleScroll = () => {
+      const step3 = step3Ref.current;
+      const content = step3ContentRef.current;
+      if (!step3 || !content) return;
+
+      const rect = step3.getBoundingClientRect();
+      if (rect.top < 0 && rect.bottom > 0) {
+        const progress = Math.min(-rect.top / window.innerHeight, 1);
+        const translateY = -progress * window.innerHeight * 0.5;
+        const opacity = Math.max(0, 1 - progress * 2.5);
+        content.style.transform = `translateY(${translateY}px)`;
+        content.style.opacity = String(opacity);
+
+        // 콘텐츠가 완전히 사라지면 다크 섹션으로 스냅
+        if (progress >= 0.4 && !hasCurtainSnapped && !isSnapping) {
+          hasCurtainSnapped = true;
+          const darkSection = step3.nextElementSibling as HTMLElement | null;
+          const snapY = darkSection
+            ? Math.round(window.scrollY + darkSection.getBoundingClientRect().top)
+            : Math.round(window.scrollY + rect.bottom);
+          snapTo(snapY);
+        }
+      } else if (rect.top >= 0) {
+        content.style.transform = "translateY(0)";
+        content.style.opacity = "1";
+        hasCurtainSnapped = false;
+      }
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("touchstart", handleTouchStart, { passive: true });
     window.addEventListener("touchmove", handleTouchMove, { passive: false });
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -284,6 +344,7 @@ export default function Features() {
         imageHeight={647}
         background="rgba(171, 201, 248, 1)"
         sectionRef={step3Ref}
+        innerContentRef={step3ContentRef}
         extraImages={[
           {
             src: "/feature-step3-card.svg",
