@@ -11,11 +11,11 @@ export default function Home() {
         <div
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
           style={{
-            width: "3273px",
-            height: "3273px",
-            borderRadius: "3273px",
+            width: "clamp(700px, 170vw, 3273px)",
+            height: "clamp(700px, 170vw, 3273px)",
+            borderRadius: "50%",
             background: "radial-gradient(50% 50% at 50% 50%, #2571EB 0%, rgba(216, 231, 255, 0.00) 100%)",
-            top: "429px",
+            top: "clamp(150px, 39.7vh, 429px)",
             zIndex: 0,
           }}
         />
@@ -25,10 +25,10 @@ export default function Home() {
           aria-hidden="true"
           style={{
             position: "absolute",
-            left: "-50px",
-            top: "-222px",
-            width: "1970px",
-            height: "943px",
+            left: "max(-50px, -2.6vw)",
+            top: "max(-222px, -11.6vw)",
+            width: "clamp(375px, 103vw, 1970px)",
+            height: "auto",
             maxWidth: "none",
             pointerEvents: "none",
             zIndex: 0,
@@ -40,7 +40,7 @@ export default function Home() {
       <PainPoint />
       <Features />
       {/* 높이 0 앵커: 다크 섹션 overflow:hidden에 클립되지 않고 경계를 걸치는 요소를 배치 */}
-      <div style={{ position: "relative", height: 0, zIndex: 2 }}>
+      <div className="hidden md:block" style={{ position: "relative", height: 0, zIndex: 2 }}>
         <img
           src="/next-section-mockup.svg"
           alt=""

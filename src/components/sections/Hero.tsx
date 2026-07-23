@@ -132,14 +132,14 @@ export default function Hero() {
               </span>
               만 하세요.
             </span>
-            <span className="leading-[72%] whitespace-nowrap">
+            <span className="leading-[120%] md:leading-[72%] [word-break:keep-all]">
               자소서 초안은 AI가 10초 만에 끝냅니다.
             </span>
           </h1>
 
           {/* 서브카피 */}
           <p
-            className="font-normal text-grey-300 leading-[120%] text-center whitespace-nowrap"
+            className="font-normal text-grey-300 leading-[120%] text-center [word-break:keep-all]"
             style={{
               ...revealStyle(mounted, STAGGER_ITEMS[2].delay),
               fontSize: "clamp(15px, 1.25vw, 24px)",
@@ -154,12 +154,12 @@ export default function Hero() {
             href="https://logit.ai.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center bg-primary-100 hover:bg-primary-200 text-white font-semibold leading-[140%] rounded-[14px] transition-colors duration-200 whitespace-nowrap"
+            className="flex items-center justify-center bg-primary-100 hover:bg-primary-200 text-white font-semibold leading-[140%] rounded-[14px] transition-colors duration-200 whitespace-nowrap w-full"
             style={{
               ...revealStyle(mounted, STAGGER_ITEMS[3].delay),
               fontSize: "clamp(14px, 0.94vw, 18px)",
-              width: "586px",
-              height: "66px",
+              maxWidth: "586px",
+              height: "clamp(52px, 5vw, 66px)",
               padding: "14px 24px",
               marginTop: "calc(52px - clamp(20px, 2.08vw, 40px))",
             }}
@@ -172,7 +172,7 @@ export default function Hero() {
 
       {/* 앱 다운로드 - 우측 하단 고정 */}
       <div
-        className="absolute bottom-12 right-[30px] z-10 flex items-center gap-4 max-md:hidden"
+        className="absolute bottom-12 right-[30px] z-10 flex items-center gap-4 max-sm:hidden"
         style={revealStyle(mounted, STAGGER_ITEMS[4].delay)}
       >
         <a href="https://apps.apple.com/kr/app/logit/id6759486113" target="_blank" rel="noopener noreferrer">
