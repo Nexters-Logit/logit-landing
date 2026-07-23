@@ -39,7 +39,22 @@ export default function Home() {
       </div>
       <PainPoint />
       <Features />
-      <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#181B24", overflow: "visible", zIndex: 1 }}>
+      {/* 높이 0 앵커: 다크 섹션 overflow:hidden에 클립되지 않고 경계를 걸치는 요소를 배치 */}
+      <div style={{ position: "relative", height: 0, zIndex: 2 }}>
+        <img
+          src="/next-section-mockup.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "-125px",
+            left: "231px",
+            width: "467px",
+            height: "451px",
+          }}
+        />
+      </div>
+      <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1 }}>
         <img
           src="/dark-section-bg.svg"
           alt=""
@@ -52,16 +67,43 @@ export default function Home() {
             pointerEvents: "none",
           }}
         />
+        {/* 라디얼 그라디언트 — overflow:hidden으로 하단 클립, Step 3 쪽 상단 부분은 Features의 Step3 gradient로 처리 */}
+        <div
+          className="pointer-events-none"
+          style={{
+            position: "absolute",
+            top: "-428px",
+            left: "-54px",
+            width: "1974px",
+            height: "1974px",
+            borderRadius: "1974px",
+            background: "radial-gradient(43.18% 43.18% at 50% 50%, rgba(24, 27, 36, 0.40) 0%, rgba(24, 27, 36, 0.00) 100%)",
+          }}
+        />
         <img
-          src="/next-section-mockup.svg"
+          src="/dark-section-deco.svg"
           alt=""
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: "-125px",
-            left: "231px",
-            width: "467px",
-            height: "451px",
+            top: "281px",
+            left: 0,
+            width: "694px",
+            height: "799px",
+            pointerEvents: "none",
+          }}
+        />
+        <img
+          src="/dark-section-deco2.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "81px",
+            left: "1542px",
+            width: "378px",
+            height: "620px",
+            pointerEvents: "none",
           }}
         />
         {/* CTA 박스 */}

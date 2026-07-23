@@ -387,6 +387,16 @@ export default function Features() {
               background: "#181B24",
             },
           },
+          {
+            style: {
+              top: "calc(100vh - 428px)",
+              left: "-54px",
+              width: "1974px",
+              height: "1974px",
+              borderRadius: "1974px",
+              background: "radial-gradient(43.18% 43.18% at 50% 50%, rgba(24, 27, 36, 0.40) 0%, rgba(24, 27, 36, 0.00) 100%)",
+            },
+          },
         ]}
       />
     </>
