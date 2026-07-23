@@ -41,6 +41,18 @@ export default function Home() {
       <Features />
       <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#181B24", overflow: "visible", zIndex: 1 }}>
         <img
+          src="/dark-section-bg.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            top: "130px",
+            left: 0,
+            width: "100%",
+            pointerEvents: "none",
+          }}
+        />
+        <img
           src="/next-section-mockup.svg"
           alt=""
           aria-hidden="true"
