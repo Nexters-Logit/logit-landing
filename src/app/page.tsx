@@ -132,7 +132,10 @@ export default function Home() {
           >
             경험이 자산이 되는 자소서 작성, 지금 바로 시작해보세요
           </p>
-          <button
+          <a
+            href="https://logit.ai.kr/"
+            target="_blank"
+            rel="noopener noreferrer"
             style={{
               display: "flex",
               width: "586px",
@@ -143,17 +146,17 @@ export default function Home() {
               gap: "13.702px",
               borderRadius: "14px",
               background: "#40A5FF",
-              border: "none",
               cursor: "pointer",
               color: "#FFF",
               fontFamily: "Pretendard",
               fontSize: "18px",
               fontWeight: 600,
               lineHeight: "140%",
+              textDecoration: "none",
             }}
           >
             로짓 무료로 시작하기
-          </button>
+          </a>
         </div>
       </div>
     </main>
