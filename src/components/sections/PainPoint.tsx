@@ -250,9 +250,8 @@ function DesktopPainPoint() {
   const expandT    = ease(norm(p, 0.50, 0.82));
   const circleSize = 80 * (1 + expandT * 42);
 
-  const labelT    = ease(norm(p, 0.58, 0.68));
-  const headingT  = ease(norm(p, 0.61, 0.71));
-  const textExitT = ease(norm(p, 0.88, 1.0));
+  const labelT   = ease(norm(p, 0.58, 0.68));
+  const headingT = ease(norm(p, 0.61, 0.71));
 
   const padding  = vw >= 1024 ? 80 : 48;
   const colWidth = Math.max(120, (vw - 2 * padding - 48) / 3);
@@ -382,7 +381,7 @@ function DesktopPainPoint() {
               left: "50%", top: "50%",
               transform: "translate(-50%, -50%)",
               zIndex: 2,
-              opacity: expandT > 0 ? (1 - textExitT) : 0,
+              opacity: expandT > 0 ? 1 : 0,
             }} />
 
             {/* 로고 링 */}
@@ -422,7 +421,7 @@ function DesktopPainPoint() {
               width: "2801px", height: "2801px",
               borderRadius: "2801px",
               background: "radial-gradient(55.95% 55.95% at 41.75% 40.6%, #40A5FF 0%, #2571EB 100%)",
-              opacity: (1 - textExitT) * labelT,
+              opacity: labelT,
               zIndex: 4,
               pointerEvents: "none",
             }} />
@@ -438,7 +437,7 @@ function DesktopPainPoint() {
                 width: "100%",
                 height: "100%",
                 objectFit: "cover",
-                opacity: (1 - textExitT) * labelT,
+                opacity: labelT,
                 zIndex: 4,
                 pointerEvents: "none",
               }}
@@ -447,8 +446,8 @@ function DesktopPainPoint() {
             {/* 솔루션 텍스트 */}
             <div style={{
               position: "absolute", left: 0, right: 0, top: "50%",
-              transform: `translateY(calc(-50% + ${textExitT * -80}px))`,
-              opacity: 1 - textExitT,
+              transform: "translateY(-50%)",
+              opacity: 1,
               zIndex: 5,
               textAlign: "center", padding: "0 3rem",
               pointerEvents: "none",
