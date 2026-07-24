@@ -484,7 +484,7 @@ export default function Features() {
               left: "0",
               width: "100%",
               height: "clamp(120px, 35.8vh, 387px)",
-              borderRadius: "clamp(60px, 29.6vh, 320px) clamp(60px, 29.6vh, 320px) 0 0",
+              borderRadius: "min(clamp(60px, 29.6vh, 320px), 25vw) min(clamp(60px, 29.6vh, 320px), 25vw) 0 0",
               background: "#181B24",
             },
           },
