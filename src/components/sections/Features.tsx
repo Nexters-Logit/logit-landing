@@ -65,6 +65,8 @@ function FeatureStep({
             alignItems: "center",
             gap: "8px",
             zIndex: 1,
+            userSelect: "none",
+            pointerEvents: "none",
           }}
         >
           <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "clamp(40px, 4.44vw, 64px)", fontWeight: 400, lineHeight: "120%" }}>
@@ -130,7 +132,7 @@ export default function Features() {
     let wheelDir = 0;
     let activeStep = "";
     let stepEnteredAt = 0;
-    const ENTRY_COOLDOWN = 700;
+    const ENTRY_COOLDOWN = 300;
 
     const snapTo = (el: HTMLElement, blockScroll = false) => {
       if (isSnapping) return;
@@ -191,6 +193,9 @@ export default function Features() {
       // 방향 바뀌면 누적 초기화
       const dir = e.deltaY > 0 ? 1 : -1;
       if (dir !== wheelDir) { wheelAccum = 0; wheelDir = dir; }
+
+      // 관성 잔여 이벤트(매우 작은 deltaY) 무시
+      if (Math.abs(e.deltaY) < 5) return;
       wheelAccum += e.deltaY;
 
       // 충분히 스크롤했을 때만 snap 발동 (의도적 스크롤 판별)
