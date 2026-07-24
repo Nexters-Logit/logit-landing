@@ -316,12 +316,13 @@ function DesktopPainPoint() {
                 aria-hidden="true"
                 style={{ width: "clamp(100px, 10.83vw, 208px)", height: "auto" }}
               />
-              <p className="text-grey-300 text-[18px] lg:text-[24px] font-normal leading-[120%] text-center self-stretch">
+              <p className="text-grey-300 font-normal leading-[120%] text-center self-stretch"
+                style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}>
                 자소서 작성, 왜 매번 이렇게 어려울까요?
               </p>
               <h2
-                className="text-[28px] lg:text-[40px] font-bold text-grey-400 leading-[120%] text-center self-stretch [word-break:keep-all]"
-                style={{ marginTop: "-24px" }}
+                className="font-bold text-grey-400 leading-[120%] text-center self-stretch [word-break:keep-all]"
+                style={{ fontSize: "clamp(22px, 2.08vw, 40px)", marginTop: "-24px" }}
               >
                 {QUOTE}
               </h2>
@@ -329,12 +330,14 @@ function DesktopPainPoint() {
 
             {/* 카드 그리드 */}
             <div
-              className="w-full grid grid-cols-3 gap-[28px] px-[181px] max-lg:px-[100px] items-stretch"
+              className="w-full grid grid-cols-3 items-stretch"
               style={{
                 position: "absolute",
-                top: "clamp(400px, 55.5vh, 599px)",
+                top: "clamp(360px, 55.5vh, 599px)",
                 left: 0, right: 0,
                 zIndex: 10,
+                gap: "clamp(16px, 1.46vw, 28px)",
+                padding: "0 clamp(60px, 9.4vw, 181px)",
               }}
             >
               {PAIN_POINTS.map((point, i) => {
@@ -356,8 +359,8 @@ function DesktopPainPoint() {
                       flexDirection: "column",
                       alignItems: "flex-start",
                       alignSelf: "stretch",
-                      padding: "24px",
-                      borderRadius: "20px",
+                      padding: "clamp(14px, 1.25vw, 24px)",
+                      borderRadius: "clamp(12px, 1.04vw, 20px)",
                       background: "#FFF",
                       boxShadow: isHovered
                         ? "0 8px 40px 0 rgba(0, 0, 0, 0.18)"
@@ -372,18 +375,21 @@ function DesktopPainPoint() {
                       transition: isConverging
                         ? "none"
                         : `opacity 0.7s ease-out ${cardDelay}ms, transform ${isHovered ? "0.18s ease-out" : `0.7s ease-out ${cardDelay}ms`}, box-shadow 0.18s ease-out`,
-                      gap: "29px",
+                      gap: "clamp(16px, 1.5vw, 29px)",
                       transformOrigin: "center center",
                       willChange: "transform, opacity, filter",
                       cursor: "default",
                     }}
                   >
-                    <span className="text-primary-100 text-[24px] lg:text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "9px", alignSelf: "stretch" }}>
-                      <p className="text-black text-[18px] lg:text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
+                    <span className="text-primary-100 font-bold leading-[120%] self-stretch"
+                      style={{ fontSize: "clamp(18px, 1.67vw, 32px)" }}>0{i + 1}</span>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 0.47vw, 9px)", alignSelf: "stretch" }}>
+                      <p className="text-black font-bold leading-[120%] self-stretch [word-break:keep-all]"
+                        style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}>
                         {point.question}
                       </p>
-                      <p className="text-grey-300 text-[18px] lg:text-[24px] font-medium leading-[120%] self-stretch">
+                      <p className="text-grey-300 font-medium leading-[120%] self-stretch"
+                        style={{ fontSize: "clamp(12px, 1.04vw, 20px)" }}>
                         {point.description.split('\n').map((line, j, arr) => (
                           <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
                         ))}
