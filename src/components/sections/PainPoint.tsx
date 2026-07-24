@@ -48,53 +48,58 @@ function MobilePainPoint() {
       <div
         ref={cardsRef}
         className="w-full bg-[#E4EEFD] flex flex-col"
-        style={{ minHeight: "100dvh", padding: "80px 20px 20px" }}
+        style={{ minHeight: "100dvh", padding: "60px 20px 40px" }}
       >
-        {/* 인트로 텍스트 */}
-        <div
-          className="flex flex-col items-center text-center mb-3"
-          style={{
-            opacity: cardsVisible ? 1 : 0,
-            transform: cardsVisible ? "translateY(0)" : "translateY(16px)",
-            transition: "opacity 0.6s ease, transform 0.6s ease",
-          }}
-        >
-          <p className="text-grey-300 text-[13px] font-normal leading-[120%] mb-2">
-            자소서 작성, 왜 매번 이렇게 어려울까요?
-          </p>
-          <h2 className="text-[20px] font-bold text-grey-400 leading-[130%] [word-break:keep-all]">
-            {QUOTE}
-          </h2>
-        </div>
+        {/* 텍스트 + 카드 전체를 수직 중앙 정렬 */}
+        <div className="flex flex-col flex-1 justify-center" style={{ gap: "clamp(24px, 4vh, 48px)" }}>
 
-        {/* 카드 목록 */}
-        <div className="flex flex-col gap-2 flex-1 justify-center">
-          {PAIN_POINTS.map((point, i) => (
-            <div
-              key={i}
-              className="bg-white rounded-[16px] flex flex-col"
-              style={{
-                padding: "14px",
-                gap: "8px",
-                boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)",
-                opacity: cardsVisible ? 1 : 0,
-                transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
-                transition: `opacity 0.6s ease ${120 + i * 100}ms, transform 0.6s ease ${120 + i * 100}ms`,
-              }}
-            >
-              <span className="text-primary-100 text-[14px] font-bold leading-[120%]">0{i + 1}</span>
-              <div className="flex flex-col gap-[6px]">
-                <p className="text-black text-[14px] font-bold leading-[140%] [word-break:keep-all]">
-                  {point.question}
-                </p>
-                <p className="text-grey-300 text-[12px] font-medium leading-[140%] [word-break:keep-all]">
-                  {point.description.split('\n').map((line, j, arr) => (
-                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                  ))}
-                </p>
+          {/* 인트로 텍스트 */}
+          <div
+            className="flex flex-col items-center text-center gap-2"
+            style={{
+              opacity: cardsVisible ? 1 : 0,
+              transform: cardsVisible ? "translateY(0)" : "translateY(16px)",
+              transition: "opacity 0.6s ease, transform 0.6s ease",
+            }}
+          >
+            <p className="text-grey-300 text-[13px] font-normal leading-[120%]">
+              자소서 작성, 왜 매번 이렇게 어려울까요?
+            </p>
+            <h2 className="text-[20px] font-bold text-grey-400 leading-[130%] [word-break:keep-all]">
+              {QUOTE}
+            </h2>
+          </div>
+
+          {/* 카드 목록 */}
+          <div className="flex flex-col gap-4">
+            {PAIN_POINTS.map((point, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-[16px] flex flex-col"
+                style={{
+                  padding: "16px",
+                  gap: "10px",
+                  boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)",
+                  opacity: cardsVisible ? 1 : 0,
+                  transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
+                  transition: `opacity 0.6s ease ${120 + i * 100}ms, transform 0.6s ease ${120 + i * 100}ms`,
+                }}
+              >
+                <span className="text-primary-100 text-[14px] font-bold leading-[120%]">0{i + 1}</span>
+                <div className="flex flex-col gap-[6px]">
+                  <p className="text-black text-[14px] font-bold leading-[140%] [word-break:keep-all]">
+                    {point.question}
+                  </p>
+                  <p className="text-grey-300 text-[12px] font-medium leading-[140%] [word-break:keep-all]">
+                    {point.description.split('\n').map((line, j, arr) => (
+                      <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                    ))}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+
         </div>
       </div>
 
