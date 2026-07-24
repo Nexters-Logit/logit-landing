@@ -21,16 +21,138 @@ const PAIN_POINTS = [
   },
 ];
 
+// ── 모바일 전용 ──────────────────────────────────────────────────────────
+function MobilePainPoint() {
+  const [cardsVisible, setCardsVisible] = useState(false);
+  const [solutionVisible, setSolutionVisible] = useState(false);
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const solutionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obs1 = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setCardsVisible(true); },
+      { threshold: 0.05 }
+    );
+    const obs2 = new IntersectionObserver(
+      ([e]) => { if (e.isIntersecting) setSolutionVisible(true); },
+      { threshold: 0.1 }
+    );
+    if (cardsRef.current) obs1.observe(cardsRef.current);
+    if (solutionRef.current) obs2.observe(solutionRef.current);
+    return () => { obs1.disconnect(); obs2.disconnect(); };
+  }, []);
+
+  return (
+    <div className="w-full">
+      {/* Screen 1: 카드 */}
+      <div
+        ref={cardsRef}
+        className="w-full bg-[#E4EEFD] flex flex-col"
+        style={{ minHeight: "100dvh", padding: "80px 20px 20px" }}
+      >
+        {/* 인트로 텍스트 */}
+        <div
+          className="flex flex-col items-center text-center mb-3"
+          style={{
+            opacity: cardsVisible ? 1 : 0,
+            transform: cardsVisible ? "translateY(0)" : "translateY(16px)",
+            transition: "opacity 0.6s ease, transform 0.6s ease",
+          }}
+        >
+          <p className="text-grey-300 text-[13px] font-normal leading-[120%] mb-2">
+            자소서 작성, 왜 매번 이렇게 어려울까요?
+          </p>
+          <h2 className="text-[20px] font-bold text-grey-400 leading-[130%] [word-break:keep-all]">
+            {QUOTE}
+          </h2>
+        </div>
+
+        {/* 카드 목록 */}
+        <div className="flex flex-col gap-2 flex-1 justify-center">
+          {PAIN_POINTS.map((point, i) => (
+            <div
+              key={i}
+              className="bg-white rounded-[16px] flex flex-col"
+              style={{
+                padding: "14px",
+                gap: "8px",
+                boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)",
+                opacity: cardsVisible ? 1 : 0,
+                transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
+                transition: `opacity 0.6s ease ${120 + i * 100}ms, transform 0.6s ease ${120 + i * 100}ms`,
+              }}
+            >
+              <span className="text-primary-100 text-[14px] font-bold leading-[120%]">0{i + 1}</span>
+              <div className="flex flex-col gap-[6px]">
+                <p className="text-black text-[14px] font-bold leading-[140%] [word-break:keep-all]">
+                  {point.question}
+                </p>
+                <p className="text-grey-300 text-[12px] font-medium leading-[140%] [word-break:keep-all]">
+                  {point.description.split('\n').map((line, j, arr) => (
+                    <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                  ))}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Screen 2: 솔루션 */}
+      <div
+        ref={solutionRef}
+        className="relative w-full flex flex-col items-center justify-center text-center overflow-hidden"
+        style={{
+          minHeight: "100dvh",
+          padding: "48px 24px",
+          background: "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)",
+        }}
+      >
+        <img
+          src="/solution-bg.svg"
+          alt=""
+          aria-hidden="true"
+          style={{
+            position: "absolute",
+            inset: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            opacity: 0.6,
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          className="relative z-10 flex flex-col items-center gap-4"
+          style={{
+            opacity: solutionVisible ? 1 : 0,
+            transform: solutionVisible ? "translateY(0)" : "translateY(24px)",
+            transition: "opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s",
+          }}
+        >
+          <p className="text-grey-70 text-[13px] font-normal leading-[120%]">
+            그래서 로짓은, 자소서를 바로 쓰지 않습니다.
+          </p>
+          <h2 className="text-[22px] font-bold text-white leading-[130%] [word-break:keep-all]">
+            자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
+          </h2>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ── 헬퍼 함수 ────────────────────────────────────────────────────────────
 function ease(t: number) {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 }
 function norm(p: number, s: number, e: number) {
   return Math.max(0, Math.min(1, (p - s) / (e - s)));
 }
-
 const CARD_STAGGER = [0, 0.05, 0.10];
 
-export default function PainPoint() {
+// ── 데스크탑 전용 ────────────────────────────────────────────────────────
+function DesktopPainPoint() {
   const section = useScrollReveal(0.05, false);
 
   const convergeSpaceRef = useRef<HTMLDivElement>(null);
@@ -60,7 +182,6 @@ export default function PainPoint() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // 솔루션 텍스트 → Features 스크롤 스냅
   useEffect(() => {
     let isSnapping = false;
 
@@ -104,86 +225,61 @@ export default function PainPoint() {
     };
   }, []);
 
-  // 텍스트 인트로 — 스크롤 시작하면 바로 fade-out
-  const textFadeT  = ease(norm(p, 0.02, 0.18));
+  // 텍스트 인트로
+  const textFadeT   = ease(norm(p, 0.02, 0.18));
   const textOpacity = p > 0.01 ? Math.max(0, 1 - textFadeT) : section.visible ? 1 : 0;
   const textSlideY  = p > 0.01 ? textFadeT * -40 : section.visible ? 0 : 20;
   const textTransition = p > 0.01 ? "none" : "opacity 0.7s ease, transform 0.7s ease";
 
-  // 카드별 stagger
   const cardTs = CARD_STAGGER.map(s => ease(norm(p, s, 0.50 + s)));
 
-  // 중심 glow
   const glowT    = ease(norm(p, 0.05, 0.46));
   const glowSize = 60 + glowT * 420;
 
-  // 로고
   const logoAppear  = ease(norm(p, 0.40, 0.50));
   const logoFade    = ease(norm(p, 0.54, 0.68));
   const logoOpacity = Math.max(0, logoAppear * (1 - logoFade));
   const logoScale   = 0.6 + 0.4 * logoAppear;
 
-  // 로고 링
   const ringT     = ease(norm(p, 0.40, 0.52));
   const ringFade  = ease(norm(p, 0.54, 0.68));
   const ring1Size = 60 + ringT * 48;
   const ring2Size = 60 + ringT * 90;
   const ringOp    = Math.max(0, ringT * 0.5 * (1 - ringFade));
 
-  // 배경 확장
   const expandT    = ease(norm(p, 0.50, 0.82));
   const circleSize = 80 * (1 + expandT * 42);
 
-  // 솔루션 텍스트
   const labelT    = ease(norm(p, 0.58, 0.68));
   const headingT  = ease(norm(p, 0.61, 0.71));
-  const subT      = ease(norm(p, 0.64, 0.76));
   const textExitT = ease(norm(p, 0.88, 1.0));
 
-  const isMobile = vw < 768;
   const padding  = vw >= 1024 ? 80 : 48;
   const colWidth = Math.max(120, (vw - 2 * padding - 48) / 3);
   const dx = colWidth + 24;
-  const dy = 226;
 
   const cardTransforms = CARD_STAGGER.map((_, i) => {
     const cT = cardTs[i];
-    if (isMobile) {
-      const offsets = [dy, 0, -dy];
-      return `translate(0, ${offsets[i] * cT}px) scale(${1 - 0.88 * cT})`;
-    } else {
-      const offsets = [dx, 0, -dx];
-      return `translate(${offsets[i] * cT}px, 0) scale(${1 - 0.88 * cT})`;
-    }
+    const offsets = [dx, 0, -dx];
+    return `translate(${offsets[i] * cT}px, 0) scale(${1 - 0.88 * cT})`;
   });
 
   return (
     <section className="w-full bg-[#E4EEFD]">
-
-      {/* IntersectionObserver 트리거 wrapper */}
       <div ref={section.ref}>
-        <div
-          ref={convergeSpaceRef}
-          style={{ height: "500vh" }}
-          className="relative"
-        >
-          <div
-            className="sticky top-0 h-screen overflow-hidden"
-            style={{
-              background: "#E4EEFD"
-            }}
-          >
+        <div ref={convergeSpaceRef} style={{ height: "500vh" }} className="relative">
+          <div className="sticky top-0 h-screen overflow-hidden" style={{ background: "#E4EEFD" }}>
 
             {/* 텍스트 인트로 */}
             <div
               style={{
                 position: "absolute",
-                top: "207px",
+                top: "clamp(150px, 19.2vh, 207px)",
                 left: 0, right: 0,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
-                gap: "32px",
+                gap: "clamp(16px, 2.96vh, 32px)",
                 opacity: textOpacity,
                 transform: `translateY(${textSlideY}px)`,
                 transition: textTransition,
@@ -195,13 +291,13 @@ export default function PainPoint() {
                 src="/object.svg"
                 alt=""
                 aria-hidden="true"
-                style={{ width: "208px", height: "180px" }}
+                style={{ width: "clamp(100px, 10.83vw, 208px)", height: "auto" }}
               />
-              <p className="text-grey-300 text-[24px] font-normal leading-[120%] text-center self-stretch">
+              <p className="text-grey-300 text-[18px] lg:text-[24px] font-normal leading-[120%] text-center self-stretch">
                 자소서 작성, 왜 매번 이렇게 어려울까요?
               </p>
               <h2
-                className="text-[40px] font-bold text-grey-400 leading-[120%] text-center self-stretch [word-break:keep-all]"
+                className="text-[28px] lg:text-[40px] font-bold text-grey-400 leading-[120%] text-center self-stretch [word-break:keep-all]"
                 style={{ marginTop: "-24px" }}
               >
                 {QUOTE}
@@ -210,10 +306,10 @@ export default function PainPoint() {
 
             {/* 카드 그리드 */}
             <div
-              className="w-full grid grid-cols-3 max-md:grid-cols-1 gap-[28px] max-md:gap-4 px-[181px] max-lg:px-[100px] max-md:px-6 items-start"
+              className="w-full grid grid-cols-3 gap-[28px] px-[181px] max-lg:px-[100px] items-stretch"
               style={{
                 position: "absolute",
-                top: "599px",
+                top: "clamp(400px, 55.5vh, 599px)",
                 left: 0, right: 0,
                 zIndex: 10,
               }}
@@ -230,7 +326,7 @@ export default function PainPoint() {
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "flex-start",
-                      alignSelf: "start",
+                      alignSelf: "stretch",
                       padding: "24px",
                       borderRadius: "20px",
                       background: "#FFF",
@@ -250,12 +346,12 @@ export default function PainPoint() {
                       willChange: "transform, opacity, filter",
                     }}
                   >
-                    <span className="text-primary-100 text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
+                    <span className="text-primary-100 text-[24px] lg:text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
                     <div style={{ display: "flex", flexDirection: "column", gap: "9px", alignSelf: "stretch" }}>
-                      <p className="text-black text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
+                      <p className="text-black text-[18px] lg:text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
                         {point.question}
                       </p>
-                      <p className="text-grey-300 text-[24px] font-medium leading-[120%] self-stretch">
+                      <p className="text-grey-300 text-[18px] lg:text-[24px] font-medium leading-[120%] self-stretch">
                         {point.description.split('\n').map((line, j, arr) => (
                           <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
                         ))}
@@ -268,8 +364,7 @@ export default function PainPoint() {
 
             {/* 중심 glow */}
             <div style={{
-              position: "absolute",
-              left: "50%", top: "50%",
+              position: "absolute", left: "50%", top: "50%",
               width: `${glowSize}px`, height: `${glowSize}px`,
               borderRadius: "50%",
               background: "radial-gradient(circle, rgba(75,192,250,0.22) 0%, rgba(101,193,237,0.07) 50%, transparent 72%)",
@@ -323,10 +418,8 @@ export default function PainPoint() {
             {/* 솔루션 배경 gradient */}
             <div style={{
               position: "absolute",
-              left: "-695px",
-              top: "-864px",
-              width: "2801px",
-              height: "2801px",
+              left: "-695px", top: "-864px",
+              width: "2801px", height: "2801px",
               borderRadius: "2801px",
               background: "radial-gradient(55.95% 55.95% at 41.75% 40.6%, #40A5FF 0%, #2571EB 100%)",
               opacity: (1 - textExitT) * labelT,
@@ -361,13 +454,13 @@ export default function PainPoint() {
               pointerEvents: "none",
             }}>
               <p
-                className="text-grey-70 text-[24px] font-normal leading-[120%] text-center self-stretch mb-5"
+                className="text-grey-70 text-[18px] lg:text-[24px] font-normal leading-[120%] text-center self-stretch mb-5"
                 style={{ opacity: labelT, transform: `translateY(${(1 - labelT) * 14}px)` }}
               >
                 그래서 로짓은, 자소서를 바로 쓰지 않습니다.
               </p>
               <h2
-                className="text-[40px] font-bold text-white leading-[120%] text-center whitespace-nowrap mb-6"
+                className="text-[28px] lg:text-[40px] font-bold text-white leading-[120%] text-center [word-break:keep-all] mb-6"
                 style={{ opacity: headingT, transform: `translateY(${(1 - headingT) * 20}px)` }}
               >
                 자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
@@ -377,7 +470,24 @@ export default function PainPoint() {
           </div>
         </div>
       </div>
-
     </section>
   );
+}
+
+// ── 메인 export ───────────────────────────────────────────────────────────
+export default function PainPoint() {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  if (isMobile === null) {
+    return <div className="w-full bg-[#E4EEFD]" style={{ minHeight: "100vh" }} />;
+  }
+
+  return isMobile ? <MobilePainPoint /> : <DesktopPainPoint />;
 }
