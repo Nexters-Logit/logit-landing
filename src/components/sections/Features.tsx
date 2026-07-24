@@ -10,6 +10,7 @@ interface ExtraImage {
   width: number;
   height: number;
   style: React.CSSProperties;
+  className?: string;
 }
 
 interface FeatureStepProps {
@@ -55,10 +56,10 @@ function FeatureStep({
         <div
           style={{
             position: "absolute",
-            top: "217px",
+            top: "clamp(110px, 20.1vh, 217px)",
             left: "50%",
             transform: "translateX(-50%)",
-            width: textWidth,
+            width: `min(${textWidth}, calc(100vw - 40px))`,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -66,30 +67,30 @@ function FeatureStep({
             zIndex: 1,
           }}
         >
-          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "64px", fontWeight: 400, lineHeight: "120%" }}>
+          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "clamp(40px, 4.44vw, 64px)", fontWeight: 400, lineHeight: "120%" }}>
             {emoji}
           </p>
-          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "24px", fontWeight: 400, lineHeight: "120%" }}>
+          <p style={{ alignSelf: "stretch", color: emojiColor, textAlign: "center", fontSize: "clamp(14px, 1.67vw, 24px)", fontWeight: 400, lineHeight: "120%" }}>
             {stepLabel}
           </p>
-          <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "40px", fontWeight: 700, lineHeight: "120%", whiteSpace: "nowrap" }}>
+          <p style={{ color: "#FFFFFF", textAlign: "center", fontSize: "clamp(20px, 2.08vw, 40px)", fontWeight: 700, lineHeight: "120%", wordBreak: "keep-all" }}>
             {heading}
           </p>
         </div>
 
         {/* 목업 이미지 */}
-        {imageSrc && (
+        {imageSrc && imageWidth > 0 && imageHeight > 0 && (
           <img
             src={imageSrc}
             alt=""
             aria-hidden="true"
             style={{
               position: "absolute",
-              top: "433.873px",
+              bottom: 0,
               left: "50%",
               transform: "translateX(-50%)",
-              width: `${imageWidth}px`,
-              height: `${imageHeight}px`,
+              width: `min(${imageWidth}px, 70vw)`,
+              height: `min(${imageHeight}px, ${((70 * imageHeight) / imageWidth).toFixed(1)}vw)`,
               zIndex: 1,
             }}
           />
@@ -101,6 +102,7 @@ function FeatureStep({
             src={img.src}
             alt=""
             aria-hidden="true"
+            className={img.className}
             style={{
               position: "absolute",
               width: `${img.width}px`,
@@ -297,7 +299,8 @@ export default function Features() {
             src: "/feature-step2-card.svg",
             width: 404,
             height: 183,
-            style: { left: "calc(50% + 50px)", top: "586.873px" },
+            style: { left: "calc(50% + 50px)", bottom: "310px" },
+            className: "hidden md:block",
           },
         ]}
         gradients={[
@@ -350,19 +353,22 @@ export default function Features() {
             src: "/feature-step3-card.svg",
             width: 447,
             height: 183,
-            style: { left: "calc(50% - 383px)", top: "790px" },
+            style: { left: "calc(50% - 383px)", bottom: "107px" },
+            className: "hidden md:block",
           },
           {
             src: "/feature-step3-deco.svg",
             width: 458,
             height: 458,
             style: { left: "1109px", top: "331px", zIndex: 4 },
+            className: "hidden md:block",
           },
           {
             src: "/feature-step3-deco2.svg",
             width: 511,
             height: 501,
             style: { left: "1200px", top: "459px" },
+            className: "hidden md:block",
           },
         ]}
         gradients={[
@@ -379,11 +385,10 @@ export default function Features() {
           {
             style: {
               bottom: "0",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "1920px",
-              height: "387px",
-              borderRadius: "320px 320px 0 0",
+              left: "0",
+              width: "100%",
+              height: "clamp(120px, 47.5vw, 387px)",
+              borderRadius: "clamp(60px, 16.7vw, 320px) clamp(60px, 16.7vw, 320px) 0 0",
               background: "#181B24",
             },
           },
