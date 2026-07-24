@@ -97,8 +97,8 @@ export default function Hero() {
 
       <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 flex justify-center">
         <div
-          className="max-w-2xl md:max-w-3xl xl:max-w-6xl w-full flex flex-col items-center text-center"
-          style={{ gap: "clamp(20px, 2.08vw, 40px)" }}
+          className="w-full flex flex-col items-center text-center"
+          style={{ maxWidth: "clamp(400px, 70vw, 1152px)", gap: "clamp(20px, 2.08vw, 40px)" }}
         >
 
           {/* 배지 */}
