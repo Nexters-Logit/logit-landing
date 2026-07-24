@@ -484,7 +484,7 @@ export default function Features() {
               left: "0",
               width: "100%",
               height: "max(80px, min(387px, 47.5vw, calc(59.8vh - 239.2px)))",
-              borderRadius: "max(60px, min(320px, 39.3vw, calc(49.5vh - 197.8px))) max(60px, min(320px, 39.3vw, calc(49.5vh - 197.8px))) 0 0",
+              borderRadius: "max(40px, min(320px, 16.7vw)) max(40px, min(320px, 16.7vw)) 0 0",
               background: "#181B24",
             },
           },
