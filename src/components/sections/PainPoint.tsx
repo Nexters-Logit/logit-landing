@@ -71,11 +71,11 @@ function MobilePainPoint() {
           </div>
 
           {/* 카드 목록 */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 px-8">
             {PAIN_POINTS.map((point, i) => (
               <div
                 key={i}
-                className="bg-white rounded-[16px] flex flex-col"
+                className="bg-white rounded-[16px] flex flex-col items-center text-center"
                 style={{
                   padding: "16px",
                   gap: "10px",
