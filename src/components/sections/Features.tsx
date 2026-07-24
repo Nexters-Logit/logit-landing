@@ -9,8 +9,14 @@ interface ExtraImage {
   src: string;
   width: number;
   height: number;
-  style: React.CSSProperties;
+  style?: React.CSSProperties;
   className?: string;
+  // 설정 시 메인 이미지 wrapper 기준 % 위치로 렌더링 (함께 스케일)
+  relLeft?: number;
+  relTop?: number;
+  relBottom?: number;
+  relWidth?: number;
+  imgZIndex?: number;
 }
 
 interface FeatureStepProps {
@@ -44,6 +50,13 @@ function FeatureStep({
   sectionRef,
   innerContentRef,
 }: FeatureStepProps) {
+  const relativeImages = extraImages.filter(
+    (img) => img.relLeft !== undefined || img.relTop !== undefined || img.relBottom !== undefined
+  );
+  const standaloneImages = extraImages.filter(
+    (img) => img.relLeft === undefined && img.relTop === undefined && img.relBottom === undefined
+  );
+
   return (
     <section ref={sectionRef} className="relative w-full overflow-hidden" style={{ minHeight: "100vh", background }}>
       {gradients.map((g, i) => (
@@ -80,25 +93,49 @@ function FeatureStep({
           </p>
         </div>
 
-        {/* 목업 이미지 */}
+        {/* 목업 이미지 + 함께 스케일되는 이미지 세트 */}
         {imageSrc && imageWidth > 0 && imageHeight > 0 && (
-          <img
-            src={imageSrc}
-            alt=""
-            aria-hidden="true"
+          <div
             style={{
               position: "absolute",
               bottom: 0,
               left: "50%",
               transform: "translateX(-50%)",
               width: `min(${imageWidth}px, 70vw, calc((100vh - 400px) * ${(imageWidth / imageHeight).toFixed(4)}))`,
-              height: `min(${imageHeight}px, ${((70 * imageHeight) / imageWidth).toFixed(1)}vw, calc(100vh - 400px))`,
+              aspectRatio: `${imageWidth} / ${imageHeight}`,
+              overflow: "visible",
               zIndex: 1,
             }}
-          />
+          >
+            <img
+              src={imageSrc}
+              alt=""
+              aria-hidden="true"
+              style={{ width: "100%", height: "100%", display: "block" }}
+            />
+            {relativeImages.map((img, i) => (
+              <img
+                key={i}
+                src={img.src}
+                alt=""
+                aria-hidden="true"
+                className={img.className}
+                style={{
+                  position: "absolute",
+                  ...(img.relLeft !== undefined && { left: `${img.relLeft}%` }),
+                  ...(img.relTop !== undefined && { top: `${img.relTop}%` }),
+                  ...(img.relBottom !== undefined && { bottom: `${img.relBottom}%` }),
+                  ...(img.relWidth !== undefined && { width: `${img.relWidth}%` }),
+                  height: "auto",
+                  zIndex: img.imgZIndex ?? 2,
+                }}
+              />
+            ))}
+          </div>
         )}
 
-        {extraImages.map((img, i) => (
+        {/* 독립 배치 이미지 (구 방식) */}
+        {standaloneImages.map((img, i) => (
           <img
             key={i}
             src={img.src}
@@ -110,7 +147,7 @@ function FeatureStep({
               width: `${img.width}px`,
               height: `${img.height}px`,
               zIndex: 2,
-              ...img.style,
+              ...(img.style ?? {}),
             }}
           />
         ))}
@@ -343,8 +380,10 @@ export default function Features() {
             src: "/feature-step2-card.svg",
             width: 404,
             height: 183,
-            style: { left: "calc(50% + 50px)", bottom: "310px" },
             className: "hidden md:block",
+            relLeft: 60.14,
+            relBottom: 48.67,
+            relWidth: 81.95,
           },
         ]}
         gradients={[
@@ -397,22 +436,29 @@ export default function Features() {
             src: "/feature-step3-card.svg",
             width: 447,
             height: 183,
-            style: { left: "calc(50% - 383px)", bottom: "107px" },
             className: "hidden md:block",
+            relLeft: -17.19,
+            relBottom: 16.54,
+            relWidth: 78.42,
           },
           {
             src: "/feature-step3-deco.svg",
             width: 458,
             height: 458,
-            style: { left: "1109px", top: "331px", zIndex: 4 },
             className: "hidden md:block",
+            relLeft: 76.14,
+            relTop: -15.77,
+            relWidth: 80.35,
+            imgZIndex: 4,
           },
           {
             src: "/feature-step3-deco2.svg",
             width: 511,
             height: 501,
-            style: { left: "1200px", top: "459px" },
             className: "hidden md:block",
+            relLeft: 92.11,
+            relTop: 4.02,
+            relWidth: 89.65,
           },
         ]}
         gradients={[
