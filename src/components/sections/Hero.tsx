@@ -93,9 +93,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative w-full min-h-[90vh] flex items-start overflow-hidden">
+    <section className="relative w-full min-h-[90vh] flex items-center overflow-hidden">
 
-      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 xl:pt-[294px] xl:pb-32 flex justify-center">
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-20 md:py-24 flex justify-center">
         <div
           className="max-w-2xl md:max-w-3xl xl:max-w-6xl w-full flex flex-col items-center text-center"
           style={{ gap: "clamp(20px, 2.08vw, 40px)" }}
