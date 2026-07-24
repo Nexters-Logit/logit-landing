@@ -341,14 +341,15 @@ function DesktopPainPoint() {
                 const cT = cardTs[i];
                 const blurPx = cT * 16;
                 const cardDelay = i * 150;
-                const isHovered = hoveredCard === i && cT === 0;
+                const isConverging = cT > 0.03;
+                const isHovered = hoveredCard === i && !isConverging;
                 const baseTranslateY = section.visible ? 0 : 40;
                 const hoverOffset = isHovered ? -8 : 0;
                 return (
                   <div
                     key={i}
                     className="select-none"
-                    onMouseEnter={() => cT === 0 && setHoveredCard(i)}
+                    onMouseEnter={() => !isConverging && setHoveredCard(i)}
                     onMouseLeave={() => setHoveredCard(null)}
                     style={{
                       display: "flex",
@@ -361,14 +362,14 @@ function DesktopPainPoint() {
                       boxShadow: isHovered
                         ? "0 8px 40px 0 rgba(0, 0, 0, 0.18)"
                         : "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
-                      transform: cT > 0
+                      transform: isConverging
                         ? cardTransforms[i]
                         : `translateY(${baseTranslateY + hoverOffset}px)`,
-                      opacity: cT > 0
+                      opacity: isConverging
                         ? Math.pow(1 - cT, 0.7)
                         : section.visible ? 1 : 0,
                       filter: blurPx > 0.5 ? `blur(${blurPx}px)` : undefined,
-                      transition: cT > 0
+                      transition: isConverging
                         ? "none"
                         : `opacity 0.7s ease-out ${cardDelay}ms, transform ${isHovered ? "0.18s ease-out" : `0.7s ease-out ${cardDelay}ms`}, box-shadow 0.18s ease-out`,
                       gap: "29px",
