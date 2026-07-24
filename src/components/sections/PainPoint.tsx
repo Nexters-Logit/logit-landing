@@ -58,8 +58,8 @@ function MobilePainPoint() {
             className="flex flex-col items-center text-center gap-2"
             style={{
               opacity: cardsVisible ? 1 : 0,
-              transform: cardsVisible ? "translateY(0)" : "translateY(16px)",
-              transition: "opacity 0.6s ease, transform 0.6s ease",
+              transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.5s ease, transform 0.5s ease",
             }}
           >
             <p className="text-grey-300 text-[13px] font-normal leading-[120%]">
@@ -81,8 +81,8 @@ function MobilePainPoint() {
                   gap: "10px",
                   boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)",
                   opacity: cardsVisible ? 1 : 0,
-                  transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
-                  transition: `opacity 0.6s ease ${120 + i * 100}ms, transform 0.6s ease ${120 + i * 100}ms`,
+                  transform: cardsVisible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.95)",
+                  transition: `opacity 0.5s ease ${80 + i * 120}ms, transform 0.5s cubic-bezier(0.34,1.56,0.64,1) ${80 + i * 120}ms`,
                 }}
               >
                 <span className="text-primary-100 text-[14px] font-bold leading-[120%]">0{i + 1}</span>
@@ -98,6 +98,24 @@ function MobilePainPoint() {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* 스크롤 유도 */}
+          <div
+            className="flex justify-center"
+            style={{
+              opacity: cardsVisible ? 0.45 : 0,
+              transition: "opacity 0.6s ease 600ms",
+            }}
+          >
+            <svg
+              className="animate-bounce"
+              width="28" height="28" viewBox="0 0 24 24"
+              fill="none" stroke="#64748b" strokeWidth="2"
+              strokeLinecap="round" strokeLinejoin="round"
+            >
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
           </div>
 
         </div>
@@ -131,8 +149,8 @@ function MobilePainPoint() {
           className="relative z-10 flex flex-col items-center gap-4"
           style={{
             opacity: solutionVisible ? 1 : 0,
-            transform: solutionVisible ? "translateY(0)" : "translateY(24px)",
-            transition: "opacity 0.7s ease 0.15s, transform 0.7s ease 0.15s",
+            transform: solutionVisible ? "translateY(0) scale(1)" : "translateY(32px) scale(0.96)",
+            transition: "opacity 0.7s ease 0.1s, transform 0.7s cubic-bezier(0.34,1.2,0.64,1) 0.1s",
           }}
         >
           <p className="text-grey-70 text-[13px] font-normal leading-[120%]">
