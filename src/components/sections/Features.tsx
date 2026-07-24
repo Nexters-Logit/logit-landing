@@ -126,92 +126,134 @@ export default function Features() {
   useEffect(() => {
     let isSnapping = false;
     let curtainUpActive = false;
+    let wheelAccum = 0;
+    let wheelDir = 0;
+    let activeStep = "";
+    let stepEnteredAt = 0;
+    const ENTRY_COOLDOWN = 700;
 
-    const snapTo = (y: number, blockScroll = false) => {
+    const snapTo = (el: HTMLElement, blockScroll = false) => {
       if (isSnapping) return;
       isSnapping = true;
       curtainUpActive = blockScroll;
-      window.scrollTo({ top: y, behavior: "smooth" });
+      wheelAccum = 0;
+      wheelDir = 0;
+      activeStep = "";
+      stepEnteredAt = 0;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
       setTimeout(() => { isSnapping = false; curtainUpActive = false; }, 900);
     };
 
+    const snapToY = (y: number) => {
+      if (isSnapping) return;
+      isSnapping = true;
+      curtainUpActive = false;
+      wheelAccum = 0;
+      wheelDir = 0;
+      activeStep = "";
+      stepEnteredAt = 0;
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+      setTimeout(() => { isSnapping = false; }, 900);
+    };
+
     const handleWheel = (e: WheelEvent) => {
-      if (isSnapping) {
-        if (curtainUpActive) e.preventDefault();
-        return;
-      }
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
       const step3 = step3Ref.current;
       if (!step1 || !step2 || !step3) return;
 
-      const step1Rect = step1.getBoundingClientRect();
-      const step2Rect = step2.getBoundingClientRect();
-      const step3Rect = step3.getBoundingClientRect();
+      const s1 = step1.getBoundingClientRect();
+      const s2 = step2.getBoundingClientRect();
+      const s3 = step3.getBoundingClientRect();
 
-      if (e.deltaY > 0 && step1Rect.top < -30 && step1Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(window.scrollY + step1Rect.bottom);
+      const inStep1 = s1.top <= 0 && s1.bottom > 0;
+      const inStep2 = s2.top <= 0 && s2.bottom > 0;
+      const inStep3 = s3.top <= 0 && s3.bottom > 0;
+
+      // Features 구간이 아닐 때: accumulator 초기화 후 자연 스크롤
+      if (!inStep1 && !inStep2 && !inStep3) { wheelAccum = 0; wheelDir = 0; activeStep = ""; return; }
+
+      e.preventDefault();
+      if (isSnapping) { if (curtainUpActive) e.preventDefault(); return; }
+
+      // 새로운 step에 진입했을 때 누적 초기화 + 쿨다운 시작
+      const curStep = inStep1 ? "1" : inStep2 ? "2" : "3";
+      if (curStep !== activeStep) {
+        activeStep = curStep;
+        stepEnteredAt = Date.now();
+        wheelAccum = 0;
+        wheelDir = 0;
+      }
+
+      // 진입 직후 관성 이벤트 무시 (쿨다운)
+      if (Date.now() - stepEnteredAt < ENTRY_COOLDOWN) return;
+
+      // 방향 바뀌면 누적 초기화
+      const dir = e.deltaY > 0 ? 1 : -1;
+      if (dir !== wheelDir) { wheelAccum = 0; wheelDir = dir; }
+      wheelAccum += e.deltaY;
+
+      // 충분히 스크롤했을 때만 snap 발동 (의도적 스크롤 판별)
+      const THRESHOLD = 80;
+      const curtainZone = window.innerHeight * 0.05;
+
+      if (wheelAccum > THRESHOLD && inStep1) { snapTo(step2); return; }
+      if (wheelAccum > THRESHOLD && inStep2) { snapTo(step3); return; }
+      if (wheelAccum > THRESHOLD && inStep3) {
+        const darkSection = step3.nextElementSibling?.nextElementSibling as HTMLElement | null;
+        if (darkSection) { hasCurtainSnapped = true; snapTo(darkSection); }
         return;
       }
-      if (e.deltaY > 0 && step2Rect.top < -30 && step2Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(window.scrollY + step2Rect.bottom);
-        return;
+      if (wheelAccum < -THRESHOLD && inStep1) {
+        // Step 1 위로 → PainPoint 솔루션 화면(p=1)으로 스냅
+        snapToY(s1.top + window.scrollY - window.innerHeight); return;
       }
-      if (e.deltaY < 0 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(step2Rect.top + window.scrollY - window.innerHeight);
-        return;
+      if (wheelAccum < -THRESHOLD && inStep2) { snapTo(step1); return; }
+      if (wheelAccum < -THRESHOLD && inStep3 && s3.top < -curtainZone) {
+        hasCurtainSnapped = false; snapTo(step3, true); return;
       }
-      // 커튼 존 or 다크 섹션 top → step3 top으로 복귀 (스크롤 차단)
-      if (e.deltaY < 0 && step3Rect.top < -30 && step3Rect.bottom >= 0) {
-        hasCurtainSnapped = false;
-        e.preventDefault();
-        snapTo(step3Rect.top + window.scrollY, true);
-        return;
-      }
-      // step3 top에 있을 때 → step2로 복귀
-      if (e.deltaY < 0 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(step3Rect.top + window.scrollY - window.innerHeight);
-        return;
-      }
+      if (wheelAccum < -THRESHOLD && inStep3) { snapTo(step2); return; }
     };
 
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-      if (isSnapping) {
-        if (curtainUpActive) e.preventDefault();
-        return;
-      }
       const step1 = step1Ref.current;
       const step2 = step2Ref.current;
       const step3 = step3Ref.current;
       if (!step1 || !step2 || !step3) return;
 
-      const step1Rect = step1.getBoundingClientRect();
-      const step2Rect = step2.getBoundingClientRect();
-      const step3Rect = step3.getBoundingClientRect();
-      const delta = touchStartY - e.touches[0].clientY;
+      const s1 = step1.getBoundingClientRect();
+      const s2 = step2.getBoundingClientRect();
+      const s3 = step3.getBoundingClientRect();
 
-      if (delta > 20 && step1Rect.top < -30 && step1Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(window.scrollY + step1Rect.bottom);
-      } else if (delta > 20 && step2Rect.top < -30 && step2Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(window.scrollY + step2Rect.bottom);
-      } else if (delta < -20 && step2Rect.top <= 0 && step2Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(step2Rect.top + window.scrollY - window.innerHeight);
-      } else if (delta < -20 && step3Rect.top < -30 && step3Rect.bottom >= 0) {
+      const inStep1 = s1.top <= 0 && s1.bottom > 0;
+      const inStep2 = s2.top <= 0 && s2.bottom > 0;
+      const inStep3 = s3.top <= 0 && s3.bottom > 0;
+      if (!inStep1 && !inStep2 && !inStep3) return;
+
+      if (isSnapping) { if (curtainUpActive) e.preventDefault(); return; }
+
+      const curtainZone = window.innerHeight * 0.05;
+      const d = touchStartY - e.touches[0].clientY;
+
+      if (d > 15 && inStep1) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(step2);
+      } else if (d > 15 && inStep2) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(step3);
+      } else if (d > 15 && inStep3) {
+        const darkSection = step3.nextElementSibling?.nextElementSibling as HTMLElement | null;
+        if (darkSection) { hasCurtainSnapped = true; e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(darkSection); }
+      } else if (d < -15 && inStep1) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY;
+        snapToY(s1.top + window.scrollY - window.innerHeight);
+      } else if (d < -15 && inStep2) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(step1);
+      } else if (d < -15 && inStep3 && s3.top < -curtainZone) {
         hasCurtainSnapped = false;
-        e.preventDefault();
-        snapTo(step3Rect.top + window.scrollY, true);
-      } else if (delta < -20 && step3Rect.top <= 0 && step3Rect.bottom > 0) {
-        e.preventDefault();
-        snapTo(step3Rect.top + window.scrollY - window.innerHeight);
+        e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(step3, true);
+      } else if (d < -15 && inStep3) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; snapTo(step2);
       }
     };
 
@@ -234,11 +276,8 @@ export default function Features() {
         // 콘텐츠가 완전히 사라지면 다크 섹션으로 스냅
         if (progress >= 0.4 && !hasCurtainSnapped && !isSnapping) {
           hasCurtainSnapped = true;
-          const darkSection = step3.nextElementSibling as HTMLElement | null;
-          const snapY = darkSection
-            ? Math.round(window.scrollY + darkSection.getBoundingClientRect().top)
-            : Math.round(window.scrollY + rect.bottom);
-          snapTo(snapY);
+          const darkSection = step3.nextElementSibling?.nextElementSibling as HTMLElement | null;
+          if (darkSection) snapTo(darkSection);
         }
       } else if (rect.top >= 0) {
         content.style.transform = "translateY(0)";
