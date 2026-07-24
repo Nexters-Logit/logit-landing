@@ -48,32 +48,36 @@ export default function Home() {
           style={{
             position: "absolute",
             top: "-125px",
-            left: "231px",
-            width: "467px",
-            height: "451px",
+            left: "clamp(20px, 12vw, 231px)",
+            width: "clamp(200px, 24.3vw, 467px)",
+            height: "clamp(193px, 23.5vw, 451px)",
           }}
         />
       </div>
-      <div style={{ position: "relative", width: "100%", minHeight: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1 }}>
+      <div style={{ position: "relative", width: "100%", height: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1 }}>
         <img
           src="/dark-section-bg.svg"
           alt=""
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: "130px",
+            top: 0,
             left: 0,
             width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            objectPosition: "top center",
             pointerEvents: "none",
           }}
         />
-        {/* 라디얼 그라디언트 — overflow:hidden으로 하단 클립, Step 3 쪽 상단 부분은 Features의 Step3 gradient로 처리 */}
+        {/* 라디얼 그라디언트 — 항상 수평 중앙 */}
         <div
           className="pointer-events-none"
           style={{
             position: "absolute",
             top: "-428px",
-            left: "-54px",
+            left: "50%",
+            transform: "translateX(-50%)",
             width: "1974px",
             height: "1974px",
             borderRadius: "1974px",
@@ -86,10 +90,10 @@ export default function Home() {
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: "281px",
+            bottom: 0,
             left: 0,
-            width: "694px",
-            height: "799px",
+            width: "clamp(120px, 36.1vw, 694px)",
+            height: "clamp(138px, 41.6vw, 799px)",
             pointerEvents: "none",
           }}
         />
@@ -99,24 +103,26 @@ export default function Home() {
           aria-hidden="true"
           style={{
             position: "absolute",
-            top: "81px",
-            left: "1542px",
-            width: "378px",
-            height: "620px",
+            top: "clamp(40px, 7.5vh, 81px)",
+            right: 0,
+            width: "clamp(80px, 19.7vw, 378px)",
+            height: "clamp(131px, 32.3vw, 620px)",
             pointerEvents: "none",
           }}
         />
-        {/* CTA 박스 */}
+        {/* CTA 박스 — 항상 수직/수평 중앙 */}
         <div
           style={{
             position: "absolute",
-            top: "511px",
-            left: "527px",
-            width: "866px",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: "min(866px, calc(100vw - 40px))",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "32px",
+            gap: "clamp(20px, 2.96vh, 32px)",
+            zIndex: 1,
           }}
         >
           <p
@@ -124,10 +130,10 @@ export default function Home() {
               color: "#FFF",
               textAlign: "center",
               fontFamily: "Pretendard",
-              fontSize: "40px",
+              fontSize: "clamp(22px, 2.08vw, 40px)",
               fontWeight: 700,
               lineHeight: "120%",
-              whiteSpace: "nowrap",
+              wordBreak: "keep-all",
             }}
           >
             경험이 자산이 되는 자소서 작성, 지금 바로 시작해보세요
@@ -138,8 +144,8 @@ export default function Home() {
             rel="noopener noreferrer"
             style={{
               display: "flex",
-              width: "586px",
-              height: "66px",
+              width: "min(586px, 100%)",
+              height: "clamp(52px, 6.1vh, 66px)",
               padding: "14px 24px",
               justifyContent: "center",
               alignItems: "center",
@@ -149,7 +155,7 @@ export default function Home() {
               cursor: "pointer",
               color: "#FFF",
               fontFamily: "Pretendard",
-              fontSize: "18px",
+              fontSize: "clamp(14px, 0.94vw, 18px)",
               fontWeight: 600,
               lineHeight: "140%",
               textDecoration: "none",

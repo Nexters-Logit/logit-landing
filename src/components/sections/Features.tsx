@@ -89,8 +89,8 @@ function FeatureStep({
               bottom: 0,
               left: "50%",
               transform: "translateX(-50%)",
-              width: `min(${imageWidth}px, 70vw)`,
-              height: `min(${imageHeight}px, ${((70 * imageHeight) / imageWidth).toFixed(1)}vw)`,
+              width: `min(${imageWidth}px, 70vw, calc((100vh - 400px) * ${(imageWidth / imageHeight).toFixed(4)}))`,
+              height: `min(${imageHeight}px, ${((70 * imageHeight) / imageWidth).toFixed(1)}vw, calc(100vh - 400px))`,
               zIndex: 1,
             }}
           />
@@ -341,7 +341,7 @@ export default function Features() {
         emojiColor="#E1E4ED"
         stepLabel="Step 3. 자소서 초안 완성!"
         heading="AI가 매칭해주는 점수로 빠르게 경험을 매칭하고 자소서를 완성해보세요"
-        textWidth="1100px"
+        textWidth="1500px"
         imageSrc="/feature-step3.svg"
         imageWidth={570}
         imageHeight={647}
