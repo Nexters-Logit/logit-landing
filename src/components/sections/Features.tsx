@@ -169,7 +169,7 @@ export default function Features() {
     let wheelDir = 0;
     let activeStep = "";
     let stepEnteredAt = 0;
-    const ENTRY_COOLDOWN = 300;
+    const ENTRY_COOLDOWN = 200;
 
     const snapTo = (el: HTMLElement, blockScroll = false) => {
       if (isSnapping) return;
@@ -205,15 +205,13 @@ export default function Features() {
       const s2 = step2.getBoundingClientRect();
       const s3 = step3.getBoundingClientRect();
 
-      const inStep1 = s1.top <= 0 && s1.bottom > 0;
-      const inStep2 = s2.top <= 0 && s2.bottom > 0;
-      const inStep3 = s3.top <= 0 && s3.bottom > 0;
+      // 뷰포트 중심점 기준으로 현재 step 감지 (서브픽셀 오차 완전 방지)
+      const center = window.innerHeight / 2;
+      const inStep1 = s1.top <= center && s1.bottom > center;
+      const inStep2 = s2.top <= center && s2.bottom > center;
+      const inStep3 = s3.top <= center && s3.bottom > center;
 
-      // Features 구간이 아닐 때: accumulator 초기화 후 자연 스크롤
       if (!inStep1 && !inStep2 && !inStep3) { wheelAccum = 0; wheelDir = 0; activeStep = ""; return; }
-
-      e.preventDefault();
-      if (isSnapping) { if (curtainUpActive) e.preventDefault(); return; }
 
       // 새로운 step에 진입했을 때 누적 초기화 + 쿨다운 시작
       const curStep = inStep1 ? "1" : inStep2 ? "2" : "3";
@@ -224,6 +222,19 @@ export default function Features() {
         wheelDir = 0;
       }
 
+      // Step 3 하향: 자연 스크롤 허용 → handleScroll이 커튼 애니메이션 + auto-snap 처리
+      if (inStep3 && e.deltaY > 0) {
+        if (isSnapping || Date.now() - stepEnteredAt < ENTRY_COOLDOWN) {
+          e.preventDefault(); // 스냅 중이거나 쿨다운: 자연 스크롤 차단
+        }
+        // 쿨다운 이후: preventDefault 없이 return → 자연 스크롤 허용
+        return;
+      }
+
+      // 그 외 모든 경우: 자연 스크롤 차단
+      e.preventDefault();
+      if (isSnapping) return;
+
       // 진입 직후 관성 이벤트 무시 (쿨다운)
       if (Date.now() - stepEnteredAt < ENTRY_COOLDOWN) return;
 
@@ -232,22 +243,16 @@ export default function Features() {
       if (dir !== wheelDir) { wheelAccum = 0; wheelDir = dir; }
 
       // 관성 잔여 이벤트(매우 작은 deltaY) 무시
-      if (Math.abs(e.deltaY) < 5) return;
+      if (Math.abs(e.deltaY) < 3) return;
       wheelAccum += e.deltaY;
 
-      // 충분히 스크롤했을 때만 snap 발동 (의도적 스크롤 판별)
-      const THRESHOLD = 80;
+      const THRESHOLD = 50;
       const curtainZone = window.innerHeight * 0.05;
 
       if (wheelAccum > THRESHOLD && inStep1) { snapTo(step2); return; }
       if (wheelAccum > THRESHOLD && inStep2) { snapTo(step3); return; }
-      if (wheelAccum > THRESHOLD && inStep3) {
-        const darkSection = step3.nextElementSibling?.nextElementSibling as HTMLElement | null;
-        if (darkSection) { hasCurtainSnapped = true; snapTo(darkSection); }
-        return;
-      }
+      // Step 3 하향은 위에서 자연 스크롤로 처리 (handleScroll이 auto-snap)
       if (wheelAccum < -THRESHOLD && inStep1) {
-        // Step 1 위로 → PainPoint 솔루션 화면(p=1)으로 스냅
         snapToY(s1.top + window.scrollY - window.innerHeight); return;
       }
       if (wheelAccum < -THRESHOLD && inStep2) { snapTo(step1); return; }
@@ -269,9 +274,10 @@ export default function Features() {
       const s2 = step2.getBoundingClientRect();
       const s3 = step3.getBoundingClientRect();
 
-      const inStep1 = s1.top <= 0 && s1.bottom > 0;
-      const inStep2 = s2.top <= 0 && s2.bottom > 0;
-      const inStep3 = s3.top <= 0 && s3.bottom > 0;
+      const center = window.innerHeight / 2;
+      const inStep1 = s1.top <= center && s1.bottom > center;
+      const inStep2 = s2.top <= center && s2.bottom > center;
+      const inStep3 = s3.top <= center && s3.bottom > center;
       if (!inStep1 && !inStep2 && !inStep3) return;
 
       if (isSnapping) { if (curtainUpActive) e.preventDefault(); return; }
@@ -316,7 +322,7 @@ export default function Features() {
         content.style.opacity = String(opacity);
 
         // 콘텐츠가 완전히 사라지면 다크 섹션으로 스냅
-        if (progress >= 0.4 && !hasCurtainSnapped && !isSnapping) {
+        if (progress >= 0.3 && !hasCurtainSnapped && !isSnapping) {
           hasCurtainSnapped = true;
           const darkSection = step3.nextElementSibling?.nextElementSibling as HTMLElement | null;
           if (darkSection) snapTo(darkSection);
