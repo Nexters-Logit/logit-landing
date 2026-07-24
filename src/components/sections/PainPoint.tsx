@@ -323,18 +323,12 @@ function DesktopPainPoint() {
                 const blurPx = cT * 16;
                 const cardDelay = i * 150;
                 return (
+                  // 스크롤 애니메이션 wrapper (transform/opacity/filter 담당)
                   <div
                     key={i}
                     className="select-none"
                     style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
                       alignSelf: "stretch",
-                      padding: "24px",
-                      borderRadius: "20px",
-                      background: "#FFF",
-                      boxShadow: "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
                       transform: cT > 0
                         ? cardTransforms[i]
                         : section.visible ? "translateY(0)" : "translateY(40px)",
@@ -345,21 +339,32 @@ function DesktopPainPoint() {
                       transition: cT > 0
                         ? "none"
                         : `opacity 0.7s ease-out ${cardDelay}ms, transform 0.7s ease-out ${cardDelay}ms`,
-                      gap: "29px",
                       transformOrigin: "center center",
                       willChange: "transform, opacity, filter",
                     }}
                   >
-                    <span className="text-primary-100 text-[24px] lg:text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "9px", alignSelf: "stretch" }}>
-                      <p className="text-black text-[18px] lg:text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
-                        {point.question}
-                      </p>
-                      <p className="text-grey-300 text-[18px] lg:text-[24px] font-medium leading-[120%] self-stretch">
-                        {point.description.split('\n').map((line, j, arr) => (
-                          <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                        ))}
-                      </p>
+                    {/* 시각 카드 + 호버 애니메이션 */}
+                    <div
+                      className="flex flex-col items-start hover:-translate-y-2 transition-transform duration-200 ease-out"
+                      style={{
+                        padding: "24px",
+                        borderRadius: "20px",
+                        background: "#FFF",
+                        boxShadow: "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
+                        gap: "29px",
+                      }}
+                    >
+                      <span className="text-primary-100 text-[24px] lg:text-[32px] font-bold leading-[120%] self-stretch">0{i + 1}</span>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "9px", alignSelf: "stretch" }}>
+                        <p className="text-black text-[18px] lg:text-[24px] font-bold leading-[120%] self-stretch [word-break:keep-all]">
+                          {point.question}
+                        </p>
+                        <p className="text-grey-300 text-[18px] lg:text-[24px] font-medium leading-[120%] self-stretch">
+                          {point.description.split('\n').map((line, j, arr) => (
+                            <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                          ))}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
