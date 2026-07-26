@@ -141,8 +141,10 @@ export default function PainPoint() {
         transition: "opacity 0.4s ease",
         pointerEvents: expanded ? "none" : "auto",
       }}>
-        <div className="flex flex-col items-center" style={{ gap: "clamp(24px, 4vh, 48px)", width: "100%", maxWidth: "1080px" }}>
+        <div className="flex flex-col items-center" style={{ gap: "clamp(24px, 4vh, 48px)", width: "100%" }}>
+          {/* 타이틀: 1080px 제약 */}
           <div className="flex flex-col items-center text-center gap-2" style={{
+            maxWidth: "1080px",
             opacity: entered ? 1 : 0,
             transform: entered ? "translateY(0)" : "translateY(20px)",
             transition: "opacity 0.6s ease 0.05s, transform 0.6s ease 0.05s",
@@ -160,7 +162,8 @@ export default function PainPoint() {
             </h2>
           </div>
 
-          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style={{ padding: "0 clamp(0px, 9.4vw, 181px)" }}>
+          {/* 카드: 화면 전체 너비 기준으로 181px 패딩 */}
+          <div className="w-full grid grid-cols-1 md:grid-cols-3" style={{ padding: "0 clamp(0px, 9.4vw, 181px)", gap: "clamp(16px, 1.46vw, 28px)" }}>
             {PAIN_POINTS.map((point, i) => (
               <div key={i} className="bg-white rounded-[16px] flex flex-col" style={{
                 padding: "clamp(14px, 1.25vw, 24px)",
@@ -200,6 +203,7 @@ export default function PainPoint() {
           ? "transform 1.3s cubic-bezier(0.22, 1, 0.36, 1)"
           : "transform 0.5s cubic-bezier(0.55, 0, 1, 0.45)",
         pointerEvents: "none", zIndex: 1,
+        willChange: "transform",
       }} />
 
       <img src="/solution-bg.svg" alt="" aria-hidden="true" style={{
@@ -208,6 +212,7 @@ export default function PainPoint() {
         opacity: expanded ? 0.6 : 0,
         transition: expanded ? "opacity 0.5s ease 0.85s" : "opacity 0.2s ease",
         pointerEvents: "none", zIndex: 2,
+        willChange: "opacity",
       }} />
 
       {/* ── 솔루션 텍스트 ───────────────────────────────── */}
@@ -219,6 +224,7 @@ export default function PainPoint() {
           ? "opacity 0.6s ease 1.0s, transform 0.6s ease 1.0s"
           : "opacity 0.2s ease, transform 0.2s ease",
         zIndex: 3, pointerEvents: "none",
+        willChange: "opacity, transform",
       }}>
         <p className="text-grey-70 font-normal leading-[120%]" style={{ fontSize: "clamp(13px, 1.25vw, 24px)" }}>
           그래서 로짓은, 자소서를 바로 쓰지 않습니다.
