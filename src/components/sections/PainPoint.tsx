@@ -29,6 +29,8 @@ export default function PainPoint() {
   const accumRef = useRef(0);
   const accumTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const cooldownRef = useRef(false);
+  // getBoundingClientRect() 대신 IO 기반 활성 여부 (강제 레이아웃 방지)
+  const isEnteredRef = useRef(false);
 
   useEffect(() => {
     expandedRef.current = expanded;
@@ -36,13 +38,18 @@ export default function PainPoint() {
 
   // 진입/이탈 감지
   useEffect(() => {
-    const obs = new IntersectionObserver(
+    // 애니메이션 트리거용 (10% 진입 시)
+    const animObs = new IntersectionObserver(
       ([e]) => {
         if (e.isIntersecting) {
           setEntered(true);
+          // snap 진입 후 남은 모멘텀 차단 (Features와 동일 패턴)
+          cooldownRef.current = true;
+          setTimeout(() => { cooldownRef.current = false; }, 600);
         } else {
           setEntered(false);
           setExpanded(false);
+          isEnteredRef.current = false;
           // 이탈 시 누적값·쿨다운 강제 리셋
           accumRef.current = 0;
           cooldownRef.current = false;
@@ -51,16 +58,23 @@ export default function PainPoint() {
       },
       { threshold: 0.1 }
     );
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
+    // 스크롤 핸들러 게이트용 (90% 이상 보일 때만 활성)
+    const activeObs = new IntersectionObserver(
+      ([e]) => { isEnteredRef.current = e.isIntersecting; },
+      { threshold: 0.9 }
+    );
+    if (ref.current) {
+      animObs.observe(ref.current);
+      activeObs.observe(ref.current);
+    }
+    return () => {
+      animObs.disconnect();
+      activeObs.disconnect();
+    };
   }, []);
 
   // 휠/터치로 expanded 제어
   useEffect(() => {
-    const section = ref.current;
-    if (!section) return;
-
-    const isActive = () => Math.abs(section.getBoundingClientRect().top) < 20;
     const THRESHOLD = 80;
 
     const resetAccum = () => {
@@ -82,7 +96,7 @@ export default function PainPoint() {
     };
 
     const handleWheel = (e: WheelEvent) => {
-      if (!isActive()) return;
+      if (!isEnteredRef.current) return;
       if (cooldownRef.current) { e.preventDefault(); return; }
 
       if (e.deltaY > 0 && !expandedRef.current) {
@@ -106,7 +120,7 @@ export default function PainPoint() {
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-      if (!isActive() || cooldownRef.current) return;
+      if (!isEnteredRef.current || cooldownRef.current) return;
       const delta = touchStartY - e.touches[0].clientY;
       if (Math.abs(delta) < 30) return;
       if (delta > 0 && !expandedRef.current) {
