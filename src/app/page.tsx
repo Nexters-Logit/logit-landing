@@ -5,9 +5,10 @@ import Features from "@/components/sections/Features";
 
 export default function Home() {
   return (
-    <main className="relative bg-white">
-      <div className="relative overflow-hidden bg-transparent min-h-screen" style={{ zIndex: 1 }}>
-        {/* 라디얼 그라디언트 — 첫 화면에만 보임 (overflow-hidden으로 클립) */}
+    <main className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-hide relative bg-white">
+
+      {/* Section 1: Hero */}
+      <div className="snap-start h-screen relative overflow-hidden bg-transparent flex flex-col" style={{ zIndex: 1, scrollSnapStop: "always" }}>
         <div
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
           style={{
@@ -37,24 +38,15 @@ export default function Home() {
         <Header />
         <Hero />
       </div>
+
+      {/* Sections 2 & 3: PainPoint */}
       <PainPoint />
+
+      {/* Sections 4, 5, 6: Features */}
       <Features />
-      {/* 높이 0 앵커: 다크 섹션 overflow:hidden에 클립되지 않고 경계를 걸치는 요소를 배치 */}
-      <div className="hidden md:block" style={{ position: "relative", height: 0, zIndex: 2 }}>
-        <img
-          src="/next-section-mockup.svg"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            top: "-125px",
-            left: "clamp(20px, 12vw, 231px)",
-            width: "clamp(200px, 24.3vw, 467px)",
-            height: "clamp(193px, 23.5vw, 451px)",
-          }}
-        />
-      </div>
-      <div style={{ position: "relative", width: "100%", height: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1 }}>
+
+      {/* Section 7: CTA */}
+      <div className="snap-start" style={{ position: "relative", width: "100%", height: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1, scrollSnapStop: "always" }}>
         <img
           src="/dark-section-bg.svg"
           alt=""
@@ -70,7 +62,6 @@ export default function Home() {
             pointerEvents: "none",
           }}
         />
-        {/* 라디얼 그라디언트 — 항상 수평 중앙 */}
         <div
           className="pointer-events-none"
           style={{
@@ -110,7 +101,6 @@ export default function Home() {
             pointerEvents: "none",
           }}
         />
-        {/* CTA 박스 — 항상 수직/수평 중앙 */}
         <div
           style={{
             position: "absolute",
@@ -165,6 +155,7 @@ export default function Home() {
           </a>
         </div>
       </div>
+
     </main>
   );
 }

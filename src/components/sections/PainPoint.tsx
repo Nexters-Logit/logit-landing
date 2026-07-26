@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useScrollReveal } from "@/lib/hooks";
-import Image from "next/image";
 
 const QUOTE = "자소서가 어려운 이유, 글솜씨 때문만이 아닙니다";
 
@@ -21,221 +19,100 @@ const PAIN_POINTS = [
   },
 ];
 
-// ── 모바일 전용 ──────────────────────────────────────────────────────────
-function MobilePainPoint() {
-  const [cardsVisible, setCardsVisible] = useState(false);
-  const [solutionVisible, setSolutionVisible] = useState(false);
-  const cardsRef = useRef<HTMLDivElement>(null);
-  const solutionRef = useRef<HTMLDivElement>(null);
+export default function PainPoint() {
+  const [entered, setEntered] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+  const expandedRef = useRef(false);
+  const ref = useRef<HTMLElement>(null);
+
+  // 누적값을 ref로 관리 — 두 useEffect에서 공유
+  const accumRef = useRef(0);
+  const accumTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const cooldownRef = useRef(false);
 
   useEffect(() => {
-    const obs1 = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setCardsVisible(true); },
-      { threshold: 0.05 }
-    );
-    const obs2 = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) setSolutionVisible(true); },
+    expandedRef.current = expanded;
+  }, [expanded]);
+
+  // 진입/이탈 감지
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setEntered(true);
+        } else {
+          setEntered(false);
+          setExpanded(false);
+          // 이탈 시 누적값·쿨다운 강제 리셋
+          accumRef.current = 0;
+          cooldownRef.current = false;
+          if (accumTimerRef.current) clearTimeout(accumTimerRef.current);
+        }
+      },
       { threshold: 0.1 }
     );
-    if (cardsRef.current) obs1.observe(cardsRef.current);
-    if (solutionRef.current) obs2.observe(solutionRef.current);
-    return () => { obs1.disconnect(); obs2.disconnect(); };
+    if (ref.current) obs.observe(ref.current);
+    return () => obs.disconnect();
   }, []);
 
-  return (
-    <div className="w-full">
-      {/* Screen 1: 카드 */}
-      <div
-        ref={cardsRef}
-        className="w-full bg-[#E4EEFD] flex flex-col"
-        style={{ minHeight: "100dvh", padding: "60px 20px 40px" }}
-      >
-        {/* 텍스트 + 카드 전체를 수직 중앙 정렬 */}
-        <div className="flex flex-col flex-1 justify-center" style={{ gap: "clamp(24px, 4vh, 48px)" }}>
-
-          {/* 인트로 텍스트 */}
-          <div
-            className="flex flex-col items-center text-center gap-2"
-            style={{
-              opacity: cardsVisible ? 1 : 0,
-              transform: cardsVisible ? "translateY(0)" : "translateY(20px)",
-              transition: "opacity 0.5s ease, transform 0.5s ease",
-            }}
-          >
-            <p className="text-grey-300 text-[13px] font-normal leading-[120%]">
-              자소서 작성, 왜 매번 이렇게 어려울까요?
-            </p>
-            <h2 className="text-[20px] font-bold text-grey-400 leading-[130%] [word-break:keep-all]">
-              {QUOTE}
-            </h2>
-          </div>
-
-          {/* 카드 목록 */}
-          <div className="flex flex-col gap-4 px-8">
-            {PAIN_POINTS.map((point, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-[16px] flex flex-col items-center text-center"
-                style={{
-                  padding: "16px",
-                  gap: "10px",
-                  boxShadow: "0 4px 16px 0 rgba(0,0,0,0.08)",
-                  opacity: cardsVisible ? 1 : 0,
-                  transform: cardsVisible ? "translateY(0) scale(1)" : "translateY(24px) scale(0.95)",
-                  transition: `opacity 0.5s ease ${80 + i * 120}ms, transform 0.5s cubic-bezier(0.34,1.56,0.64,1) ${80 + i * 120}ms`,
-                }}
-              >
-                <span className="text-primary-100 text-[14px] font-bold leading-[120%]">0{i + 1}</span>
-                <div className="flex flex-col gap-[6px]">
-                  <p className="text-black text-[14px] font-bold leading-[140%] [word-break:keep-all]">
-                    {point.question}
-                  </p>
-                  <p className="text-grey-300 text-[12px] font-medium leading-[140%] [word-break:keep-all]">
-                    {point.description.split('\n').map((line, j, arr) => (
-                      <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                    ))}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {/* 스크롤 유도 */}
-          <div
-            className="flex justify-center"
-            style={{
-              opacity: cardsVisible ? 0.45 : 0,
-              transition: "opacity 0.6s ease 600ms",
-            }}
-          >
-            <svg
-              className="animate-bounce"
-              width="28" height="28" viewBox="0 0 24 24"
-              fill="none" stroke="#64748b" strokeWidth="2"
-              strokeLinecap="round" strokeLinejoin="round"
-            >
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </div>
-
-        </div>
-      </div>
-
-      {/* Screen 2: 솔루션 */}
-      <div
-        ref={solutionRef}
-        className="relative w-full flex flex-col items-center justify-center text-center overflow-hidden"
-        style={{
-          minHeight: "100dvh",
-          padding: "48px 24px",
-          background: "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)",
-        }}
-      >
-        <img
-          src="/solution-bg.svg"
-          alt=""
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            opacity: 0.6,
-            pointerEvents: "none",
-          }}
-        />
-        <div
-          className="relative z-10 flex flex-col items-center gap-4"
-          style={{
-            opacity: solutionVisible ? 1 : 0,
-            transform: solutionVisible ? "translateY(0) scale(1)" : "translateY(32px) scale(0.96)",
-            transition: "opacity 0.7s ease 0.1s, transform 0.7s cubic-bezier(0.34,1.2,0.64,1) 0.1s",
-          }}
-        >
-          <p className="text-grey-70 text-[13px] font-normal leading-[120%]">
-            그래서 로짓은, 자소서를 바로 쓰지 않습니다.
-          </p>
-          <h2 className="text-[22px] font-bold text-white leading-[130%] [word-break:keep-all]">
-            자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
-          </h2>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ── 헬퍼 함수 ────────────────────────────────────────────────────────────
-function ease(t: number) {
-  return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-}
-function norm(p: number, s: number, e: number) {
-  return Math.max(0, Math.min(1, (p - s) / (e - s)));
-}
-const CARD_STAGGER = [0, 0.05, 0.10];
-
-// ── 데스크탑 전용 ────────────────────────────────────────────────────────
-function DesktopPainPoint() {
-  const section = useScrollReveal(0.05, false);
-
-  const convergeSpaceRef = useRef<HTMLDivElement>(null);
-  const [p, setP] = useState(0);
-  const pRef = useRef(0);
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-  const [vw, setVw] = useState(1200);
-
+  // 휠/터치로 expanded 제어
   useEffect(() => {
-    setVw(window.innerWidth);
-    const onResize = () => setVw(window.innerWidth);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
+    const section = ref.current;
+    if (!section) return;
 
-  useEffect(() => {
-    const onScroll = () => {
-      const el = convergeSpaceRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const total = el.offsetHeight - window.innerHeight;
-      const next = Math.max(0, Math.min(1, -rect.top / total));
-      setP(next);
-      pRef.current = next;
+    const isActive = () => Math.abs(section.getBoundingClientRect().top) < 20;
+    const THRESHOLD = 80;
+
+    const resetAccum = () => {
+      accumRef.current = 0;
+      if (accumTimerRef.current) clearTimeout(accumTimerRef.current);
     };
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
-  useEffect(() => {
-    let isSnapping = false;
-
-    const snapToFeatures = () => {
-      if (isSnapping) return;
-      const el = convergeSpaceRef.current;
-      if (!el) return;
-      isSnapping = true;
-      const target = window.scrollY + el.getBoundingClientRect().bottom;
-      window.scrollTo({ top: target, behavior: "smooth" });
-      setTimeout(() => { isSnapping = false; }, 1000);
+    const onDown = () => {
+      resetAccum();
+      cooldownRef.current = true;
+      setExpanded(true);
+      setTimeout(() => { cooldownRef.current = false; }, 1200);
+    };
+    const onUp = () => {
+      resetAccum();
+      cooldownRef.current = true;
+      setExpanded(false);
+      setTimeout(() => { cooldownRef.current = false; }, 900);
     };
 
     const handleWheel = (e: WheelEvent) => {
-      const el = convergeSpaceRef.current;
-      if (!el) return;
-      if (pRef.current > 0.85 && e.deltaY > 0 && !isSnapping && el.getBoundingClientRect().bottom > 0) {
+      if (!isActive()) return;
+      if (cooldownRef.current) { e.preventDefault(); return; }
+
+      if (e.deltaY > 0 && !expandedRef.current) {
         e.preventDefault();
-        snapToFeatures();
+        accumRef.current += e.deltaY;
+        if (accumTimerRef.current) clearTimeout(accumTimerRef.current);
+        accumTimerRef.current = setTimeout(() => { accumRef.current = 0; }, 400);
+        if (accumRef.current >= THRESHOLD) onDown();
+      } else if (e.deltaY < 0 && expandedRef.current) {
+        e.preventDefault();
+        accumRef.current += Math.abs(e.deltaY);
+        if (accumTimerRef.current) clearTimeout(accumTimerRef.current);
+        accumTimerRef.current = setTimeout(() => { accumRef.current = 0; }, 400);
+        if (accumRef.current >= THRESHOLD) onUp();
+      } else {
+        // 경계(expanded+아래, cards+위) → snap 컨테이너로 통과
+        resetAccum();
       }
     };
 
     let touchStartY = 0;
     const handleTouchStart = (e: TouchEvent) => { touchStartY = e.touches[0].clientY; };
     const handleTouchMove = (e: TouchEvent) => {
-      const el = convergeSpaceRef.current;
-      if (!el) return;
-      if (pRef.current > 0.85 && !isSnapping && el.getBoundingClientRect().bottom > 0) {
-        const delta = touchStartY - e.touches[0].clientY;
-        if (delta > 20) { e.preventDefault(); snapToFeatures(); }
+      if (!isActive() || cooldownRef.current) return;
+      const delta = touchStartY - e.touches[0].clientY;
+      if (Math.abs(delta) < 30) return;
+      if (delta > 0 && !expandedRef.current) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; onDown();
+      } else if (delta < 0 && expandedRef.current) {
+        e.preventDefault(); touchStartY = e.touches[0].clientY; onUp();
       }
     };
 
@@ -249,283 +126,107 @@ function DesktopPainPoint() {
     };
   }, []);
 
-  // 텍스트 인트로
-  const textFadeT   = ease(norm(p, 0.02, 0.18));
-  const textOpacity = p > 0.01 ? Math.max(0, 1 - textFadeT) : section.visible ? 1 : 0;
-  const textSlideY  = p > 0.01 ? textFadeT * -40 : section.visible ? 0 : 20;
-  const textTransition = p > 0.01 ? "none" : "opacity 0.7s ease, transform 0.7s ease";
-
-  const cardTs = CARD_STAGGER.map(s => ease(norm(p, s, 0.50 + s)));
-
-  const glowT    = ease(norm(p, 0.05, 0.46));
-  const glowSize = 60 + glowT * 420;
-
-  const logoAppear  = ease(norm(p, 0.40, 0.50));
-  const logoFade    = ease(norm(p, 0.54, 0.68));
-  const logoOpacity = Math.max(0, logoAppear * (1 - logoFade));
-  const logoScale   = 0.6 + 0.4 * logoAppear;
-
-  const ringT     = ease(norm(p, 0.40, 0.52));
-  const ringFade  = ease(norm(p, 0.54, 0.68));
-  const ring1Size = 60 + ringT * 48;
-  const ring2Size = 60 + ringT * 90;
-  const ringOp    = Math.max(0, ringT * 0.5 * (1 - ringFade));
-
-  const expandT    = ease(norm(p, 0.50, 0.82));
-  const circleSize = 80 * (1 + expandT * 42);
-
-  const labelT   = ease(norm(p, 0.58, 0.68));
-  const headingT = ease(norm(p, 0.61, 0.71));
-
-  const padding  = vw >= 1024 ? 80 : 48;
-  const colWidth = Math.max(120, (vw - 2 * padding - 48) / 3);
-  const dx = colWidth + 24;
-
-  const cardTransforms = CARD_STAGGER.map((_, i) => {
-    const cT = cardTs[i];
-    const offsets = [dx, 0, -dx];
-    return `translate(${offsets[i] * cT}px, 0) scale(${1 - 0.88 * cT})`;
-  });
-
   return (
-    <section className="w-full bg-[#E4EEFD]">
-      <div ref={section.ref}>
-        <div ref={convergeSpaceRef} style={{ height: "500vh" }} className="relative">
-          <div className="sticky top-0 h-screen overflow-hidden" style={{ background: "#E4EEFD" }}>
-
-            {/* 텍스트 인트로 */}
-            <div
-              style={{
-                position: "absolute",
-                top: "clamp(150px, 19.2vh, 207px)",
-                left: 0, right: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                gap: "clamp(16px, 2.96vh, 32px)",
-                opacity: textOpacity,
-                transform: `translateY(${textSlideY}px)`,
-                transition: textTransition,
-                pointerEvents: "none",
-                zIndex: 6,
-              }}
-            >
-              <img
-                src="/object.svg"
-                alt=""
-                aria-hidden="true"
-                style={{ width: "clamp(100px, 10.83vw, 208px)", height: "auto" }}
-              />
-              <p className="text-grey-300 font-normal leading-[120%] text-center self-stretch"
-                style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}>
-                자소서 작성, 왜 매번 이렇게 어려울까요?
-              </p>
-              <h2
-                className="font-bold text-grey-400 leading-[120%] text-center self-stretch [word-break:keep-all]"
-                style={{ fontSize: "clamp(22px, 2.08vw, 40px)", marginTop: "-24px" }}
-              >
-                {QUOTE}
-              </h2>
-            </div>
-
-            {/* 카드 그리드 */}
-            <div
-              className="w-full grid grid-cols-3 items-stretch"
-              style={{
-                position: "absolute",
-                top: "clamp(360px, 55.5vh, 599px)",
-                left: 0, right: 0,
-                zIndex: 10,
-                gap: "clamp(16px, 1.46vw, 28px)",
-                padding: "0 clamp(60px, 9.4vw, 181px)",
-              }}
-            >
-              {PAIN_POINTS.map((point, i) => {
-                const cT = cardTs[i];
-                const blurPx = cT * 16;
-                const cardDelay = i * 150;
-                const isConverging = cT > 0.03;
-                const isHovered = hoveredCard === i && !isConverging;
-                const baseTranslateY = section.visible ? 0 : 40;
-                const hoverOffset = isHovered ? -8 : 0;
-                return (
-                  <div
-                    key={i}
-                    className="select-none"
-                    onMouseEnter={() => !isConverging && setHoveredCard(i)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                      alignSelf: "stretch",
-                      padding: "clamp(14px, 1.25vw, 24px)",
-                      borderRadius: "clamp(12px, 1.04vw, 20px)",
-                      background: "#FFF",
-                      boxShadow: isHovered
-                        ? "0 8px 40px 0 rgba(0, 0, 0, 0.18)"
-                        : "0 4px 32px 0 rgba(0, 0, 0, 0.12)",
-                      transform: isConverging
-                        ? cardTransforms[i]
-                        : `translateY(${baseTranslateY + hoverOffset}px)`,
-                      opacity: isConverging
-                        ? Math.pow(1 - cT, 0.7)
-                        : section.visible ? 1 : 0,
-                      filter: blurPx > 0.5 ? `blur(${blurPx}px)` : undefined,
-                      transition: isConverging
-                        ? "none"
-                        : `opacity 0.7s ease-out ${cardDelay}ms, transform ${isHovered ? "0.18s ease-out" : `0.7s ease-out ${cardDelay}ms`}, box-shadow 0.18s ease-out`,
-                      gap: "clamp(16px, 1.5vw, 29px)",
-                      transformOrigin: "center center",
-                      willChange: "transform, opacity, filter",
-                      cursor: "default",
-                    }}
-                  >
-                    <span className="text-primary-100 font-bold leading-[120%] self-stretch"
-                      style={{ fontSize: "clamp(18px, 1.67vw, 32px)" }}>0{i + 1}</span>
-                    <div style={{ display: "flex", flexDirection: "column", gap: "clamp(6px, 0.47vw, 9px)", alignSelf: "stretch" }}>
-                      <p className="text-black font-bold leading-[120%] self-stretch [word-break:keep-all]"
-                        style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}>
-                        {point.question}
-                      </p>
-                      <p className="text-grey-300 font-medium leading-[120%] self-stretch"
-                        style={{ fontSize: "clamp(12px, 1.04vw, 20px)" }}>
-                        {point.description.split('\n').map((line, j, arr) => (
-                          <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
-                        ))}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* 중심 glow */}
-            <div style={{
-              position: "absolute", left: "50%", top: "50%",
-              width: `${glowSize}px`, height: `${glowSize}px`,
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(75,192,250,0.22) 0%, rgba(101,193,237,0.07) 50%, transparent 72%)",
-              transform: "translate(-50%, -50%)",
-              opacity: glowT * (1 - expandT * 2),
-              zIndex: 1,
-            }} />
-
-            {/* 배경 확장 원 */}
-            <div style={{
-              position: "absolute",
-              width: `${circleSize}px`, height: `${circleSize}px`,
-              borderRadius: "50%",
-              background: "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)",
-              left: "50%", top: "50%",
-              transform: "translate(-50%, -50%)",
-              zIndex: 2,
-              opacity: expandT > 0 ? 1 : 0,
-            }} />
-
-            {/* 로고 링 */}
-            <div style={{
-              position: "absolute", left: "50%", top: "50%",
-              width: `${ring1Size}px`, height: `${ring1Size}px`,
-              borderRadius: "50%",
-              border: "1.5px solid rgba(59,111,232,0.45)",
-              transform: "translate(-50%, -50%)",
-              opacity: ringOp,
-              zIndex: 3,
-            }} />
-            <div style={{
-              position: "absolute", left: "50%", top: "50%",
-              width: `${ring2Size}px`, height: `${ring2Size}px`,
-              borderRadius: "50%",
-              border: "1px solid rgba(59,111,232,0.18)",
-              transform: "translate(-50%, -50%)",
-              opacity: ringOp * 0.6,
-              zIndex: 3,
-            }} />
-
-            {/* 로고 */}
-            <div style={{
-              position: "absolute", left: "50%", top: "50%",
-              transform: `translate(-50%, -50%) scale(${logoScale})`,
-              zIndex: 4,
-              opacity: logoOpacity,
-            }}>
-              <Image src="/logo_symbol_2d.svg" alt="로짓" width={52} height={52} />
-            </div>
-
-            {/* 솔루션 배경 gradient */}
-            <div style={{
-              position: "absolute",
-              left: "-695px", top: "-864px",
-              width: "2801px", height: "2801px",
-              borderRadius: "2801px",
-              background: "radial-gradient(55.95% 55.95% at 41.75% 40.6%, #40A5FF 0%, #2571EB 100%)",
-              opacity: labelT,
-              zIndex: 4,
-              pointerEvents: "none",
-            }} />
-
-            {/* 솔루션 배경 SVG */}
+    <section
+      ref={ref}
+      className="snap-start h-screen w-full overflow-hidden"
+      style={{ position: "relative", background: "#E4EEFD", scrollSnapStop: "always" }}
+    >
+      {/* ── 카드 레이어 ─────────────────────────────────── */}
+      <div style={{
+        position: "absolute", inset: 0,
+        display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+        padding: "60px 20px 40px",
+        opacity: expanded ? 0 : 1,
+        transition: "opacity 0.4s ease",
+        pointerEvents: expanded ? "none" : "auto",
+      }}>
+        <div className="flex flex-col items-center" style={{ gap: "clamp(24px, 4vh, 48px)", width: "100%", maxWidth: "1080px" }}>
+          <div className="flex flex-col items-center text-center gap-2" style={{
+            opacity: entered ? 1 : 0,
+            transform: entered ? "translateY(0)" : "translateY(20px)",
+            transition: "opacity 0.6s ease 0.05s, transform 0.6s ease 0.05s",
+          }}>
             <img
-              src="/solution-bg.svg"
-              alt=""
-              aria-hidden="true"
-              style={{
-                position: "absolute",
-                inset: 0,
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                opacity: labelT,
-                zIndex: 4,
-                pointerEvents: "none",
-              }}
+              src="/object.svg" alt="" aria-hidden="true"
+              className="hidden md:block"
+              style={{ width: "clamp(80px, 10.83vw, 208px)", height: "auto", marginBottom: "8px" }}
             />
+            <p className="text-grey-300 font-normal leading-[120%]" style={{ fontSize: "clamp(13px, 1.25vw, 24px)" }}>
+              자소서 작성, 왜 매번 이렇게 어려울까요?
+            </p>
+            <h2 className="font-bold text-grey-400 leading-[120%] text-center [word-break:keep-all]" style={{ fontSize: "clamp(20px, 2.08vw, 40px)" }}>
+              {QUOTE}
+            </h2>
+          </div>
 
-            {/* 솔루션 텍스트 */}
-            <div style={{
-              position: "absolute", left: 0, right: 0, top: "50%",
-              transform: "translateY(-50%)",
-              opacity: 1,
-              zIndex: 5,
-              textAlign: "center", padding: "0 3rem",
-              pointerEvents: "none",
-            }}>
-              <p
-                className="text-grey-70 text-[18px] lg:text-[24px] font-normal leading-[120%] text-center self-stretch mb-5"
-                style={{ opacity: labelT, transform: `translateY(${(1 - labelT) * 14}px)` }}
-              >
-                그래서 로짓은, 자소서를 바로 쓰지 않습니다.
-              </p>
-              <h2
-                className="text-[28px] lg:text-[40px] font-bold text-white leading-[120%] text-center [word-break:keep-all] mb-6"
-                style={{ opacity: headingT, transform: `translateY(${(1 - headingT) * 20}px)` }}
-              >
-                자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
-              </h2>
-            </div>
-
+          <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4" style={{ padding: "0 clamp(0px, 9.4vw, 181px)" }}>
+            {PAIN_POINTS.map((point, i) => (
+              <div key={i} className="bg-white rounded-[16px] flex flex-col" style={{
+                padding: "clamp(14px, 1.25vw, 24px)",
+                gap: "clamp(12px, 1.5vw, 29px)",
+                boxShadow: "0 4px 32px 0 rgba(0,0,0,0.12)",
+                opacity: entered ? 1 : 0,
+                transform: entered ? "translateY(0)" : "translateY(28px)",
+                transition: `opacity 0.6s ease ${0.2 + i * 0.12}s, transform 0.6s ease ${0.2 + i * 0.12}s`,
+              }}>
+                <span className="text-primary-100 font-bold leading-[120%]" style={{ fontSize: "clamp(16px, 1.67vw, 32px)" }}>
+                  0{i + 1}
+                </span>
+                <div className="flex flex-col gap-[6px]">
+                  <p className="text-black font-bold leading-[120%] [word-break:keep-all]" style={{ fontSize: "clamp(14px, 1.25vw, 24px)" }}>
+                    {point.question}
+                  </p>
+                  <p className="text-grey-300 font-medium leading-[120%]" style={{ fontSize: "clamp(12px, 1.04vw, 20px)" }}>
+                    {point.description.split("\n").map((line, j, arr) => (
+                      <span key={j}>{line}{j < arr.length - 1 && <br />}</span>
+                    ))}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      {/* ── 원형 팽창 배경 ──────────────────────────────── */}
+      <div style={{
+        position: "absolute", left: "50%", top: "50%",
+        width: "max(220vw, 220vh)", height: "max(220vw, 220vh)",
+        borderRadius: "50%",
+        background: "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)",
+        transform: `translate(-50%, -50%) scale(${expanded ? 1 : 0})`,
+        transition: expanded
+          ? "transform 1.3s cubic-bezier(0.22, 1, 0.36, 1)"
+          : "transform 0.5s cubic-bezier(0.55, 0, 1, 0.45)",
+        pointerEvents: "none", zIndex: 1,
+      }} />
+
+      <img src="/solution-bg.svg" alt="" aria-hidden="true" style={{
+        position: "absolute", inset: 0,
+        width: "100%", height: "100%", objectFit: "cover",
+        opacity: expanded ? 0.6 : 0,
+        transition: expanded ? "opacity 0.5s ease 0.85s" : "opacity 0.2s ease",
+        pointerEvents: "none", zIndex: 2,
+      }} />
+
+      {/* ── 솔루션 텍스트 ───────────────────────────────── */}
+      <div className="relative flex flex-col items-center justify-center text-center h-full" style={{
+        padding: "0 clamp(24px, 6vw, 120px)", gap: "16px",
+        opacity: expanded ? 1 : 0,
+        transform: expanded ? "translateY(0)" : "translateY(32px)",
+        transition: expanded
+          ? "opacity 0.6s ease 1.0s, transform 0.6s ease 1.0s"
+          : "opacity 0.2s ease, transform 0.2s ease",
+        zIndex: 3, pointerEvents: "none",
+      }}>
+        <p className="text-grey-70 font-normal leading-[120%]" style={{ fontSize: "clamp(13px, 1.25vw, 24px)" }}>
+          그래서 로짓은, 자소서를 바로 쓰지 않습니다.
+        </p>
+        <h2 className="font-bold text-white leading-[120%] text-center [word-break:keep-all]" style={{ fontSize: "clamp(22px, 2.08vw, 40px)" }}>
+          자소서가 달라지려면, 경험을 고르는 방식부터 달라져야 합니다.
+        </h2>
+      </div>
     </section>
   );
-}
-
-// ── 메인 export ───────────────────────────────────────────────────────────
-export default function PainPoint() {
-  const [isMobile, setIsMobile] = useState<boolean | null>(null);
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  if (isMobile === null) {
-    return <div className="w-full bg-[#E4EEFD]" style={{ minHeight: "100vh" }} />;
-  }
-
-  return isMobile ? <MobilePainPoint /> : <DesktopPainPoint />;
 }
