@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="w-full" style={{ background: "#13151C" }}>
       <div style={{
-        padding: "clamp(48px, 6.25vw, 120px) clamp(20px, 4.6875vw, 90px) clamp(32px, 4.17vw, 80px)",
+        padding: "clamp(48px, 6.25vw, 120px) clamp(20px, 4.6875vw, 90px) clamp(24px, 3.125vw, 60px)",
       }}>
 
         {/* 로고 + 위로가기 버튼 */}
@@ -57,6 +57,7 @@ export default function Footer() {
 
         {/* Email */}
         <div style={{ marginTop: "clamp(40px, 4.6875vw, 90px)" }}>
+
           <p style={{
             color: "#F6F6F7",
             fontFamily: "Pretendard",
@@ -76,6 +77,50 @@ export default function Footer() {
             margin: 0,
           }}>logit2026@gmail.com</p>
         </div>
+
+        {/* 소셜 아이콘 + 스토어 버튼 */}
+        <div style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginTop: "clamp(24px, 2.5vw, 48px)",
+        }}>
+
+          {/* 소셜 아이콘 그룹 */}
+          <div style={{ display: "flex", alignItems: "center", gap: "clamp(12px, 1.25vw, 24px)" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon_tistory.svg" alt="Tistory" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon_naver_blog.svg" alt="Naver Blog" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon_instagram.svg" alt="Instagram" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/icon_kakaotalk.svg" alt="KakaoTalk" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+          </div>
+
+          {/* 스토어 버튼 그룹 */}
+          <div style={{ display: "flex", alignItems: "center", gap: "clamp(8px, 0.83vw, 16px)" }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/app-store.svg" alt="App Store" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto" }} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/google-play.svg" alt="Google Play" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto" }} />
+          </div>
+
+        </div>
+
+        {/* Copyright */}
+        <p style={{
+          color: "#949497",
+          textAlign: "center",
+          fontFamily: "Pretendard",
+          fontSize: "clamp(12px, 1.09vw, 21px)",
+          fontWeight: 500,
+          lineHeight: "160%",
+          letterSpacing: "-0.024em",
+          margin: 0,
+          marginTop: "clamp(24px, 2.5vw, 48px)",
+          alignSelf: "stretch",
+        }}>© Copyright 2026 logit.ac.kr All Right Reserved</p>
 
       </div>
     </footer>
