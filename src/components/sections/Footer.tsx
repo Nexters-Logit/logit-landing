@@ -86,13 +86,19 @@ export default function Footer() {
           {/* 소셜 아이콘 그룹 */}
           <div style={{ display: "flex", alignItems: "center", gap: "clamp(12px, 1.25vw, 24px)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon_tistory.svg" alt="Tistory" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon_naver_blog.svg" alt="Naver Blog" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/icon_instagram.svg" alt="Instagram" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/icon_kakaotalk.svg" alt="KakaoTalk" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" style={{ lineHeight: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icon_instagram.svg" alt="Instagram" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            </a>
+            <a href="https://blog.naver.com/logit_official" target="_blank" rel="noopener noreferrer" style={{ lineHeight: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icon_naver_blog.svg" alt="Naver Blog" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            </a>
+            <a href="https://logit.tistory.com/" target="_blank" rel="noopener noreferrer" style={{ lineHeight: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/icon_tistory.svg" alt="Tistory" style={{ width: "clamp(28px, 3.125vw, 60px)", height: "clamp(28px, 3.125vw, 60px)" }} />
+            </a>
           </div>
 
           {/* 스토어 버튼 그룹 */}

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 const NAV_LINKS = [
-  { label: "About Us", href: "#about", external: false },
+  { label: "About Us", href: "https://docs.logit.ai.kr/", external: true },
   { label: "Price", href: "#price", external: false },
   { label: "SNS", href: "https://www.instagram.com", external: true },
 ];
