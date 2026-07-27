@@ -2,6 +2,7 @@ import Header from "@/components/sections/Header";
 import Hero from "@/components/sections/Hero";
 import PainPoint from "@/components/sections/PainPoint";
 import Features from "@/components/sections/Features";
+import Footer from "@/components/sections/Footer";
 
 export default function Home() {
   return (
@@ -45,8 +46,9 @@ export default function Home() {
       {/* Sections 4, 5, 6: Features */}
       <Features />
 
-      {/* Section 7: CTA */}
-      <div className="snap-start" style={{ position: "relative", width: "100%", height: "100vh", background: "#181B24", overflow: "hidden", zIndex: 1, scrollSnapStop: "always" }}>
+      {/* Section 7: CTA + Footer (하나의 snap 섹션) */}
+      <div className="snap-start" style={{ position: "relative", zIndex: 1, scrollSnapStop: "always" }}>
+      <div style={{ position: "relative", width: "100%", height: "100vh", background: "#181B24", overflow: "hidden" }}>
         <img
           src="/dark-section-bg.svg"
           alt=""
@@ -154,6 +156,10 @@ export default function Home() {
             로짓 무료로 시작하기
           </a>
         </div>
+      </div>
+
+      {/* Footer */}
+      <Footer />
       </div>
 
     </main>
