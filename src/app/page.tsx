@@ -158,7 +158,10 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Footer */}
+      </div>
+
+      {/* Section 8: Footer */}
+      <div className="snap-start" style={{ scrollSnapStop: "always", zIndex: 1 }}>
       <Footer />
       </div>
 
