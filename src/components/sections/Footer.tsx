@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className="w-full" style={{ background: "#13151C" }}>
       <div style={{
-        padding: "clamp(48px, 6.25vw, 120px) clamp(20px, 4.6875vw, 90px) clamp(24px, 3.125vw, 60px)",
+        padding: "clamp(48px, 6.25vw, 120px) clamp(30px, 4.6875vw, 90px) clamp(24px, 3.125vw, 60px)",
       }}>
 
         {/* 로고 + 위로가기 버튼 */}
@@ -56,7 +56,7 @@ export default function Footer() {
         </div>
 
         {/* Email */}
-        <div style={{ marginTop: "clamp(40px, 4.6875vw, 90px)" }}>
+        <div className="mt-10 md:mt-[clamp(40px,4.6875vw,90px)]">
 
           <p style={{
             color: "#F6F6F7",
@@ -79,12 +79,9 @@ export default function Footer() {
         </div>
 
         {/* 소셜 아이콘 + 스토어 버튼 */}
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginTop: "clamp(24px, 2.5vw, 48px)",
-        }}>
+        <div
+          className="flex flex-col items-start mt-5 md:flex-row md:justify-between md:items-center md:mt-[clamp(24px,2.5vw,48px)]"
+        >
 
           {/* 소셜 아이콘 그룹 */}
           <div style={{ display: "flex", alignItems: "center", gap: "clamp(12px, 1.25vw, 24px)" }}>
@@ -99,11 +96,11 @@ export default function Footer() {
           </div>
 
           {/* 스토어 버튼 그룹 */}
-          <div style={{ display: "flex", alignItems: "center", gap: "clamp(8px, 0.83vw, 16px)" }}>
+          <div className="mt-[65px] w-full md:mt-0 md:w-auto" style={{ display: "flex", alignItems: "center", gap: "clamp(8px, 0.83vw, 16px)" }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/app-store.svg" alt="App Store" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto" }} />
+            <img src="/app-store.svg" alt="App Store" className="flex-1 md:flex-none" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto", minWidth: 0 }} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/google-play.svg" alt="Google Play" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto" }} />
+            <img src="/google-play.svg" alt="Google Play" className="flex-1 md:flex-none" style={{ width: "clamp(100px, 9.375vw, 180px)", height: "auto", minWidth: 0 }} />
           </div>
 
         </div>
