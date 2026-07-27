@@ -54,6 +54,29 @@ export default function Footer() {
           </button>
 
         </div>
+
+        {/* Email */}
+        <div style={{ marginTop: "clamp(40px, 4.6875vw, 90px)" }}>
+          <p style={{
+            color: "#F6F6F7",
+            fontFamily: "Pretendard",
+            fontSize: "clamp(13px, 1.25vw, 24px)",
+            fontWeight: 400,
+            lineHeight: "160%",
+            letterSpacing: "-0.024em",
+            margin: 0,
+          }}>Email</p>
+          <p style={{
+            color: "#F6F6F7",
+            fontFamily: "Pretendard",
+            fontSize: "clamp(13px, 1.25vw, 24px)",
+            fontWeight: 700,
+            lineHeight: "160%",
+            letterSpacing: "-0.024em",
+            margin: 0,
+          }}>logit2026@gmail.com</p>
+        </div>
+
       </div>
     </footer>
   );
