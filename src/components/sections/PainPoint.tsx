@@ -86,7 +86,7 @@ export default function PainPoint() {
       resetAccum();
       cooldownRef.current = true;
       setExpanded(true);
-      setTimeout(() => { cooldownRef.current = false; }, 1200);
+      setTimeout(() => { cooldownRef.current = false; }, 2500);
     };
     const onUp = () => {
       resetAccum();
@@ -214,7 +214,7 @@ export default function PainPoint() {
         background: "radial-gradient(circle at 38% 36%, #A8DEFA, #65C1ED 35%, #4BC0FA 60%, #2571EB)",
         transform: `translate(-50%, -50%) scale(${expanded ? 1 : 0})`,
         transition: expanded
-          ? "transform 1.3s cubic-bezier(0.22, 1, 0.36, 1)"
+          ? "transform 2.5s cubic-bezier(0.22, 1, 0.36, 1)"
           : "transform 0.5s cubic-bezier(0.55, 0, 1, 0.45)",
         pointerEvents: "none", zIndex: 1,
         willChange: "transform",
@@ -224,7 +224,7 @@ export default function PainPoint() {
         position: "absolute", inset: 0,
         width: "100%", height: "100%", objectFit: "cover",
         opacity: expanded ? 0.6 : 0,
-        transition: expanded ? "opacity 0.5s ease 0.85s" : "opacity 0.2s ease",
+        transition: expanded ? "opacity 0.5s ease 1.8s" : "opacity 0.2s ease",
         pointerEvents: "none", zIndex: 2,
         willChange: "opacity",
       }} />
@@ -235,7 +235,7 @@ export default function PainPoint() {
         opacity: expanded ? 1 : 0,
         transform: expanded ? "translateY(0)" : "translateY(32px)",
         transition: expanded
-          ? "opacity 0.6s ease 1.0s, transform 0.6s ease 1.0s"
+          ? "opacity 0.6s ease 2.0s, transform 0.6s ease 2.0s"
           : "opacity 0.2s ease, transform 0.2s ease",
         zIndex: 3, pointerEvents: "none",
         willChange: "opacity, transform",
