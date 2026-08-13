@@ -76,7 +76,7 @@ export default function Header() {
           href="https://logit.ai.kr"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex h-[36px] md:h-[44px] px-4 md:px-6 py-2 md:py-[14px] justify-center items-center gap-[14px] rounded-[14px] bg-primary-200 hover:bg-primary-300 text-white font-semibold text-[15px] md:text-[18px] leading-[140%] transition-colors duration-200 whitespace-nowrap"
+          className="flex h-[36px] md:h-[44px] px-4 md:px-6 py-2 md:py-[14px] justify-center items-center gap-[14px] rounded-[14px] bg-primary-100 hover:bg-primary-200 text-white font-semibold text-[15px] md:text-[18px] leading-[140%] transition-colors duration-200 whitespace-nowrap"
         >
           <span className="hidden sm:inline">지금 무료로 시작하기</span>
           <span className="sm:hidden">무료 시작</span>

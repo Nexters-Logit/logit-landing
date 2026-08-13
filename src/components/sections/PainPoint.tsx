@@ -240,7 +240,7 @@ export default function PainPoint() {
         zIndex: 3, pointerEvents: "none",
         willChange: "opacity, transform",
       }}>
-        <p className="text-grey-70 font-normal leading-[120%]" style={{ fontSize: "clamp(13px, 1.25vw, 24px)" }}>
+        <p className="text-white font-normal leading-[120%]" style={{ fontSize: "clamp(13px, 1.25vw, 24px)" }}>
           그래서 로짓은, 자소서를 바로 쓰지 않습니다.
         </p>
         <h2 className="font-bold text-white leading-[120%] text-center [word-break:keep-all]" style={{ fontSize: "clamp(22px, 2.08vw, 40px)" }}>
